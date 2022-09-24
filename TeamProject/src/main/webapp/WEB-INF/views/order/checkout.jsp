@@ -17,6 +17,24 @@
 </head>
 
 
+	<script>
+ var point2 = '${pointDTO2.pointNow}';
+ $(function() { 
+     $('#textUsePoint').change(function() { 
+        if($('#textUsePoint').val() - point2 > 0) { 
+          alert('사용 가능 포인트를 초과하였습니다.') 
+           $('#textUsePoint').val(point2); 
+          document.getElementById('usePoint2').innerHTML=point2+"원";
+		  document.getElementById('total2').innerHTML=${total}-point2+"원"; 
+        }else if($('#textUsePoint').val() < 1000) {
+          alert('최소 사용 가능 포인트는 1000P 입니다.') 
+          document.getElementById('usePoint2').innerHTML="1000원";
+		  document.getElementById('total2').innerHTML=${total}-1000+"원"; 
+           $('#textUsePoint').val(1000); 
+        }
+     }) 
+  });
+  </script>
 
 <script>
 function calc(t) {
@@ -134,6 +152,7 @@ function myCoupon(){
                    data: { 'ordUser'    		:'${memberDTO.userId}',
 	                       'ordGetNm'   		:'${addressDTO.addressGetNm}',
 	                       'couNm'				: couNm,
+	                       'couYn'				: 'N',
 	                       'ordGetZipcode'		: addZipcode,
 	                       'ordGetAddress' 	   	: add,
 	                       'ordGetPhone'    	:'${addressDTO.addressGetPhone }',
@@ -157,23 +176,7 @@ function myCoupon(){
      }
   </script>
 
-	<script>
- var point2 = '${pointDTO2.pointNow}';
-      $(function() {
-         $('#textUsePoint').change(function() {
-            if($('#textUsePoint').val() - point2 > 0) {
-              alert('사용 가능 포인트를 초과하였습니다.')
-               $('#textUsePoint').val(point2);
-              document.getElementById('usePoint2').innerHTML=point2+"원";
-			  document.getElementById('total2').innerHTML=${total}-point2+"원";
-            }else if($('#textUsePoint').val() < 1000) {
-              alert('최소 사용 가능 포인트는 1000P 입니다.')
-              document.getElementById('usePoint2').innerHTML="1000원";
-			  document.getElementById('total2').innerHTML=${total}-1000+"원";
-               $('#textUsePoint').val(1000);
-         })
-      })
-   </script>
+
 	<body>
 	<!-- 메뉴단 -->
 	<jsp:include page="../inc/menu.jsp" />

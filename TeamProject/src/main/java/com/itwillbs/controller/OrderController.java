@@ -94,7 +94,7 @@ public class OrderController {
 	// 결제완료
 	 @ResponseBody
 	   @RequestMapping(value="/order/orderComplete", method = RequestMethod.POST)
-	   public String paymenByImpUid (HttpSession session, HttpServletRequest request, @RequestParam Map<String, Object> para, BasketDTO basketDTO){
+	   public String paymenByImpUid (HttpSession session, HttpServletRequest request, @RequestParam Map<String, Object> para, BasketDTO basketDTO, CouponDTO couponDTO){
 	      Map<String, Object> sMap = para;
 	      sMap.put("userId", (String)session.getAttribute("userId"));
 	      sMap.put("ordDeliveryMessage", request.getParameter("ordDeliveryMessage"));
@@ -102,6 +102,7 @@ public class OrderController {
 	      sMap.put("pointNow", request.getParameter("pointNow"));
 	      sMap.put("pointUsed", request.getParameter("pointUsed"));
 	      sMap.put("couNm", request.getParameter("couNm"));
+	      sMap.put("couYn", request.getParameter("couYn"));
 
 	      System.out.println(sMap);
 	      orderService.insertOrder(sMap);
