@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mappers.compMapper">
+
+<!-- 상품 신규등록 -->
+	<insert id="insertProd">
+		INSERT INTO PRODUCT_LIST(
+				    PROD_L_NUM
+			       ,PROD_L_CODE
+			       ,PROD_L_OPTION1
+			       ,PROD_L_OPTION2
+			       ,PROD_L_OPTION3
+			       ,PROD_L_OPTION4
+			       ,PROD_L_OPTION5
+			       ,PROD_L_PRODNM
+			       ,PROD_L_PRICE
+			       ,PROD_L_UPLOADDATE
+			       ,PROD_L_COMPNM
+			       ,PROD_L_MAINIMG
+			       ,PROD_L_SUBIMG
+			       ,PROD_L_DETAIL
+			       ,PROD_L_QUANTITY
+           		    )
+			 VALUES (
+					(SELECT PROD_L_NUM
+		       		 FROM   (SELECT IFNULL(MAX(CAST(PROD_L_NUM AS UNSIGNED)), 0) + 1 AS PROD_L_NUM
+				 	   	       FROM PRODUCT_LIST) A)
+			       ,#{prodLCode}
+			       ,#{prodLOption1}
+			       ,#{prodLOption2}
+			       ,#{prodLOption3}
+			       ,#{prodLOption4}
+			       ,#{prodLOption5}
+			       ,#{prodLProdnm}
+			       ,#{prodLPrice}
+			       ,#{prodLUploaddate}
+			       ,#{prodLCompnm}
+			       ,#{prodLMainimg}
+			       ,#{prodLSubimg}
+			       ,#{prodLDetail}
+			       ,#{prodLQuantity}
+			  		)
+	</insert>
+<!-- 	개별 상품정보 갖고오기 -->
+	<select id="getProd" resultType="com.itwillbs.domain.ProdDTO">
+		   SELECT	*
+		    FROM    PRODUCT_LIST
+		   WHERE    PROD_L_CODE=#{prodLCode}
+
+	</select>
+
+<!-- 	검색사용, 검색 미사용시 삭제할 상품리스트 갖고오기 -->
+	<select id="getProdList" resultType="com.itwillbs.domain.ProdDTO" >
+		   SELECT 	PROD_L_NUM
+			       ,PROD_L_CODE
+			       ,PROD_L_OPTION1
+			       ,PROD_L_OPTION2
+			       ,PROD_L_PRODNM
+			       ,PROD_L_PRICE
+			       ,PROD_L_QUANTITY
+		     FROM   PRODUCT_LIST
+		    WHERE   PROD_L_COMPNM=#{compId}
+		   	<if test="status != null and status !='0' ">
+		   	  <choose>
+			     <when test='status.equals("1") '>
+		      AND	PROD_L_QUANTITY <![CDATA[ >= ]]> 50
+			     </when>
+			     <when test='status.equals("2") '>
+			  AND   PROD_L_QUANTITY <![CDATA[ < ]]> 50
+		   	  AND   PROD_L_QUANTITY <![CDATA[ > ]]> 0
+			     </when>
+			   	 <when test='status.equals("3") '>
+			  AND   PROD_L_QUANTITY = 0
+			     </when>
+			   </choose>
+			</if>
+			<if test='searchKeyWord != null and columnNm != "0"'>
+		   	  AND   ${columnNm} LIKE CONCAT('%', #{searchKeyWord}, '%')
+		    </if>
+		 ORDER BY   PROD_L_NUM
+       DESC LIMIT   #{startRow}
+                   ,#{pageSize}
+	</select>
+
+<!--  	페이징 처리에 필요한 게시글수 -->
+	<select id="getProdCount" resultType="java.lang.Integer">
+		   SELECT   COUNT(PROD_L_CODE)
+		     FROM   PRODUCT_LIST
+		    WHERE   PROD_L_COMPNM=#{compId}
+	<if test="status != null and status !='0' ">
+		   	  <choose>
+			     <when test='status.equals("1") '>
+		      AND	PROD_L_QUANTITY <![CDATA[ >= ]]> 50
+			     </when>
+			     <when test='status.equals("2") '>
+			  AND   PROD_L_QUANTITY <![CDATA[ < ]]> 50
+		   	  AND   PROD_L_QUANTITY <![CDATA[ > ]]> 0
+			     </when>
+			   	 <when test='status.equals("3") '>
+			  AND   PROD_L_QUANTITY = 0
+			     </when>
+			   </choose>
+			</if>
+			<if test='searchKeyWord != null and columnNm != "0"'>
+		   	  AND   ${columnNm} LIKE CONCAT('%', #{searchKeyWord}, '%')
+		    </if>
+	</select>
+<!-- 	상품 삭제 -->
+	<delete id="deleteProd">
+	   DELETE FROM  PRODUCT_LIST
+	   	     WHERE  PROD_L_CODE=#{prodLCode}
+	</delete>
+<!-- 상품 수정 -->
+	<update id="updateProd">
+		UPDATE  PRODUCT_LIST
+		   SET  PROD_L_PRICE    =#{prodLPrice}
+			   ,PROD_L_MAINIMG  =#{prodLMainimg}
+			   ,PROD_L_SUBIMG   =#{prodLSubimg}
+			   ,PROD_L_DETAIL   =#{prodLDetail}
+			   ,PROD_L_QUANTITY =#{prodLQuantity}
+	     WHERE  PROD_L_CODE     =#{prodLCode}
+	</update>
+<!-- 	업체정보 갖고오기-->
+	<select id="getComp" resultType="com.itwillbs.domain.CompDTO">
+		SELECT *
+		  FROM COMPANY_INFO
+		 WHERE COMP_ID=#{compId}
+		 <if test='compPass != null '>
+		   AND  COMP_PASS = ${compPass}
+		 </if>
+	</select>
+<!-- 	업체정보 수정 -->
+	<update id="modComp">
+		UPDATE    COMPANY_INFO
+		   SET	  COMP_ZIPCODE		=#{compZipcode}
+			   	 ,COMP_ADDRESS		=#{compAddress}
+			   	 ,COMP_DETADDRESS	=#{compDetaddress}
+				 ,COMP_PHONE		=#{compPhone}
+		 WHERE    COMP_ID			=#{compId}
+	</update>
+<!-- 비밀번호 수정 -->
+	<update id="passMod">
+		UPDATE COMPANY_INFO
+		   SET COMP_PASS	=#{compPass}
+		 WHERE COMP_ID		=#{compId}
+	</update>
+<!-- 	업체 탈퇴 -->
+	<delete id="delComp">
+		DELETE FROM COMPANY_INFO
+		 WHERE 		COMP_ID		=#{compId}
+		   AND 		COMP_PASS	=#{compPass}
+	</delete>
+<!-- 주문 목록 갖고오기 -->
+	<select id="getOrdList" resultType="com.itwillbs.domain.OrderListDTO">
+		SELECT 	 @rownum:=@rownum+1 as trnum
+<!-- 				 게시판에 tr반복이라 구분숫자를 주기 위해	 -->
+				,OB.NUM 									as num
+				,OL.ORD_L_USER 								as ordLUser
+				,OL.ORD_L_CODE                              as ordLCode
+				,OL.ORD_L_QUANTITY                          as ordLQuantity
+				,OL.ORD_L_DATE                              as ordLDate
+				,OL.ORD_DELIVERY_STATUS                     as ordDeliveryStatus
+				,(OL.ORD_L_QUANTITY * OL.ORD_L_PRICE)      as ordFinalprice
+		  FROM	ORDER_LIST as OL JOIN ORDER_BOARD as OB
+			ON  (OL.ORD_L_USER = OB.USER_ID)
+		 WHERE   (@rownum:=0)=0
+		 <!-- 				 게시판에 tr반복이라 구분숫자를 주기 위해	 -->
+		   AND   OL.ORD_L_CODE IN (SELECT PROD_L_CODE
+		 							FROM PRODUCT_LIST
+		 						   WHERE PROD_L_COMPNM=#{compId})
+		 LIMIT 	#{startRow}	,#{pageSize}
+	</select>
+
+	<select id="getOrdCount" resultType="java.lang.Integer">
+
+		SELECT   count(OL.ORD_L_CODE)
+		  FROM   ORDER_LIST OL
+		  JOIN   ORDER_BOARD OB
+		    ON   (OL.ORD_L_USER=OB.USER_ID)
+		 WHERE   OL.ORD_L_CODE IN (SELECT PROD_L_CODE
+                        			 FROM PRODUCT_LIST
+                        			WHERE PROD_L_COMPNM = #{compId})
+	</select>
+<!-- 	송장번호입력 -->
+	<update id="delivNumberInsert">
+		UPDATE ORDER_LIST
+		   SET ORD_L_DELIV_NUMBER	=#{ordLDelivNumber}
+		 WHERE ORD_L_USER	=#{ordLUser}
+		   AND ORD_L_CODE	=#{ordLCode}
+		   AND ORD_DELIVERY_STATUS ="0"
+	</update>
+	<!-- 	배송 상태 변경 -->
+	<update id="delivNumberUpdate">
+		UPDATE ORDER_LIST
+		   SET ORD_DELIVERY_STATUS	=#{ordDeliveryStatus}
+		 WHERE ORD_L_USER	=#{ordLUser}
+		   AND ORD_L_CODE	=#{ordLCode}
+		   AND ORD_PURCHASESTATUS ="0"
+	</update>
+<!-- 	미배송, 배송완료 검색 -->
+	<select id="getOrdCountMain" resultType="java.lang.Integer">
+
+		SELECT   count(OL.ORD_L_CODE)
+		  FROM   ORDER_LIST OL
+		  JOIN   ORDER_BOARD OB
+		    ON   (OL.ORD_L_USER=OB.USER_ID)
+		 WHERE   OL.ORD_L_CODE IN (SELECT PROD_L_CODE
+                        			 FROM PRODUCT_LIST
+                        			WHERE PROD_L_COMPNM = #{compId})
+		   AND   ORD_DELIVERY_STATUS =#{ordDeliveryStatus}
+	</select>
+<!-- 	총합계를 구하기 위한 개별 합계 -->
+	<select id="getTotalsum" resultType="java.lang.Integer">
+		SELECT   sum((ORD_L_QUANTITY * ORD_L_PRICE)) as ordFinalprice
+		  FROM   ORDER_LIST
+		 WHERE   ORD_L_CODE IN (SELECT PROD_L_CODE
+                        		  FROM PRODUCT_LIST
+                        		 WHERE PROD_L_COMPNM = #{compId})
+	</select>
+
+	<!-- column은 DB의 출력하는 칼럼명, property는 Key값 -->
+	<select id="getProdAmount" resultType="com.itwillbs.domain.OrderListDTO" >
+		   SELECT 	(SELECT  count(PROD_L_CODE)
+					   FROM  PRODUCT_LIST
+					  WHERE  PROD_L_COMPNM=#{compId}
+					    AND  PROD_L_QUANTITY <![CDATA[ >= ]]> 50) as ge50Count
+				   ,(SELECT  count(PROD_L_CODE)
+					   FROM  PRODUCT_LIST
+					  WHERE  PROD_L_COMPNM=#{compId}
+					    AND  PROD_L_QUANTITY <![CDATA[ < ]]> 50
+					    AND  PROD_L_QUANTITY <![CDATA[ > ]]> 0) as ne50Count
+				   ,(SELECT  count(PROD_L_CODE)
+					   FROM  PRODUCT_LIST
+					  WHERE  PROD_L_COMPNM=#{compId}
+					    AND  PROD_L_QUANTITY <![CDATA[ = ]]> 0) as eq50Couunt
+			 FROM  dual
+	</select>
+
+
+<!-- 리스트 -->
+	<select id="getCompCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		  FROM COMPANY_INFO
+	</select>
+	<select id="getCompList" resultType="com.itwillbs.domain.CompDTO">
+		SELECT *
+		  FROM COMPANY_INFO
+	  ORDER BY COMP_DATE DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+
+<!-- 업체 삭제 -->
+	<delete id="deleteComp">
+		DELETE FROM COMPANY_INFO
+		 WHERE COMPANY_INFO_NUM	=#{companyInfoNum}
+	</delete>
+<!-- 	주문 상세정보  -->
+	<select id="getOrdListDet" resultType="com.itwillbs.domain.OrderListDTO">
+		SELECT
+				 ol.ORD_L_CODE			 as ordLCode
+				,ol.ORD_L_USER           as ordLUser
+				,ol.ORD_L_QUANTITY       as ordLQuantity
+				,ol.ORD_L_PRICE          as ordLPrice
+				,ol.ORD_L_COUPONNUM      as ordLCouponnum
+				,ol.ORD_DELIVERY_STATUS  as ordDeliveryStatus
+				,ol.ORD_L_DELIV_NUMBER   as ordLDelivNumber
+				,ol.ORD_PURCHASESTATUS   as ordPurchasestatus
+				,ol.ORD_L_DATE           as ordLDate
+				,ob.ORD_GET_ADDRESS      as ordGetAddress
+				,ob.ORD_GET_ZIPCODE      as ordGetZipcode
+				,ob.ORD_DELIVERY_MESSAGE as ordDeliveryMessage
+				,ob.ORD_TOTAL_PRICE      as ordTotalPrice
+				,ob.ORD_COUPONDC         as ordCouponDc
+				,ob.ORD_FINALPRICE       as ordFinalPrice
+				,ob.ORD_GET_NM           as ordGetNm
+				,ob.ORD_GET_PHONE        as ordGetPhone
+				,(SELECT USER_NM
+    			    FROM USER_INFO
+  				   WHERE USER_ID=#{ordLUser}) as ordLUserNm
+		 FROM   ORDER_LIST as ol JOIN ORDER_BOARD as ob
+		   ON   (ol.ORD_L_USER=ob.USER_ID)
+		WHERE   ORD_L_USER=#{ordLUser}
+		  AND   ol.ORD_L_CODE = #{ordLCode};
+
+	</select>
+
+</mapper>

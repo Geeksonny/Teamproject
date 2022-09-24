@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mappers.memberMapper">
+
+<!-- 회원가입(유저) -->
+	<insert id="insertMember">
+		INSERT INTO USER_INFO(
+					USER_INFO_NUM
+				   ,USER_ID
+				   ,USER_PASS
+				   ,USER_NM
+				   ,USER_EMAIL
+				   ,USER_ATHLETIC
+				   ,USER_NICKNM
+				   ,USER_PHONE
+				   ,USER_DATE
+				   ,MY_COUPON_NUM
+				   ,USER_RANK
+				   ,USER_TYPE
+             	   ,USER_STATUS
+            	   ,USER_LAST_DATE
+            	   ,USER_EMAIL_AUTH
+            	   ,USER_EMAIL_KEY
+
+					)
+			VALUES(
+				    #{userInfoNum}
+			  	   ,#{userId}
+				   ,#{userPass}
+				   ,#{userNm}
+				   ,#{userEmail}
+				   ,#{userAthletic}
+				   ,#{userNicknm}
+				   ,#{userPhone}
+				   ,#{userDate}
+				   ,#{myCouponNum}
+				   ,#{userRank}
+				   ,#{userType}
+				   ,#{userStatus}
+				   ,#{userLastDate}
+				   ,#{userEmailAuth}
+				   ,#{userEmailKey}
+			  		)
+	</insert>
+
+<!--  회원가입 시 이메일 인증을 위한 랜덤번호 저장 -->
+	<update id="updateEmailKey">
+    	UPDATE USER_INFO
+    	   SET USER_EMAIL_KEY=#{userEmailKey}
+    	 WHERE USER_EMAIL	 =#{userEmail}
+    	   AND USER_ID		 =#{userId}
+	</update>
+
+<!-- 인증 시 USER_MAIL_AUTH 변경으로 로그인 허용 -->
+	<update id="updateEmailAuth">
+	    UPDATE USER_INFO
+	       SET USER_EMAIL_AUTH=1
+	     WHERE USER_EMAIL	  =#{userEmail}
+	       AND USER_EMAIL_KEY =#{userEmailKey}
+	</update>
+
+<!--  로그인 시 인증여부 체크 -->
+	<select id="emailAuthFail" resultType="int">
+    	SELECT COUNT(*)
+    	  FROM USER_INFO
+    	 WHERE USER_ID			=#{userId}
+    	   AND USER_EMAIL_AUTH	=1
+	</select>
+
+<!-- 로그인(유저) -->
+	<select id="userCheck" resultType="com.itwillbs.domain.MemberDTO">
+		SELECT *
+		  FROM USER_INFO
+		 WHERE USER_ID	=#{userId}
+<!-- 		   AND USER_PASS=#{userPass} -->
+	</select>
+
+<!-- 마지막 로그인 체크 -->
+	<update id="loginCheck">
+		UPDATE USER_INFO
+		   SET USER_LAST_DATE	=#{userLastDate}
+		 WHERE USER_ID			=#{userId}
+	</update>
+
+<!-- 휴면 계정 전환 -->
+	<update id="changeStatus">
+		UPDATE USER_INFO
+		   SET USER_STATUS	=1
+		 WHERE USER_ID 		=#{userId}
+		 <![CDATA[AND USER_LAST_DATE < DATE_SUB(NOW(), INTERVAL 1 YEAR)]]>
+	</update>
+
+<!-- INSERT INTO USER_DORMANT -->
+<!-- 	SELECT *  -->
+<!--     FROM USER_INFO -->
+<!--     WHERE USER_ID = #{userId}; -->
+
+<!--  로그인 시 휴면 계정 여부 체크 -->
+	<select id="statusCheck" resultType="int">
+    	SELECT COUNT(*)
+    	  FROM USER_INFO
+    	 WHERE USER_ID		=#{userId}
+    	   AND USER_STATUS	=1
+	</select>
+
+<!-- 멤버 불러오기 -->
+	<select id="getMember" resultType="com.itwillbs.domain.MemberDTO">
+		SELECT *
+		  FROM USER_INFO
+		 WHERE USER_ID=#{userId}
+	</select>
+
+<!-- 이메일 중복 -->
+	<select id="checkUserEmail" resultType="com.itwillbs.domain.MemberDTO">
+		SELECT *
+		  FROM USER_INFO
+		 WHERE USER_EMAIL=#{userEmail}
+	</select>
+
+<!-- 로그인 아이디 찾기(유저) -->
+	<select id="idSearch" resultType="string">
+		SELECT USER_ID
+		  FROM USER_INFO
+		 WHERE USER_NM=		#{userNm}
+		   AND USER_EMAIL=	#{userEmail}
+	</select>
+
+<!-- 로그인 비밀번호 찾기(유저) -->
+	<select id="pwCheck" resultType="string">
+		SELECT *
+		  FROM USER_INFO
+		 WHERE USER_ID=		#{userId}
+		   AND USER_EMAIL=	#{userEmail}
+	</select>
+
+<!-- 비밀번호 찾기 -->
+	<update id="updatePass">
+	    UPDATE USER_INFO
+	       SET USER_PASS  =#{userPass}
+	     WHERE USER_ID	  =#{userId}
+	       AND USER_EMAIL =#{userEmail}
+	</update>
+
+
+<!-- 회원가입(업체) -->
+	<insert id="insertComp">
+	INSERT INTO  COMPANY_INFO(
+				 COMPANY_INFO_NUM
+				,COMP_ID
+				,COMP_NM
+	            ,COMP_PASS
+	            ,COMP_EMAIL
+	            ,COMP_REG_NUM
+	            ,USER_TYPE
+	            ,COMP_PHONE
+	            ,COMP_DATE
+				)
+		VALUES(
+		  		#{companyInfoNum}
+			   ,#{compId}
+			   ,#{compNm}
+			   ,#{compPass}
+			   ,#{compEmail}
+			   ,#{compRegNum}
+			   ,#{userType}
+			   ,#{compPhone}
+			   ,#{compDate}
+		  		)
+	</insert>
+
+<!-- 로그인(업체) -->
+	<select id="compCheck" resultType="com.itwillbs.domain.CompDTO">
+		SELECT *
+		  FROM COMPANY_INFO
+		 WHERE COMP_ID=#{compId}
+		   AND COMP_PASS=#{compPass}
+	</select>
+
+<!-- 회원 정보 수정 -->
+	<update id="modUser">
+		UPDATE USER_INFO
+		   SET	USER_NM			=#{userNm},
+		   		USER_NICKNM		=#{userNicknm},
+				USER_PHONE		=#{userPhone},
+				USER_ATHLETIC	=#{userAthletic}
+		 WHERE USER_ID			=#{userId}
+	</update>
+
+<!-- 비밀번호 수정 -->
+	<update id="passMod">
+		UPDATE USER_INFO
+		   SET USER_PASS	=#{userPass}
+		 WHERE USER_ID		=#{userId}
+	</update>
+
+<!-- 회원 탈퇴 -->
+	<delete id="delUser">
+		DELETE FROM USER_INFO
+		 WHERE USER_ID		=#{userId}
+	</delete>
+
+<!-- 관리자 / 회원 리스트 -->
+	<select id="getUserCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		  FROM USER_INFO
+	</select>
+	<select id="getUserList" resultType="com.itwillbs.domain.MemberDTO">
+		SELECT *
+		  FROM USER_INFO
+	  ORDER BY USER_DATE DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+
+
+<!-- 관리자 / 회원 삭제 -->
+	<delete id="deleteUser">
+		DELETE FROM USER_INFO
+		 WHERE USER_INFO_NUM	=#{userInfoNum}
+	</delete>
+
+<!-- 관리자 / 상품 리스트 -->
+	<select id="getProductCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		  FROM PRODUCT_LIST
+	</select>
+	<select id="getProductList" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT *
+		  FROM PRODUCT_LIST
+	  ORDER BY PROD_L_CODE DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+
+<!-- 관리자 / 주문 리스트 -->
+	<select id="getOrderCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		  FROM ORDER_LIST
+	</select>
+	<select id="getOrderList" resultType="com.itwillbs.domain.OrderListDTO">
+		SELECT *
+		  FROM ORDER_LIST
+	  ORDER BY ORD_L_DATE DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+
+</mapper>

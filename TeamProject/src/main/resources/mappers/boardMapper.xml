@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.mappers.boardMapper">
+
+	<insert id="insertBoard">
+		insert into BOARD
+		(
+			 BOARD_NUM
+			,USER_NICKNM
+			,BOARD_PASS
+			,BOARD_SUBJECT
+			,BOARD_CONTENT
+			,BOARD_FILE) 
+		values(
+		     #{boardNum}
+			,#{userNicknm}
+			,#{boardPass}
+			,#{boardSubject}
+			,#{boardContent}
+			,#{boardFile})
+	</insert>
+	
+	
+	
+	
+	
+	<select id="searchBoard" resultType="com.itwillbs.domain.BoardDTO">
+		select * from BOARD where BOARD_SUBJECT LIKE '%'#{boardSubject}'%'
+	</select>
+	
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		SELECT MAX(BOARD_NUM) FROM BOARD
+	</select>
+	   
+	<select id="getBoardList" resultType="com.itwillbs.domain.BoardDTO">
+		SELECT * FROM BOARD ORDER BY BOARD_NUM DESC LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="getBoardCount" resultType="java.lang.Integer">
+		select count(*) from BOARD
+	</select>
+	
+	<select id="getBoard" resultType="com.itwillbs.domain.BoardDTO">
+		select * from BOARD where BOARD_NUM=#{boardNum}
+	</select>
+	
+	<select id="PassCheck" resultType="com.itwillbs.domain.BoardDTO">
+		select * from BOARD where BOARD_PASS=#{boardPass} and BOARD_NUM=#{boardNum}
+	</select>
+	
+	<select id="numCheck" resultType="com.itwillbs.domain.BoardDTO">
+			select * from BOARD where USER_NICKNM=#{userNicknm} and BOARD_NUM=#{boardNum}
+	</select>
+	
+	<update id="updateBoard">
+		update BOARD set BOARD_SUBJECT=#{boardSubject}, BOARD_CONTENT=#{boardContent} where BOARD_NUM=#{boardNum}
+	</update>
+	
+	<update id="updateFile">
+		update BOARD set BOARD_SUBJECT=#{boardSubject}, BOARD_CONTENT=#{boardContent}, BOARD_FILE=#{boardFile} where BOARD_NUM=#{boardNum}
+	</update>
+	
+	<delete id="deleteBoard">
+		delete from BOARD where BOARD_PASS=#{boardPass} and USER_NICKNM=#{userNicknm}
+	</delete>
+	
+	<update id="rCount">
+		UPDATE BOARD SET 
+		BOARD_RCOUNT = BOARD_RCOUNT + 1 
+		where BOARD_NUM=#{boardNum}
+	</update>
+	
+	<update id="rCountsub">
+		UPDATE BOARD SET 
+		BOARD_RCOUNT = BOARD_RCOUNT - 1 
+		where BOARD_NUM=#{boardNum}
+	</update>
+	
+	
+	
+
+	<!-- view -->
+	<insert id="viewinsert">
+		insert into BOARD_VIEW 
+		(
+			BOARD_NUM
+		   ,USER_ID
+		) values (
+			#{boardNum}
+		   ,#{userId}
+		)
+	</insert>
+	
+	<select id="viewcheck" resultType="com.itwillbs.domain.ViewDTO">
+		SELECT * FROM BOARD_VIEW WHERE USER_ID=#{userId} and BOARD_NUM=#{boardNum}
+	</select>
+	
+	<update id="viewup">
+		UPDATE BOARD SET 
+		BOARD_READCOUNT = BOARD_READCOUNT + 1 
+		where BOARD_NUM=#{boardNum}
+	</update>
+	
+	<!-- mypage  -->
+	
+	
+	
+	
+	
+</mapper>

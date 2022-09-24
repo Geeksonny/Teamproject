@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.mappers.mypageMapper">
+
+
+	<insert id="insertMypage">
+		INSERT INTO USER_MYPAGE(
+		USER_ID
+		)VALUE(
+		#{userId}
+		)
+	</insert>
+
+	<select id="mypageselect" resultType="com.itwillbs.domain.MypageDTO">
+		SELECT * FROM USER_MYPAGE WHERE USER_ID=#{userId}
+	</select>
+
+	<update id="boardCount">
+		UPDATE USER_MYPAGE SET
+		BOARD_COUNT = BOARD_COUNT + 1
+		where USER_ID=#{userId}
+	</update>
+
+	<update id="replyCount">
+		UPDATE USER_MYPAGE SET
+		REPLY_COUNT = REPLY_COUNT + 1
+		where USER_ID=#{userId}
+	</update>
+
+	<update id="productLike">
+		UPDATE USER_MYPAGE SET
+		PRODUCT_LIKE = PRODUCT_LIKE + 1
+		where USER_ID=#{userId}
+	</update>
+
+	<update id="boardsub">
+		UPDATE USER_MYPAGE SET
+		BOARD_COUNT = BOARD_COUNT - 1
+		where USER_ID=#{userId}
+	</update>
+
+	<update id="replysub">
+		UPDATE USER_MYPAGE SET
+		REPLY_COUNT = REPLY_COUNT - 1
+		where USER_ID=#{userId}
+	</update>
+
+	<update id="productLikesub">
+		UPDATE USER_MYPAGE SET
+		PRODUCT_LIKE = PRODUCT_LIKE - 1
+		where USER_ID=#{userId}
+	</update>
+<!-- 	유저가 주문목록 같고오기 -->
+	<select id="getMyOrdList" resultType="com.itwillbs.domain.OrderListDTO">
+
+		SELECT   @rownum:=@rownum+1 as trnum
+				,ol.ORD_L_CODE			 as ordLCode
+				,ol.ORD_L_QUANTITY       as ordLQuantity
+				,ol.ORD_L_PRICE          as ordLPrice
+				,ol.ORD_L_COUPONNUM      as ordLCouponnum
+				,ol.ORD_DELIVERY_STATUS  as ordDeliveryStatus
+				,ol.ORD_L_DELIV_NUMBER   as ordLDelivNumber
+				,ol.ORD_PURCHASESTATUS   as ordPurchasestatus
+				,ol.ORD_L_DATE           as ordLDate
+				,ob.NUM					 as num
+				,ob.ORD_COUPONDC         as ordCouponDc
+				,ob.ORD_FINALPRICE       as ordFinalPrice
+		 FROM   ORDER_LIST as ol JOIN ORDER_BOARD as ob
+		   ON   (ol.ORD_L_USER=ob.USER_ID) JOIN PRODUCT_LIST pl
+		   ON	(ol.ORD_L_CODE=pl.PROD_L_CODE)
+		WHERE   (@rownum:=0)=0
+		  AND   ol.ORD_L_USER=#{userId}
+<!-- 	 ORDER BY   ol.ORD_L_CODE -->
+   DESC LIMIT   #{startRow}
+                ,#{pageSize}
+	</select>
+	<select id="getMyOrdListCount" resultType="java.lang.Integer">
+
+		SELECT  count(ORD_L_USER)
+		 FROM   ORDER_LIST
+		WHERE   ORD_L_USER=#{userId}
+
+	</select>
+<!-- 	<select id="getMyOrdList" resultType="com.itwillbs.domain.OrderListDTO"> -->
+
+<!-- 		SELECT   @rownum:=@rownum+1 as trnum -->
+<!-- 				,ol.ORD_L_CODE			 as ordLCode -->
+<!-- 				,ol.ORD_L_QUANTITY       as ordLQuantity -->
+<!-- 				,ol.ORD_L_PRICE          as ordLPrice -->
+<!-- 				,ol.ORD_L_COUPONNUM      as ordLCouponnum -->
+<!-- 				,ol.ORD_DELIVERY_STATUS  as ordDeliveryStatus -->
+<!-- 				,ol.ORD_L_DELIV_NUMBER   as ordLDelivNumber -->
+<!-- 				,ol.ORD_PURCHASESTATUS   as ordPurchasestatus -->
+<!-- 				,ol.ORD_L_DATE           as ordLDate -->
+<!-- 				,ob.NUM					 as num -->
+<!-- 				,ob.ORD_GET_ADDRESS      as ordGetAddress -->
+<!-- 				,ob.ORD_GET_ZIPCODE      as ordGetZipcode -->
+<!-- 				,ob.ORD_DELIVERY_MESSAGE as ordDeliveryMessage -->
+<!-- 				,ob.ORD_TOTAL_PRICE      as ordTotalPrice -->
+<!-- 				,ob.ORD_COUPONDC         as ordCouponDc -->
+<!-- 				,ob.ORD_FINALPRICE       as ordFinalPrice -->
+<!-- 				,ob.ORD_GET_NM           as ordGetNm -->
+<!-- 				,ob.ORD_GET_PHONE        as ordGetPhone -->
+<!-- 				,ci.COMP_NM as compNm -->
+<!-- 				,pl.PROD_L_PRODNM as ordLProdnm -->
+<!-- 		 FROM   ORDER_LIST as ol JOIN ORDER_BOARD as ob -->
+<!-- 		   ON   (ol.ORD_L_USER=ob.USER_ID) JOIN PRODUCT_LIST pl -->
+<!-- 		   ON	(ol.ORD_L_CODE=pl.PROD_L_CODE) JOIN COMPANY_INFO ci -->
+<!-- 		   ON	(pl.PROD_L_COMPNM=ci.COMP_ID) -->
+<!-- 		WHERE   (@rownum:=0)=0 -->
+<!-- 		  AND   ol.ORD_L_USER=#{userId} -->
+<!-- 	 ORDER BY    -->
+<!--    DESC LIMIT   #{startRow} -->
+<!--                 ,#{pageSize} -->
+<!-- 	</select> -->
+
+
+</mapper>

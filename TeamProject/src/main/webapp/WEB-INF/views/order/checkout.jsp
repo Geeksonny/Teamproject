@@ -1,0 +1,445 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="com.itwillbs.dao.OrderDAO"%>
+<%@page import="com.itwillbs.domain.OrderDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resources/jsPro/basketListPro.js"></script>
+</head>
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> refs/remotes/origin/main
+<script>
+function myCoupon(){
+ var sbUser = "${memberDTO.userId}";
+ $('.nice-select').hide();
+ $('#myCouponList').show();
+//  var myCouponDC =document.getElementById('myCouponList');
+//  var myCouponDC1 = myCouponDC.options[myCouponDC.selectedIndex].value.split('_')[1]; // 옵션 value값
+	$.ajax({
+        	url: "myCoupon",
+			type: "post",
+			data : {'couUserNm':sbUser},
+			dataType: "json",
+			async: false,
+			success:function( data ) {
+				if(data.code=="S") {
+					$('#myCouponList').append("<option value='0_0'>" + "선택" + "</option>");
+					var codeList = data.couponList;
+				      for(var i = 0; i < codeList.length ; i++){
+				        var option = "<option value='" + codeList[i].couNumCouDc + "'>" + codeList[i].couNm + "</option>";
+				        $('#myCouponList').append(option);
+				      }
+				} else {
+					alert("ERROR : Common Code");
+				}
+			}
+		}); // ajax
+}
+</script>
+
+
+	<script>
+	function point(v){
+		document.getElementById('usePoint2').innerHTML=v+"원";
+		document.getElementById('total2').innerHTML=(${total}-v)+"원"; 		
+		
+	}
+</script>
+
+<script>
+function clearPoint(){
+	document.getElementById('textUsePoint').value="";
+	document.getElementById('usePoint2').innerHTML="0"+"원";
+	document.getElementById('total2').innerHTML=${total} + "원"; 
+}
+
+</script>
+
+	<script>
+// 포인트사용
+function pointUseAll(){
+	document.getElementById('textUsePoint').value = ${pointDTO2.pointNow};
+	document.getElementById('usePoint2').innerHTML=${pointDTO2.pointNow}+"원";
+	document.getElementById('total2').innerHTML=(${total}-${pointDTO2.pointNow})+"원"; 
+}
+
+</script>
+
+	<script type="text/javascript">
+		var path = "${pageContext.request.contextPath }";
+
+		$(function() { 
+			$("#resTb tbody").append($("#resInfoTr").html()); 
+
+		});
+
+	</script>
+
+
+	<script>
+	
+	function iamport(){
+        var amount = '${total}'-$('#textUsePoint').val();
+        var discount = "";
+        discount += $('#textUsePoint').val();
+        var nowPoint = '${pointDTO2.pointNow}' - $('#textUsePoint').val();
+        //가맹점 식별코드
+        IMP.init('imp27865884');
+        IMP.request_pay({
+            pg : 'html5_inicis',
+            pay_method : 'card',
+            merchant_uid : '${memberDTO.userId}' + new Date().getTime(),
+            name : '핏티드' , //결제창에서 보여질 이름
+            amount : amount, //실제 결제되는 가격
+        }, function(rsp) {
+           console.log(rsp);
+           
+           
+            if (rsp.success) {
+                var msg = '결제가 완료되었습니다.';
+                var add = "";
+                add += '${addressDTO.address }' + "  " +'${addressDTO.addressDetails }';
+                var addZipcode= "";
+                addZipcode += '${addressDTO.addressZipcode }';
+				
+                alert(msg);
+              
+                $.ajax({
+                    url: "orderComplete",
+                   type: "POST",
+                   data: { 'ordUser'    		:'${memberDTO.userId}',
+	                       'ordGetNm'   		:'${addressDTO.addressGetNm}',
+	                       'ordGetZipcode'		: addZipcode,
+	                       'ordGetAddress' 	   	: add,
+	                       'ordGetPhone'    	:'${addressDTO.addressGetPhone }',
+	                       'ordDeliveryMessage' : $('#ordDeliveryMessage').val(),
+	                       'ordTotalPrice'		:'${total}',
+	                       'ordCouponDc'		: discount,
+	                       'pointNow'			: nowPoint,
+	                       'pointUsed'			: $('#textUsePoint').val(),
+	                       'ordFinalPrice'		: amount,
+                       },
+
+                   dataType:"json",
+                })
+              
+                location.href = '${pageContext.request.contextPath}/main/main';
+            } else {
+              var msg = rsp.error_msg;
+              alert(msg);
+            }
+        });
+     }
+  </script>
+  
+	<script> 
+ var point2 = '${pointDTO2.pointNow}'; 
+      $(function() { 
+         $('#textUsePoint').change(function() { 
+            if($('#textUsePoint').val() - point2 > 0) { 
+              alert('사용 가능 포인트를 초과하였습니다.') 
+               $('#textUsePoint').val(point2); 
+              document.getElementById('usePoint2').innerHTML=point2+"원";
+			  document.getElementById('total2').innerHTML=${total}-point2+"원"; 
+            }else if($('#textUsePoint').val() < 1000) {
+              alert('최소 사용 가능 포인트는 1000P 입니다.') 
+              document.getElementById('usePoint2').innerHTML="1000원";
+			  document.getElementById('total2').innerHTML=${total}-1000+"원"; 
+               $('#textUsePoint').val(1000); 
+            }
+         }) 
+      }) 
+   </script>
+	<body>
+	<!-- 메뉴단 -->
+	<jsp:include page="../inc/menu.jsp" />
+
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h4>상품 주문</h4>
+						<div class="breadcrumb__links">
+							<a href="./index.html">Home</a> <a href="./shop.html">Shop</a> <span>Check
+								Out</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
+
+    <!-- 결제 Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+<!--                 <form action="#"> -->
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+
+<!--                             <h6 class="coupon__code"><span class="icon_tag_alt"></span> 주문자 변경은 -->
+<!--                             <a href="/web/mypage/modify">이쪽으로!</a></h6> -->
+
+						<!-- 주문자 정보 -->
+                            <h6 class="checkout__title">주문자 정보
+								<a href="/web/mypage/modify" class="text-primary float-right" style="text-decoration:none;">
+									정보 변경
+								</a>
+                            </h6>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>이름</p>
+                                        <input type="text" value="${memberDTO.userNm }">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>이메일</p>
+                                        <input type="text" value="${memberDTO.userEmail }">
+                                    </div>
+                                </div>
+                            </div>
+
+						<!-- 배송지 정보 -->
+                            <h6 class="checkout__title mt-4">배송지 정보</h6>
+		                        <c:if test="${addressDTO.address ne null }">
+									<form name="updateAddressPro2" class=form-update
+										action="${pageContext.request.contextPath }/order/updateAddressPro2"
+										method="post">
+								</c:if>
+
+								<c:if test="${addressDTO.address eq null }">
+									<form name="insertAddress2"
+										action="${pageContext.request.contextPath }/order/insertAddress2"
+										method="post">
+								</c:if>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>받는 분</p>
+                                        <input 	type="text"
+                                        		name="addressGetNm" id="addressGetNm"
+												value="${addressDTO.addressGetNm}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>연락처</p>
+                                        <input 	type="text"
+                                        		name="addressGetPhone" id="addressGetPhone" maxlength="11"
+												value="${addressDTO.addressGetPhone}" placeholder="숫자만 입력하세요."/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="checkout__input">
+                                        <p>우편 번호</p>
+                                        <input 	type="text"
+												name="addressZipcode" id="addressZipcode"
+												value="${addressDTO.addressZipcode}" onclick="sample6_execDaumPostcode()" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="checkout__input">
+                                        <p>주소</p>
+                                        <input type="text" id="address" name="address" value="${addressDTO.address }" onclick="sample6_execDaumPostcode()">
+                                    </div>
+                               </div>
+                            </div>
+                             <div class="checkout__input">
+                                <p>상세 주소</p>
+                                <input type="text" id="addressDetails" name="addressDetails" value="${addressDTO.addressDetails }" >
+                            </div>
+                            <div class="checkout__input">
+									<p>배송 요구 사항</p>
+									<input	type="text"
+											id="ordDeliveryMessage"
+											name="ordDeliveryMessage"
+											placeholder="메세지를 입력하세요.">
+							</div>
+
+							<c:if test="${addressDTO.address ne null }">
+								<button type="submit" class="site-btn mb-3 mt-1">배송지
+									수정</button>
+								<button type="reset" class="site-btn mb-3 mt-1">취소</button>
+								</form>
+							</c:if>
+							<c:if test="${addressDTO.address eq null }">
+								<button type="submit" class="site-btn mb-3 mt-1">배송지
+									저장</button>
+								<button type="reset" class="site-btn mb-3 mt-1" >취소</button>
+								</form>
+							</c:if>
+						</div>
+
+					<!--  포인트 / 쿠폰 -->
+                        <div class="col-lg-4 col-md-5">
+							<div class="cart__discount">
+								<div class="mb-2">
+                        		<h6>포인트 / 쿠폰</h6>
+<!-- 				                      <form action="#"> -->
+									<!-- 현재 보유 포인트 -->
+				                      	<input 	type="hidden" id="currentPoint"
+												name="currentPoint" value="0"> <input
+												type="hidden" id="usePoint" name="usePoint" value="0">
+										<input 	type="number" style="width:75%"
+												id="textUsePoint"
+												name="textUsePoint" placeholder="1,000 P부터 사용 가능"
+												min='1000' max="${pointDTO2.pointNow}"
+												onblur="point(value)">
+<!-- 																						onKeyPress="return checkNum(event)" -->
+<!-- 																						onkeyup="removeChar(event)" onblur="fnUsePoint()" -->
+				                          	<button type="button" class="site-btn" onclick="clearPoint()">
+												삭제
+											</button>
+<!-- 				                      </form> -->
+				                     </div>
+				                     <div>
+									<p style="display:inline-block;">
+										사용 가능 포인트 <em class="text-num-bold">${pointDTO2.pointNow}</em> P
+									</p>
+									<button type="button" class="site-btn float-right" id="pointUseAll"
+														onclick="pointUseAll();">
+										전액 사용
+									</button>
+								</div>
+
+								<!-- 쿠폰 -->
+									<div class="mb-3 mt-5">
+										<select id="myCouponList"
+											class="form-select form-control" name="myCouponList">
+										</select>
+									</div>
+								</div>
+
+                            <div class="checkout__order">
+								<h4 class="order__title">주문 정보</h4>
+								<div class="checkout__order__products">
+									<strong>상품</strong> <span><strong>가격</strong> </span>
+								</div>
+
+								<c:forEach items="${basketList }" var="basketDTO"
+									varStatus="status">
+									<ul class="checkout__total__products">
+										<li>${basketDTO.sbProdNm }${basketDTO.sbCount }개<span>${basketDTO.sbProdPrice }원</span></li>
+										<li><strong>${basketDTO.sbProdPrice *basketDTO.sbCount }원</strong></li>
+									</ul>
+								</c:forEach>
+
+								<ul class="checkout__total__all">
+									<li>할인 금액<span id="usePoint2">0 원</span></li>
+									<li>합계 <span id="total2">${total } 원</span></li>
+								</ul>
+									<button type="button" class="site-btn" onclick="iamport();">결제하기</button>
+								</div>
+							</div>
+                    </div>
+            </div>
+        </div>
+    </section>
+	<!-- Footer Sect
+	<!-- Footer Section Begin -->
+	<jsp:include page="../inc/footer.jsp" />
+	
+</body>
+
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+		function sample6_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var addr = ''; // 주소 변수
+							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+							if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+								addr = data.roadAddress;
+							} else { // 사용자가 지번 주소를 선택했을 경우(J)
+								addr = data.jibunAddress;
+							}
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('addressZipcode').value = data.zonecode;
+							document.getElementById("address").value = addr;
+							// 커서를 상세주소 필드로 이동한다.
+							document.getElementById("addressDetails").value = "";
+							document.getElementById("addressDetails").focus();
+						}
+					}).open();
+		}
+	</script>
+
+<script type="text/javascript">
+  $(function(){
+	    $("#addressGetPhone").on('keydown', function(e){
+	       // 숫자만 입력받기
+	        var trans_num = $(this).val().replace(/-/gi,'');
+		var k = e.keyCode;
+		if(trans_num.length >= 11 && ((k >= 48 && k <=126) || (k >= 12592 && k <= 12687 || k==32 || k==229 || (k>=45032 && k<=55203)) ))
+		{
+	  	    e.preventDefault();
+		}
+	    }).on('blur', function(){ // 포커스를 잃었을때 실행합니다.
+	        if($(this).val() == '') return;
+	        // 기존 번호에서 - 를 삭제합니다.
+	        var trans_num = $(this).val().replace(/-/gi,'');
+	        // 입력값이 있을때만 실행합니다.
+	        if(trans_num != null && trans_num != '')
+	        {
+	            // 총 핸드폰 자리수는 11글자이거나, 10자여야 합니다.
+	            if(trans_num.length==11 || trans_num.length==10)
+	            {
+	                // 유효성 체크
+	                var regExp_ctn = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+	                if(regExp_ctn.test(trans_num))
+	                {
+	                    // 유효성 체크에 성공하면 하이픈을 넣고 값을 바꿔줍니다.
+	                    trans_num = trans_num.replace(/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?([0-9]{3,4})-?([0-9]{4})$/, "$1-$2-$3");
+	                    $(this).val(trans_num);
+	                }
+	                else
+	                {
+	                    alert("유효하지 않은 전화번호 입니다.");
+	                    $(this).val("");
+	                    $(this).focus();
+	                }
+	            }
+	            else
+	            {
+	                alert("유효하지 않은 전화번호 입니다.");
+	                $(this).val("");
+	                $(this).focus();
+	            }
+	      }
+	  });
+	});
+  </script>
+
+
+<!-- jQuery -->
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-{SDK-최신버전}.js"></script>
+
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mappers.prodlikeMapper">
+	
+	<insert id="inserProdLike">
+		insert into PRODUCT_LIKE
+		(
+			PROD_LIKE_NUM
+		   ,USER_ID
+		   ,PROD_L_CODE		
+		)values(
+			(SELECT A.PROD_LIKE_NUM
+          		FROM (SELECT IFNULL(MAX(PROD_LIKE_NUM), 0) + 1 as PROD_LIKE_NUM
+					FROM PRODUCT_LIKE) A) 
+		   ,#{userId}
+		   ,#{prodLCode}	
+		)
+	</insert>
+	
+	<delete id="deleteProdLike">
+	delete from PRODUCT_LIKE where USER_ID = #{userId} and PROD_L_CODE = #{prodLCode}
+	</delete>
+	
+	<select id="prodLikeCheck" resultType="com.itwillbs.domain.prodLikeDTO">
+		select * from PRODUCT_LIKE where USER_ID = #{userId} and PROD_L_CODE = #{prodLCode}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwillbs.mappers.replyMapper">
+
+<!-- 	<insert id="replyinsert">
+		insert into BOARD_REPLY
+		(	     R_NUM
+		   		,BOARD_NUM
+           		,USER_ID
+           		,R_CONTENT
+           		,R_DATE)
+        values(
+        		#{rNum}
+        	   ,#{boardNum}
+        	   ,#{userId}
+        	   ,#{rContent}
+        	   ,#{rDate})
+	</insert> -->
+		<insert id="replyinsert" >
+		insert into BOARD_REPLY
+		(
+			 R_NUM
+			,BOARD_NUM
+			,USER_ID
+			,R_CONTENT
+			)
+		values(
+		     #{rNum}
+			,#{boardNum}
+			,#{userId}
+			,#{rContent}
+			)
+		</insert>
+
+
+
+	<select id="getReplyList" resultType="com.itwillbs.domain.ReplyDTO">
+		select * from BOARD_REPLY WHERE BOARD_NUM=#{boardNum}
+	</select>
+
+	<select id="getMaxNum" resultType="java.lang.Integer">
+		SELECT MAX(R_NUM) FROM BOARD_REPLY
+	</select>
+
+	<select id="getReplyCount" resultType="java.lang.Integer">
+		select count(*) from BOARD_REPLY where BOARD_NUM=#{boardNum}
+	</select>
+
+	<delete id="Replydelete">
+		delete from BOARD_REPLY where R_NUM=#{rNum} and USER_ID=#{userId}
+	</delete>
+
+	<select id="rNumCheck" resultType="com.itwillbs.domain.ReplyDTO">
+		select * from BOARD_REPLY where R_NUM=#{rNum} and USER_ID=#{userId}
+	</select>
+</mapper>

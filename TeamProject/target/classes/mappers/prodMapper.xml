@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mappers.prodMapper">
+
+	<select id="selectProdList" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT PROD.*
+		  FROM (
+			SELECT PR.*
+			  FROM (
+					SELECT PR.PROD_L_NUM
+			              ,PR.PROD_L_CODE
+			              ,PR.PROD_L_OPTION1
+			              ,PR.PROD_L_OPTION2
+			              ,PR.PROD_L_OPTION3
+			              ,PR.PROD_L_OPTION4
+			              ,PR.PROD_L_OPTION5
+			              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION1) AS nm1
+			              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION2) AS nm2
+			              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION3) AS nm3
+			              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION4) AS nm4
+			              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION5) AS nm5
+			              ,PR.PROD_L_PRODNM
+			              ,PR.PROD_L_PRICE
+			              ,PR.PROD_L_UPLOADDATE
+			              ,PR.PROD_L_COMPNM
+			              ,PR.PROD_L_MAINIMG
+			              ,PR.PROD_L_SUBIMG
+			              ,PR.PROD_L_DETAIL
+			              ,PR.PROD_L_QUANTITY
+					  FROM projectdb.PRODUCT_LIST PR
+			  ) PR
+		  WHERE 1=1
+		 <!-- 검색 기능 -->
+		 <if test="srhText != null and srhText != ''">
+		 	AND (
+		 		REGEXP_LIKE (PR.nm1 , #{srhText})
+		 	  	OR REGEXP_LIKE (PR.nm2 , #{srhText})
+		 	 	OR REGEXP_LIKE (PR.nm3 , #{srhText})
+		 	 	OR REGEXP_LIKE (PR.nm4 , #{srhText})
+		 	 	OR REGEXP_LIKE (PR.nm5 , #{srhText})
+		 	 	OR REGEXP_LIKE (PR.PROD_L_PRODNM , #{srhText})
+		 	 	)
+		 </if>
+		 <!-- 검색 기능 -->
+		 <!-- 카테고리 기능 -->
+		 <if test="category != null and category != ''">
+		 	AND PROD_L_OPTION3 = #{category}
+		 </if>
+		 <!-- 카테고리 기능 -->
+		 ORDER BY PR.PROD_L_NUM DESC
+		 ) PROD
+		 LIMIT #{startRow}, #{pageSize}
+
+		 <!--
+		 정렬 방법 높은가격,낮은가격
+		 ORDER BY
+		 <choose>
+	  		<when test="gridColumn == 'priceDesc'">
+	  			PROD_L_PRICE DESC
+	  		</when>
+	  		<when test="gridColumn == 'priceAsc'">
+	  			PROD_L_PRICE ASC
+	  		</when>
+	  		<otherwise>
+		    	PROD_L_NUM DESC
+	    </otherwise>
+	  	</choose>
+	  	 -->
+	</select>
+
+	<select id="selectProdListCnt" parameterType="com.itwillbs.domain.ProdDTO" resultType="java.lang.Integer">
+		SELECT COUNT(PROD.PROD_L_NUM) FROM
+		(
+		SELECT PR.PROD_L_NUM
+              ,PR.PROD_L_CODE
+              ,PR.PROD_L_OPTION1
+              ,PR.PROD_L_OPTION2
+              ,PR.PROD_L_OPTION3
+              ,PR.PROD_L_OPTION4
+              ,PR.PROD_L_OPTION5
+              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION1) AS nm1
+              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION2) AS nm2
+              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION3) AS nm3
+              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION4) AS nm4
+              ,(SELECT CC.CD_OPT_NM FROM COMMON_CODE CC WHERE CC.USE_YN = 'Y' AND CC.CD_OPT = PR.PROD_L_OPTION5) AS nm5
+              ,PR.PROD_L_PRODNM
+              ,PR.PROD_L_PRICE
+              ,PR.PROD_L_UPLOADDATE
+              ,PR.PROD_L_COMPNM
+              ,PR.PROD_L_MAINIMG
+              ,PR.PROD_L_SUBIMG
+              ,PR.PROD_L_DETAIL
+              ,PR.PROD_L_QUANTITY
+		  FROM projectdb.PRODUCT_LIST PR
+		  ) PROD
+		 WHERE 1=1
+		 <!-- 검색 기능 -->
+		 <if test="srhText != null and srhText != ''">
+		 	AND (
+		 		REGEXP_LIKE (PROD.nm1 , #{srhText})
+		 	  	OR REGEXP_LIKE (PROD.nm2 , #{srhText})
+		 	 	OR REGEXP_LIKE (PROD.nm3 , #{srhText})
+		 	 	OR REGEXP_LIKE (PROD.nm4 , #{srhText})
+		 	 	OR REGEXP_LIKE (PROD.nm5 , #{srhText})
+		 	 	OR REGEXP_LIKE (PROD.PROD_L_PRODNM , #{srhText})
+		 	 	)
+		 </if>
+		 <!-- 검색 기능 -->
+		 <!-- 카테고리 기능 -->
+		 <if test="category != null and category != ''">
+		 	AND PROD_L_OPTION3 = #{category}
+		 </if>
+	</select>
+
+	<select id="selectProdDetail" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT PROD_L_NUM
+              ,PROD_L_CODE
+              ,PROD_L_OPTION1
+              ,PROD_L_OPTION2
+              ,PROD_L_OPTION3
+              ,PROD_L_OPTION4
+              ,PROD_L_OPTION5
+              ,PROD_L_PRODNM
+              ,PROD_L_PRICE
+              ,PROD_L_UPLOADDATE
+              ,PROD_L_COMPNM
+              ,PROD_L_MAINIMG
+              ,PROD_L_SUBIMG
+              ,PROD_L_DETAIL
+              ,PROD_L_QUANTITY
+		  FROM projectdb.PRODUCT_LIST
+		 WHERE PROD_L_NUM = #{prodLNum}
+	</select>
+
+	<!-- '리뷰 등록(팝업창)' 뷰로 보내줄 정보 (prodLNum값을 통해 prodLProdnm값을 반환) -->
+	<select id="getProdNumName" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT R.REPLY_NUM
+		      ,L.PROD_L_NUM
+		      ,U.USER_ID
+		      ,R.CONTENT
+		      ,R.RATING
+		      ,R.REPLY_DATE
+	      FROM PRODUCT_REPLY R
+	      LEFT OUTER JOIN PRODUCT_LIST L ON R.PROD_L_NUM = L.PROD_L_NUM
+	      LEFT OUTER JOIN USER_INFO U ON R.USER_ID = U.USER_ID
+	     WHERE L.PROD_L_NUM = #{prodLNum}
+	</select>
+	<!-- 댓글등록 -->
+  	<insert id="enrollReply" parameterType="com.itwillbs.domain.ProdDTO">
+  		INSERT INTO PRODUCT_REPLY(PROD_L_NUM, USER_ID, CONTENT, RATING)
+  		VALUES (#{prodLNum}, #{userId}, #{content}, #{rating})
+  	</insert>
+
+	<!-- 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능 -->
+	<select id="checkReply" parameterType="com.itwillbs.domain.ProdDTO" resultType="integer">
+		SELECT COUNT(REPLY_NUM)
+		  FROM PRODUCT_REPLY
+		 WHERE USER_ID = #{userId}
+		   AND PROD_L_NUM = #{prodLNum}
+	</select>
+
+
+</mapper>

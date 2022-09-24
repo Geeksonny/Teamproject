@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mappers.addressMapper">
+	
+	<insert id="insertAddress">
+		INSERT INTO ADDRESS(
+					USER_ID
+				   ,ADDRESS_ZIPCODE
+				   ,ADDRESS
+				   ,ADDRESS_DETAILS
+				   ,ADDRESS_GET_NM
+				   ,ADDRESS_GET_PHONE
+				   )
+			VALUES(
+					#{userId}
+				   ,#{addressZipcode}
+				   ,#{address}
+				   ,#{addressDetails}
+				   ,#{addressGetNm}
+				   ,#{addressGetPhone}
+				    )
+
+	</insert>
+	
+	<select id="updateAddress" resultType="com.itwillbs.domain.AddressDTO">
+		UPDATE ADDRESS
+		   SET ADDRESS_ZIPCODE		=#{addressZipcode}
+		      ,ADDRESS				=#{Address}
+		      ,ADDRESS_DETAILS		=#{addressDetails}
+		 	   ,ADDRESS_GET_NM		=#{addressGetNm}
+		       ,ADDRESS_GET_PHONE	=#{addressGetPhone}			
+	 	 WHERE USER_ID				=#{userId}
+		   
+	</select>
+	
+	
+	<select id="getAddress" resultType="com.itwillbs.domain.AddressDTO">
+		SELECT *
+		  FROM ADDRESS
+		 WHERE USER_ID=#{userId}
+	</select>
+	
+	
+	<update id="updateAddressPro">
+		UPDATE ADDRESS 
+			SET ADDRESS_ZIPCODE 	=#{addressZipcode}
+			   ,ADDRESS 			=#{address}
+		       ,ADDRESS_DETAILS 	=#{addressDetails}
+		 	   ,ADDRESS_GET_NM		=#{addressGetNm}
+		       ,ADDRESS_GET_PHONE	=#{addressGetPhone}
+		 	WHERE USER_ID			=#{userId}
+	</update>
+	
+	
+	
+</mapper>

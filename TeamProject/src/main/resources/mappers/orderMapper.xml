@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itwillbs.mappers.orderMapper">
+	
+	<insert id="insertOrder" >
+	
+			INSERT INTO ORDER_BOARD(
+					USER_ID
+				   ,ORD_GET_NM
+				   ,ORD_GET_ZIPCODE
+				   ,ORD_GET_ADDRESS
+				   ,ORD_GET_PHONE
+				   ,ORD_DELIVERY_MESSAGE
+				   ,ORD_TOTAL_PRICE
+				   ,ORD_COUPONDC
+				   ,ORD_FINALPRICE
+				   )
+			VALUES(
+					#{userId}
+				   ,#{ordGetNm}
+				   ,#{ordGetZipcode}
+				   ,#{ordGetAddress}
+				   ,#{ordGetPhone}
+				   ,#{ordDeliveryMessage}
+				   ,#{ordTotalPrice}
+				   ,#{ordCouponDc}
+				   ,#{ordFinalPrice}
+				    )
+	</insert>
+	
+<!--  결제시 결제 리스트에 값 넣기	 -->
+
+	<insert id="isertOrderList">
+			INSERT INTO ORDER_LIST(
+				 ORD_NUM
+			 	,ORD_L_USER
+			 	,ORD_L_CODE 
+			 	,ORD_L_QUANTITY
+			 	,ORD_L_PRICE
+			 	,ORD_DELIVERY_STATUS
+				,ORD_PURCHASESTATUS
+				)
+			VALUE(
+				  (SELECT ORD_NUM
+                    FROM   (SELECT IFNULL(MAX(CAST(ORD_NUM AS UNSIGNED)), 0) + 1 AS ORD_NUM
+                             FROM ORDER_LIST) A)
+				 ,#{ordLUser}
+				 ,#{ordLCode}
+				 ,#{ordLQuantity}
+				 ,#{ordLPrice}
+				 ,"0"
+				 ,"Y"
+			)
+	</insert>
+	
+<!-- 결제시 재고 수량 변경 --> 
+	<update id="updateQuantity">
+		UPDATE PRODUCT_LIST 
+			SET PROD_L_QUANTITY = PROD_L_QUANTITY - #{ordLQuantity}
+		 	WHERE PROD_L_CODE		=#{prodLCode}
+	</update>
+	
+	
+<!-- 결제시 장바구니 초기화 -->
+	<delete id="removeItemBasket">
+		DELETE FROM SHOPPING_BASKET 
+			WHERE SB_USER=#{userId}
+	</delete>
+	
+<!-- 제품 수량 가져오기 -->
+	<select id="getQuantityList" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT * FROM PRODUCT_LIST
+			WHERE PROD_L_CODE		=#{prodLCode}
+	</select>	
+	
+<!--  사용한 포인트 입력 -->
+	<insert id="insertUsePoint">
+		INSERT INTO POINT(
+			POINT_NUM
+		   ,USER_ID
+		   ,POINT_DATE
+		   ,POINT_TYPE
+		   ,POINT_NOW
+		   ,POINT_USED
+		   ,POINT_CHARGE
+			)
+		VALUES(
+			 (SELECT A.POINTNUM
+			    FROM (SELECT MAX(POINT_NUM) + 1 AS POINTNUM
+			    	    FROM POINT) A)
+			,#{userId}
+			,#{pointDate}
+			,"포인트 사용"
+			,#{pointNow}
+			,#{pointUsed}
+			,0
+			)
+	</insert>
+	
+<!-- 		<select  id="selectCouponList" resultType="com.itwillbs.domain.CouponDTO" parameterType="com.itwillbs.domain.CouponDTO"> -->
+<!-- 			SELECT 	  NUM -->
+<!-- 					 ,COU_USER_NM -->
+<!-- 					 ,COU_NUM -->
+<!-- 					 ,COU_NM -->
+<!-- 					 ,COU_DC -->
+<!-- 					 ,COU_YN -->
+<!-- 					 ,COU_DATE -->
+<!-- 					 ,CONCAT(COU_NUM,'_',COU_DC) as couNumCouDc -->
+<!-- 			  FROM 	 COUPON -->
+<!-- 			 WHERE 	 COU_USER_NM =#{couUserNm} -->
+<!-- 	</select> -->
+	
+
+</mapper>
