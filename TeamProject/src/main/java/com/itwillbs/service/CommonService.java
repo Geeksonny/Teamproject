@@ -14,4 +14,5 @@ public interface CommonService {
 	// 카운트
 	int getCount(CommonDTO commonDTO);
 
+
 }

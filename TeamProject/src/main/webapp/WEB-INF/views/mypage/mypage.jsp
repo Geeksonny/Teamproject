@@ -173,7 +173,7 @@
                          			<span class="d-block">주소</span>
                          		</th>
                          		<td>
-                         			<span class="d-block">${addressDTO.addressZipcode} ${addressDTO.address} ${addressDTO.addressDetails}</span>
+                         			<span class="d-block"> ${addressDTO.address}</span>
                          		</td>
                          	</tr>
                          </table>
@@ -183,7 +183,7 @@
                   </div>
                 </div>
                 <!--/ Total Revenue -->
-                
+
                <input type="hidden" value="${sessionScope.userId}">
                 <div class="col-12 col-md-8 col-lg-12 order-3 order-md-2">
                   <div class="row">
@@ -200,7 +200,7 @@
                         </div>
                       </div>
                     </div>
-                 
+
                     <div class="col-4 mb-4">
                       <div class="card">
                         <div class="card-body">

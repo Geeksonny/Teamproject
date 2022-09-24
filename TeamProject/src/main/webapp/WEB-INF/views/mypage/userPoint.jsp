@@ -28,38 +28,56 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">포인트/쿠폰 /</span> 포인트</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">포인트 · 쿠폰 /</span> 포인트</h4>
+
 
               <div class="row">
                 <div class="col-md-12">
-
-                <div class="mb-3 row">
-                  <div class="col-md-10">
-                    <form action="${pageContext.request.contextPath }/mypage/point" method="get" onsubmit="return datecheck()">
-                    <input class="form-control" type="date" id="startDate" name="startDate"  required />
-                    <input class="form-control" type="date" id="endDate" name="endDate" required />
-								<br>
-						<input type="button" value="1개월" id="searchMonth1" class="btn btn-outline-info" >
-						<input type="button" value="3개월" id="searchMonth3" class="btn btn-outline-info" >
-						<input type="button" value="6개월" id="searchMonth6" class="btn btn-outline-info" >
-						<input type="submit" value="조회하기" class="btn btn-info" id="searchPoint">
-						
-					</form><br>
-					</div>
-				</div>
+                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="${pageContext.request.contextPath }/mypage/point">
+                      <i class="bx bx-buildings me-1"></i> 포인트</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/coupon">
+                      <i class="bx bx-buildings me-1"></i> 쿠폰</a>
+                    </li>
+                  </ul>
 
               <!-- Basic Bootstrap Table -->
                <div class="card">
                 <h5 class="card-header">포인트 조회  </h5>
                 <hr class="my-0" />
                 <div class="card-body">
+
+                    <form action="${pageContext.request.contextPath }/mypage/point" method="get" onsubmit="return datecheck()">
+                <div class="col-md-12" style="padding-left:4%">
+
+                <div class="mb-4 mt-2 row">
+                  <div class="col-md-4 mb-3">
+                    <input class="form-control mr-2" type="date" id="startDate" name="startDate" style="width: 85%; display:inline-block" required /> 부터
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control mr-2" type="date" id="endDate" name="endDate" style="width: 85%; display:inline-block" required /> 까지
+                  </div>
+                  <div class="col-md-4">
+						<input type="button" value="1개월" id="searchMonth1" class="btn btn-outline-primary" >
+						<input type="button" value="3개월" id="searchMonth3" class="btn btn-outline-primary" >
+						<input type="button" value="6개월" id="searchMonth6" class="btn btn-outline-primary" >
+						<input type="submit" value="조회" class="btn btn-primary" id="searchPoint">
+                  </div>
+
+					</div>
+				</div>
+					</form>
+
                 <div class="table-responsive text-nowrap">
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>적립일자</th>
+                        <th>&nbsp;&nbsp;&nbsp;적립 일자</th>
                         <th>내역</th>
-                        <th>적립</th>
+                        <th>적립 / 차감</th>
                         <th>잔액</th>
                       </tr>
                     </thead>

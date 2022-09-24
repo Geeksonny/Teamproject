@@ -126,6 +126,7 @@ public class MemberController {
         if(memberDTO2 != null && bcryptPasswordEncoder.matches(memberDTO.getUserPass(), memberDTO2.getUserPass())) {
 	        // 로그인 세션값 생성
 	        session.setAttribute("userId", memberDTO.getUserId());
+	        session.setAttribute("name", memberDTO2.getUserNm());
 	        // 마지막 로그인
 	        memberService.loginCheck(memberDTO);
         } else {
@@ -148,6 +149,7 @@ public class MemberController {
 		CompDTO compDTO2=memberService.compCheck(compDTO);
 		if(compDTO2!=null) {
 			session.setAttribute("compId", compDTO.getCompId());
+	        session.setAttribute("name", compDTO2.getCompNm());
 
 			return "redirect:/main/main";
 		}else {

@@ -49,6 +49,15 @@
 		border-radius: 1.5rem;
 		height: 3em;
 	}
+
+	#li {
+		font-size: 20px;
+	    color: #4ACBAB;
+	    display: block;
+	    font-weight: 900;
+	    position: relative;
+	    padding: 3px 0;
+	}
 	</style>
 
 </head>
@@ -91,13 +100,10 @@
                 <div class="col-lg-6 col-md-7">
                     <div class="header__top__left">
                      <div class="offcanvas__links">
-						<c:if test="${(empty sessionScope)}">
-						<a href="${pageContext.request.contextPath }/member/msg" class="mr-3 ml-3" >포인트 충전</a> |
-						</c:if>
 						<c:if test="${!(empty sessionScope.userId)}">
 						<a href="javascript:openPop();" class="mr-3 ml-3" >포인트 충전</a> |
-						</c:if>
 						<a href="${pageContext.request.contextPath }/order/cart" class="mr-3  ml-3">장바구니</a>
+						</c:if>
 
                     </div>
                     </div>
@@ -114,8 +120,6 @@
 
 							<c:if test="${ !(empty sessionScope.userId)}">
 								<!-- sessionScope 아이디가 userId에 admin이 아닐 경우 환영글 / 로그아웃 -->
-								<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
-								${sessionScope.userId }님 환영합니다!
 								<c:if test="${sessionScope.userId ne 'admin'}">
 									<a href="${pageContext.request.contextPath }/mypage">마이페이지</a>
 									<a href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
@@ -124,8 +128,6 @@
 
 							<c:if test="${ !(empty sessionScope.compId )}">
 								<!-- sessionScope 아이디가 compId에 admin이 아닐 경우 마이페이지 -->
-								<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
-								${sessionScope.compId }님 환영합니다!
 									<a href="${pageContext.request.contextPath }/comp/compMain">업체페이지</a>
 									<a href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
 							</c:if>
@@ -166,9 +168,9 @@
             <div class="col-lg-4 col-md-12">
                 <nav class="header__menu mobile-menu">
                     <ul>
+                        <li><span id="li">${sessionScope.name }</span></li>
                         <li><a href="${pageContext.request.contextPath }/product/shop">스토어</a></li>
                         <li><a href="${pageContext.request.contextPath }/board/list">커뮤니티</a></li>
-                        <li><a href="../contact.html">이벤트</a></li>
                     </ul>
                 </nav>
             </div>
@@ -236,7 +238,7 @@
 	    IMP.init('imp27865884');
 	    var money = $('input[name="cp_item"]:checked').val();
 	    var pointNow = parseInt(${pointDTO.pointNow}) + parseInt(money);
-	
+
 	    IMP.request_pay({
 	        pg: 'html5_inicis',
 	        merchant_uid: 'point' + new Date().getTime(),
