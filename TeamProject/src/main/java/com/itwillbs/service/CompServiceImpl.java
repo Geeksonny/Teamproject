@@ -179,6 +179,27 @@ public class CompServiceImpl implements CompService {
 		return compDAO.getOrdListDet(orderDTO1);
 	}
 
+	// 배송취소, 환불완료로 디비수정
+	@Override
+	public void refundDeliveryStatusUpdate(OrderListDTO orderListDTO) {
+		compDAO.refundDeliveryStatusUpdate(orderListDTO);
+
+	}
+
+	// 쿠폰 돌려주기
+	@Override
+	public void couponUpdate(OrderListDTO orderListDTO) {
+		compDAO.couponUpdate(orderListDTO);
+
+	}
+
+	// 물품수량 되돌리기
+	@Override
+	public void prodquantityUpdate(OrderListDTO orderListDTO) {
+		compDAO.prodquantityUpdate(orderListDTO);
+
+	}
+
 
 
 

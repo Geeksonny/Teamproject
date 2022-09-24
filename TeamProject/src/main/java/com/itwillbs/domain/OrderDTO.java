@@ -3,7 +3,7 @@ package com.itwillbs.domain;
 
 public class OrderDTO {
 	private int num;
-	
+
 	private String ordUser;
 	private String ordGetNm;
 	private String ordGetAddress;
@@ -16,12 +16,12 @@ public class OrderDTO {
 	private int ordCouponDc;
 	private int ordUsepoint;
 	private int ordFinalPrice;
-	private String ordPurchaseStatus;
+//	private String ordPurchaseStatus;
 	private int ordDeliveryPrice;
-	
 
-	
-	
+
+
+
 	public String getOrdGetZipcode() {
 		return ordGetZipcode;
 	}
@@ -52,7 +52,7 @@ public class OrderDTO {
 	public void setOrdGetAddress(String ordGetAddress) {
 		this.ordGetAddress = ordGetAddress;
 	}
-	
+
 	public String getOrdGetPhone() {
 		return ordGetPhone;
 	}
@@ -102,19 +102,19 @@ public class OrderDTO {
 	public void setOrdFinalPrice(int ordFinalPrice) {
 		this.ordFinalPrice = ordFinalPrice;
 	}
-	public String getOrdPurchaseStatus() {
-		return ordPurchaseStatus;
-	}
-	public void setOrdPurchaseStatus(String ordPurchaseStatus) {
-		this.ordPurchaseStatus = ordPurchaseStatus;
-	}
+//	public String getOrdPurchaseStatus() {
+//		return ordPurchaseStatus;
+//	}
+//	public void setOrdPurchaseStatus(String ordPurchaseStatus) {
+//		this.ordPurchaseStatus = ordPurchaseStatus;
+//	}
 	public int getOrdDeliveryPrice() {
 		return ordDeliveryPrice;
 	}
 	public void setOrdDeliveryPrice(int ordDeliveryPrice) {
 		this.ordDeliveryPrice = ordDeliveryPrice;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "OrderDTO [num=" + num + ", ordUser=" + ordUser + ", ordGetNm=" + ordGetNm + ", ordGetAddress="
@@ -122,19 +122,19 @@ public class OrderDTO {
 				+ ", ordDeliveryMessage=" + ordDeliveryMessage + ", ordPayment=" + ordPayment
 				+ ", ordTotalPrice=" + ordTotalPrice + ", ordSavedpoint=" + ordSavedpoint + ", ordCouponDc="
 				+ ordCouponDc + ", ordUsepoint=" + ordUsepoint + ", ordFinalPrice=" + ordFinalPrice
-				+ ", ordPurchaseStatus=" + ordPurchaseStatus + ", ordDeliveryPrice=" + ordDeliveryPrice + "]";
+				+ ", ordDeliveryPrice=" + ordDeliveryPrice + "]";
 	}
-	
-	
 
-	
 
-	
-	
-	
-	
-	
 
-	
-	
+
+
+
+
+
+
+
+
+
+
 }

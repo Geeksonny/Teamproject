@@ -158,12 +158,15 @@
 		SELECT 	 @rownum:=@rownum+1 as trnum
 <!-- 				 게시판에 tr반복이라 구분숫자를 주기 위해	 -->
 				,OB.NUM 									as num
+				,OL.ORD_L_COUPONNUM 						as ordLCouponnum
 				,OL.ORD_L_USER 								as ordLUser
 				,OL.ORD_L_CODE                              as ordLCode
 				,OL.ORD_L_QUANTITY                          as ordLQuantity
+				,OL.ORD_PURCHASESTATUS   					as ordPurchasestatus
 				,OL.ORD_L_DATE                              as ordLDate
 				,OL.ORD_DELIVERY_STATUS                     as ordDeliveryStatus
 				,(OL.ORD_L_QUANTITY * OL.ORD_L_PRICE)      as ordFinalprice
+				,OL.ORD_REFUND									as ordRefund
 		  FROM	ORDER_LIST as OL JOIN ORDER_BOARD as OB
 			ON  (OL.ORD_L_USER = OB.USER_ID)
 		 WHERE   (@rownum:=0)=0
@@ -198,9 +201,9 @@
 		   SET ORD_DELIVERY_STATUS	=#{ordDeliveryStatus}
 		 WHERE ORD_L_USER	=#{ordLUser}
 		   AND ORD_L_CODE	=#{ordLCode}
-		   AND ORD_PURCHASESTATUS ="0"
+		   AND ORD_PURCHASESTATUS ="Y"
 	</update>
-<!-- 	미배송, 배송완료 검색 -->
+<!-- 	미배송, 배송완료 수 검색 -->
 	<select id="getOrdCountMain" resultType="java.lang.Integer">
 
 		SELECT   count(OL.ORD_L_CODE)
@@ -214,7 +217,7 @@
 	</select>
 <!-- 	총합계를 구하기 위한 개별 합계 -->
 	<select id="getTotalsum" resultType="java.lang.Integer">
-		SELECT   sum((ORD_L_QUANTITY * ORD_L_PRICE)) as ordFinalprice
+		SELECT   IFNULL(sum((ORD_L_QUANTITY * ORD_L_PRICE)), 0) as ordFinalprice
 		  FROM   ORDER_LIST
 		 WHERE   ORD_L_CODE IN (SELECT PROD_L_CODE
                         		  FROM PRODUCT_LIST
@@ -285,5 +288,27 @@
 		  AND   ol.ORD_L_CODE = #{ordLCode};
 
 	</select>
+	<!-- 배송취소, 환불완료로 디비수정 -->
+	<update id="refundDeliveryStatusUpdate">
+		UPDATE  ORDER_LIST
+		   SET  ORD_DELIVERY_STATUS =#{ordDeliveryStatus}
+			   ,ORD_REFUND  		=#{ordRefund}
+	     WHERE  ORD_L_CODE    		=#{ordLCode}
+	       AND  ORD_L_USER 			=#{ordLUser}
+	       AND	ORD_PURCHASESTATUS	="N"
+	</update>
+	<!-- 쿠폰 돌려주기 -->
+	<update id="couponUpdate">
+		UPDATE  COUPON
+		   SET  COU_YN          ="Y"
+	     WHERE  COU_USER_NM     =#{ordLUser}
+	       AND  COU_NUM			=#{ordLCouponnum}
+	</update>
+	<!-- 물품수량 되돌리기 -->
+	<update id="prodquantityUpdate">
+		UPDATE  PRODUCT_LIST
+		   SET  PROD_L_QUANTITY =(PROD_L_QUANTITY + #{ordLQuantity})
+	     WHERE  PROD_L_CODE     =#{ordLCode}
+	</update>
 
 </mapper>

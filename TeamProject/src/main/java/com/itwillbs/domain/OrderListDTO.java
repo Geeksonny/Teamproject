@@ -25,7 +25,7 @@ public class OrderListDTO extends OrderDTO{
 	private String ne50Count; //50개 미만 상품수량
 	private String eq50Couunt; // 0개 상품 수량
 	private String ordLCouponnum; //사용 쿠폰 넘버
-
+	private String ordRefund; //환불 여부
 
 	public int getTrnum() {
 		return trnum;
@@ -160,6 +160,13 @@ public class OrderListDTO extends OrderDTO{
 	}
 	public void setCompNm(String compNm) {
 		this.compNm = compNm;
+	}
+
+	public String getOrdRefund() {
+		return ordRefund;
+	}
+	public void setOrdRefund(String ordRefund) {
+		this.ordRefund = ordRefund;
 	}
 	@Override
 	public String toString() {

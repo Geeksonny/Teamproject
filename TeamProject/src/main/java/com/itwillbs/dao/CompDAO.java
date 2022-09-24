@@ -61,4 +61,10 @@ public interface CompDAO {
 
 	// 주문 상세 정보
 	public OrderListDTO getOrdListDet(OrderListDTO orderDTO1);
+	// 배송취소, 환불완료로 디비수정
+	public void refundDeliveryStatusUpdate(OrderListDTO orderListDTO);
+	// 쿠폰 돌려주기
+	public void couponUpdate(OrderListDTO orderListDTO);
+	// 물품수량 되돌리기
+	public void prodquantityUpdate(OrderListDTO orderListDTO);
 }

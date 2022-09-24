@@ -57,7 +57,6 @@ public class CompController {
 
 	@RequestMapping(value = "/comp/insertGoods", method = RequestMethod.GET)
 	public String compInsertProd() {
-		System.out.println("comp/insertGoods");
 		return "comp/insertGoods";
 	}
 
@@ -97,7 +96,7 @@ public class CompController {
 			prodDTO.setProdLCode(prodLCode);
 		}
 
-		// ProdDTO prodDTO,
+
 		// 로그인후 세션값, 업체 아이디 갖고옴
 
 		// 파일 이름 => 랜덤문자_파일이름
@@ -402,6 +401,7 @@ public class CompController {
 		pageDTO.setStartPage(startPage);
 		pageDTO.setEndPage(endPage);
 		pageDTO.setPageCount(pageCount);
+
 		// 데이터 담아서 list.jsp 이동
 		model.addAttribute("ordList", ordList);
 		model.addAttribute("pageDTO", pageDTO);
@@ -413,13 +413,28 @@ public class CompController {
 
 	// 송장번호 입력과 배송중으로 바꿈
 	@RequestMapping(value = { "/comp/delivNumberInsert" }, method = { RequestMethod.POST })
-	public String delivNumberInsert(OrderListDTO orderListDTO) throws Exception {
+	public String delivNumberInsert(OrderListDTO orderListDTO,HttpServletRequest request) throws Exception {
+		String ordLDelivNumber = request.getParameter("ordLDelivComp");
+		ordLDelivNumber += ","+request.getParameter("ordLDelivNum");
+		orderListDTO.setOrdLDelivNumber(ordLDelivNumber);
 		compService.delivNumberInsert(orderListDTO); // 송장번호 입력
-		orderListDTO.setOrdDeliveryStatus("2"); // 배송중으로 셋팅
+		orderListDTO.setOrdDeliveryStatus("1"); // 배송중으로 셋팅
 		compService.delivNumberUpdate(orderListDTO); // 배송중으로 셋팅
 
 		return "redirect:/comp/ordList";
 	}
+	// 송장번호 입력과 배송중으로 바꿈
+	@RequestMapping(value = { "/comp/refund" }, method = { RequestMethod.POST })
+	public String refund(OrderListDTO orderListDTO,HttpServletRequest request) throws Exception {
+		orderListDTO.setOrdDeliveryStatus("3"); //배송취소로 셋팅
+		orderListDTO.setOrdRefund("12"); // 환불완료로 셋팅
+		compService.refundDeliveryStatusUpdate(orderListDTO); // 배송취소, 환불완료로 디비수정
+		compService.couponUpdate(orderListDTO); // 쿠폰 돌려주기
+		compService.prodquantityUpdate(orderListDTO); // 물품수량 되돌리기
+		return "redirect:/comp/ordList";
+	}
+
+
 
 //		 업체 페이지 메인화면
 	@RequestMapping(value = "/comp/compMain", method = RequestMethod.GET)

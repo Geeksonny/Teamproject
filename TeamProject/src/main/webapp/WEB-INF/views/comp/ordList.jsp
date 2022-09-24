@@ -59,12 +59,12 @@
                         <th>주문자</th>
                         <th>총 금액</th>
                         <th style="width:30%">배송</th>
+                        <th>주문상태</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
 					  <c:forEach var="orderListDTO" items="${ordList }" varStatus="status">
                       <tr onClick="location.href='${pageContext.request.contextPath }/comp/ordListDet?CheckRow=${orderListDTO.ordLCode },${orderListDTO.ordLUser }'" style="cursor:pointer;">
-
                         <td><fmt:formatDate pattern="yy-MM-dd" value="${orderListDTO.ordLDate }"/></td>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${orderListDTO.num }</strong></td>
                         <td>
@@ -77,25 +77,57 @@
                           ${orderListDTO.ordFinalprice }
                         </td>
 
-                        <td colspan="2" onclick="event.cancelBubble=true">
+                        <td  onclick="event.cancelBubble=true">
 					  		<form action="${pageContext.request.contextPath }/comp/delivNumberInsert" method="post">
                       			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
                       			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
                       			<div id="delivNumber_${orderListDTO.trnum}">
                      	  		<c:set var="num" value="${orderListDTO.ordDeliveryStatus }" />
                          		<c:choose>
-						 			<c:when test="${num eq '1'}">
+						 			<c:when test="${num eq '0'}">
 						  				상품준비중&nbsp;&nbsp;
                        					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
                        					배송준비
                        					</button>
                        					<div></div>
 						 			</c:when>
-						 			<c:when test="${num eq '2'}">
+						 			<c:when test="${num eq '1'}">
 						  				배송중
 						 			</c:when>
-						 			<c:when test="${num eq '3'}">
+						 			<c:when test="${num eq '2'}">
 						  				배송완료
+						 			</c:when>
+						 			<c:when test="${num eq '3'}">
+						  				배송취소
+						 			</c:when>
+						 		</c:choose>
+                				</div>
+                 			</form>
+						</td>
+						<td onclick="event.cancelBubble=true">
+							<form action="${pageContext.request.contextPath }/comp/refund" method="post">
+                      			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
+                      			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
+                      			<input type="hidden" value="${orderListDTO.ordLCouponnum }" name="ordLCouponnum" id="ordLCouponnum">
+                      			<input type="hidden" value="${orderListDTO.ordLQuantity }" name="ordLQuantity" id="ordLQuantity">
+                      			<div id="delivNumber_${orderListDTO.trnum}">
+                     	  		<c:set var="ordRefund" value="${orderListDTO.ordRefund }"  />
+                     	  		<c:set var="purchasestatus" value="${orderListDTO.ordPurchasestatus }" />
+                         		<c:choose>
+						 			<c:when test="${ordRefund eq '10' and purchasestatus eq 'Y'}">
+<!-- 						 			배송완료, 주문완료 -->
+						  				정상주문&nbsp;&nbsp;
+						 			</c:when>
+						 			<c:when test="${ordRefund eq '11' and purchasestatus eq 'N'}">
+<!-- 						 			환불신청 주문취소 -->
+						  				취소신청
+						  				<button type='submit' class="btn btn-outline-primary" id="refund_btn_${orderListDTO.trnum}" type="button">
+                       					환불처리
+                       					</button>
+                       					<div></div>
+						 			</c:when>
+						 			<c:when test="${ordRefund eq '12' and purchasestatus eq 'N'}">
+						  				환불완료
 						 			</c:when>
 						 		</c:choose>
                 				</div>
