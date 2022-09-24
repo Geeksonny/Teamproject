@@ -20,9 +20,9 @@ public class OrderServiceImpl implements OrderService {
 	@Inject
 	@Autowired
 	OrderDAO orderDAO;
-	
-	
-	
+
+
+
 	@Override
 	public void insertOrder(Map<String, Object> sMap) {
 		orderDAO.insertOrder(sMap);
@@ -36,28 +36,28 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void updateQuantity(Map<String, Object> sMap) {
 		System.out.println("updateQuantityImpl()");
-		orderDAO.updateQuantity(sMap);		
+		orderDAO.updateQuantity(sMap);
 	}
 
-	
-//	
+
+//
 //	@Override
 //	public BasketDTO getItemCode(String userId) {
-//		return orderDAO.getItemCode(userId);		
-//		
+//		return orderDAO.getItemCode(userId);
+//
 //	}
 
-	
-	
+
+
 	@Override
 	public void removeItemBasket(Map<String, Object> sMap) {
-		orderDAO.removeItemBasket(sMap);		
+		orderDAO.removeItemBasket(sMap);
 	}
 
 	@Override
 	public void insertUsePoint(Map<String, Object> sMap) {
 		orderDAO.insertUsePoint(sMap);
-		
+
 	}
 
 	@Override
@@ -68,11 +68,15 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void isertOrderList(Map<String, Object> sMap) {
 		System.out.println("insertOrderListImpl()");
-		orderDAO.isertOrderList(sMap);		
-		
+		orderDAO.isertOrderList(sMap);
+
 	}
 
-	
-	
-	
+	@Override
+	public void updateCoupon(Map<String, Object> sMap) {
+		orderDAO.updateCoupon(sMap);
+	}
+
+
+
 }

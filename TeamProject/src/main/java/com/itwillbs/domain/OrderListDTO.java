@@ -19,7 +19,7 @@ public class OrderListDTO extends OrderDTO{
 	private int ordFinalprice;
 	private String ordLDelivNumber;   //운송장 번호
 	private int count;
-	private String ordPurchasestatus;
+	private String ordPurchasestatus;	//구매상태
 
 	private String ge50Count; //50개이상 상품수량
 	private String ne50Count; //50개 미만 상품수량
@@ -160,6 +160,16 @@ public class OrderListDTO extends OrderDTO{
 	}
 	public void setCompNm(String compNm) {
 		this.compNm = compNm;
+	}
+	@Override
+	public String toString() {
+		return "OrderListDTO [trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode=" + ordLCode + ", ordLProdnm="
+				+ ordLProdnm + ", ordLUser=" + ordLUser + ", ordLUserNm=" + ordLUserNm + ", compNm=" + compNm
+				+ ", ordLQuantity=" + ordLQuantity + ", ordLPrice=" + ordLPrice + ", ordLDate=" + ordLDate + ", compId="
+				+ compId + ", ordDeliveryStatus=" + ordDeliveryStatus + ", ordFinalprice=" + ordFinalprice
+				+ ", ordLDelivNumber=" + ordLDelivNumber + ", count=" + count + ", ordPurchasestatus="
+				+ ordPurchasestatus + ", ge50Count=" + ge50Count + ", ne50Count=" + ne50Count + ", eq50Couunt="
+				+ eq50Couunt + ", ordLCouponnum=" + ordLCouponnum + "]";
 	}
 
 

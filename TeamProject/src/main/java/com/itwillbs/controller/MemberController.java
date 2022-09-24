@@ -23,12 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.CompDTO;
 import com.itwillbs.domain.MemberDTO;
+import com.itwillbs.domain.MypageDTO;
 import com.itwillbs.domain.PointDTO;
 import com.itwillbs.mail.MailUtils;
 import com.itwillbs.mail.TempKey;
 import com.itwillbs.service.CommonService;
 import com.itwillbs.service.CompService;
 import com.itwillbs.service.MemberService;
+import com.itwillbs.service.MypageService;
 import com.itwillbs.service.PointService;
 
 @Controller
@@ -38,6 +40,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Inject
 	private PointService pointService;
+	@Inject
+	private MypageService mypageService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
@@ -47,11 +51,12 @@ public class MemberController {
 		return "member/insertForm";
 	}
 	@RequestMapping(value = "/member/joinMemPro", method = RequestMethod.POST)
-	public String insertPro(MemberDTO memberDTO, PointDTO pointDTO, Model model) throws Exception {
+	public String insertPro(MypageDTO mypageDTO, MemberDTO memberDTO, PointDTO pointDTO, Model model) throws Exception {
 
 		memberDTO.setUserPass(bcryptPasswordEncoder.encode(memberDTO.getUserPass()));
 
 		memberService.insertMember(memberDTO);
+		mypageService.insertMypage(mypageDTO);
 		pointService.insertMember(pointDTO);
 		model.addAttribute("memberDTO",memberDTO);
 		model.addAttribute("pointDTO",pointDTO);

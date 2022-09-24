@@ -14,20 +14,20 @@ public interface BoardService {
 	//추상메서드
 	void insertBoard(BoardDTO boardDTO);
 
-	List<BoardDTO> getBoardList(PageDTO pageDTO);
+	List<BoardDTO> getBoardList(BoardDTO boardDTO);
 
-	int getBoardCount();
-	
+	int getBoardCount(BoardDTO boardDTO);
+
 	BoardDTO getBoard(int boardNum);
-	
+
 //	BoardDTO boardDTO2=boardService.numCheck(boardDTO);
 	BoardDTO numCheck(BoardDTO boardDTO);
-	
+
 //	boardService.updateBoard(boardDTO);
 	void updateBoard(BoardDTO boardDTO);
 
 	void updateFile(BoardDTO boardDTO);
-	
+
 	void deleteBoard(BoardDTO boardDTO);
 
 	BoardDTO PassCheck(BoardDTO boardDTO);
@@ -42,11 +42,7 @@ public interface BoardService {
 
 	void rCount(int boardNum);
 
-	List<BoardDTO> searchBoard(BoardDTO boardDTO);
-
-//	List<BoardDTO> searchBoard(SearchDTO boardDTO);
 
 
-	
 
 }

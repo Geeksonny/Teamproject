@@ -132,51 +132,52 @@ public class MypageController {
 	}
 
 	// 마이페이지 - 주문 정보
-//	@RequestMapping(value = "/mypage/order", method = RequestMethod.GET)
-//	public String order(HttpServletRequest request, Model model, HttpSession session) throws Exception {
-//	public String order(HttpServletRequest request, Model model, HttpSession session,
-//			@ModelAttribute OrderListDTO orderListDTO) {
-//		// 한화면에 보여줄 글개수
-//				int pageSize = 10;
-//				// 현페이지 번호
-//				String pageNum = request.getParameter("pageNum");
-//				String userId =(String)session.getAttribute("userId");
-//
-//				if (pageNum == null) {
-//					pageNum = "1";
-//				}
-//
-//				// 현페이지 번호를 정수형으로 변경
-//				int currentPage = Integer.parseInt(pageNum);
-//				// PageDTO 객체생성
-//				PageDTO pageDTO = new PageDTO();
-//				pageDTO.setPageSize(pageSize);
-//				pageDTO.setPageNum(pageNum);
-//				pageDTO.setCurrentPage(currentPage);
-//				pageDTO.setUserId(userId);
-//				List<OrderListDTO> ordList = mypageService.getMyOrdList(pageDTO); // 주문 물건 리스트 갖고오기
-//				int count = mypageService.getMyOrdListCount(pageDTO); // 업체 전체 물건 리스트 갯수
-//				// 페이징
-//				int pageBlock = 10;
-//				int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
-//				int endPage = startPage + pageBlock - 1;
-//				int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
-//				if (endPage > pageCount) {
-//					endPage = pageCount;
-//				}
-//
-//				pageDTO.setCount(count);
-//				pageDTO.setPageBlock(pageBlock);
-//				pageDTO.setStartPage(startPage);
-//				pageDTO.setEndPage(endPage);
-//				pageDTO.setPageCount(pageCount);
-//				// 데이터 담아서 list.jsp 이동
-//				model.addAttribute("ordList", ordList);
-//				model.addAttribute("pageDTO", pageDTO);
-//
-//
-//		return "mypage/orderList";
-//	}
+	@RequestMapping(value = "/mypage/order", method = RequestMethod.GET)
+	public String order(HttpServletRequest request, Model model, HttpSession session,
+			@ModelAttribute OrderListDTO orderListDTO) {
+		// 한화면에 보여줄 글개수
+				int pageSize = 10;
+				// 현페이지 번호
+				String pageNum = request.getParameter("pageNum");
+				String userId =(String)session.getAttribute("userId");
+
+				if (pageNum == null) {
+					pageNum = "1";
+				}
+
+				// 현페이지 번호를 정수형으로 변경
+				int currentPage = Integer.parseInt(pageNum);
+				// PageDTO 객체생성
+				PageDTO pageDTO = new PageDTO();
+				pageDTO.setPageSize(pageSize);
+				pageDTO.setPageNum(pageNum);
+				pageDTO.setCurrentPage(currentPage);
+				pageDTO.setUserId(userId);
+				List<OrderListDTO> ordList = mypageService.getMyOrdList(pageDTO); // 주문 물건 리스트 갖고오기
+				int count = mypageService.getMyOrdListCount(pageDTO); // 업체 전체 물건 리스트 갯수
+				// 페이징
+				int pageBlock = 10;
+				int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+				int endPage = startPage + pageBlock - 1;
+				int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+				if (endPage > pageCount) {
+					endPage = pageCount;
+				}
+
+				pageDTO.setCount(count);
+				pageDTO.setPageBlock(pageBlock);
+				pageDTO.setStartPage(startPage);
+				pageDTO.setEndPage(endPage);
+				pageDTO.setPageCount(pageCount);
+				// 데이터 담아서 list.jsp 이동
+//				System.out.println(ordList.toString());
+
+				model.addAttribute("ordList", ordList);
+				model.addAttribute("pageDTO", pageDTO);
+
+
+		return "mypage/orderList";
+	}
 
 	// 마이페이지 - 포인트
 	@RequestMapping(value = "/mypage/point", method = RequestMethod.GET)

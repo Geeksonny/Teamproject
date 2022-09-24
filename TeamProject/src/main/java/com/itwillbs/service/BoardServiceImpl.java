@@ -22,8 +22,8 @@ public class BoardServiceImpl implements BoardService{
 	@Inject
 	private BoardDAO boardDAO;
 	private BoardDAO likeDAO;
-	
-	
+
+
 	@Override
 	public void insertBoard(BoardDTO boardDTO) {
 		//폼에서 가져온값 name pass subject content
@@ -35,30 +35,30 @@ public class BoardServiceImpl implements BoardService{
 		}else {
 			boardDTO.setBoardNum(boardDAO.getMaxNum() + 1);
 		}
-		
+
 		System.out.println(boardDTO);
-		
+
 		boardDAO.insertBoard(boardDTO);
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList(PageDTO pageDTO) {
+	public List<BoardDTO> getBoardList(BoardDTO boardDTO) {
 		// pageSize  pageNum  currentPage
-		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
-		int endRow=startRow+pageDTO.getPageSize()-1;
-		
+		int startRow=(boardDTO.getCurrentPage()-1)*boardDTO.getPageSize()+1;
+		int endRow=startRow+boardDTO.getPageSize()-1;
+
 		// sql => limit #{startRow -1}, #{pageSize}
-		
-		pageDTO.setStartRow(startRow-1);
-		pageDTO.setEndRow(endRow);
-		
-		return boardDAO.getBoardList(pageDTO);
-		
+
+		boardDTO.setStartRow(startRow-1);
+		boardDTO.setEndRow(endRow);
+
+		return boardDAO.getBoardList(boardDTO);
+
 	}
 
 	@Override
-	public int getBoardCount() {
-		return boardDAO.getBoardCount();
+	public int getBoardCount(BoardDTO boardDTO) {
+		return boardDAO.getBoardCount(boardDTO);
 	}
 	@Override
 	public BoardDTO getBoard(int boardNum) {
@@ -78,14 +78,14 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void updateFile(BoardDTO boardDTO) {
 		boardDAO.updateFile(boardDTO);
-		
+
 	}
-	
+
 	@Override
 	public void deleteBoard(BoardDTO boardDTO) {
 		boardDAO.deleteBoard(boardDTO);
 	}
-	
+
 
 	@Override
 	public BoardDTO PassCheck(BoardDTO boardDTO) {
@@ -102,45 +102,36 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void viewinsert(ViewDTO viewDTO) {
 		boardDAO.viewinsert(viewDTO);
-		
+
 	}
 
 	@Override
 	public void viewup(int boardNum) {
 		boardDAO.viewup(boardNum);
-		
+
 	}
 
 	@Override
 	public void rCountsub(int boardNum) {
-		boardDAO.rCountsub(boardNum);		
+		boardDAO.rCountsub(boardNum);
 	}
 
 	@Override
 	public void rCount(int boardNum) {
-		boardDAO.rCount(boardNum);		
+		boardDAO.rCount(boardNum);
 	}
 
-	
 
-//	@Override
-//	public List<BoardDTO> searchBoard(SearchDTO boardDTO) {
-//		// TODO Auto-generated method stub
-//		return boardDAO.searchBoard(boardDTO);
-//	}
 
-	@Override
-	public List<BoardDTO> searchBoard(BoardDTO boardDTO) {
-		// TODO Auto-generated method stub
-		return boardDAO.searchBoard(boardDTO);
-	}
 
-	
 
-	
 
-	
-	
-	
+
+
+
+
+
+
+
 
 }

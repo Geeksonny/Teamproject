@@ -16,11 +16,48 @@
 	src="${pageContext.request.contextPath }/resources/jsPro/basketListPro.js"></script>
 </head>
 
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/main
+
 <script>
+function calc(t) {
+	if(t.id == 'pointUseAll'){
+		$('#textUsePoint').val(${pointDTO2.pointNow});
+	}
+
+	if(t.id == ''){
+		$('#textUsePoint').val(0);
+	}
+
+	if(t.id == 'textUsePoint'){
+		$('#textUsePoint').val();
+	}
+
+	if(t.id == 'myCouponList'){
+		$('#myCouponList').val().split('_')[1];
+	}
+
+	var total = ${total}; // 원래결재금액
+	var discount = 0;
+	var coupon = $('#myCouponList').val().split('_')[1];
+	var point = 0 + $('#textUsePoint').val();
+
+	discount += parseInt(point);
+
+	// 할인율 적용
+	if(coupon != 0) {
+		total *= coupon;
+		discount += total * (1 - coupon);
+	}
+
+	// 포인트 차감
+	total -= point;
+
+
+	// 합계에 적용
+	document.getElementById('usePoint2').innerHTML= Math.round(discount) +"원";
+	document.getElementById('total2').innerHTML= Math.round(total) +"원";
+}
+
 function myCoupon(){
  var sbUser = "${memberDTO.userId}";
  $('.nice-select').hide();
@@ -50,38 +87,11 @@ function myCoupon(){
 </script>
 
 
-	<script>
-	function point(v){
-		document.getElementById('usePoint2').innerHTML=v+"원";
-		document.getElementById('total2').innerHTML=(${total}-v)+"원"; 		
-		
-	}
-</script>
-
-<script>
-function clearPoint(){
-	document.getElementById('textUsePoint').value="";
-	document.getElementById('usePoint2').innerHTML="0"+"원";
-	document.getElementById('total2').innerHTML=${total} + "원"; 
-}
-
-</script>
-
-	<script>
-// 포인트사용
-function pointUseAll(){
-	document.getElementById('textUsePoint').value = ${pointDTO2.pointNow};
-	document.getElementById('usePoint2').innerHTML=${pointDTO2.pointNow}+"원";
-	document.getElementById('total2').innerHTML=(${total}-${pointDTO2.pointNow})+"원"; 
-}
-
-</script>
-
 	<script type="text/javascript">
 		var path = "${pageContext.request.contextPath }";
 
-		$(function() { 
-			$("#resTb tbody").append($("#resInfoTr").html()); 
+		$(function() {
+			$("#resTb tbody").append($("#resInfoTr").html());
 
 		});
 
@@ -89,12 +99,12 @@ function pointUseAll(){
 
 
 	<script>
-	
+
 	function iamport(){
-        var amount = '${total}'-$('#textUsePoint').val();
-        var discount = "";
-        discount += $('#textUsePoint').val();
+        var amount = Number($('#total2').text().slice(0, -1));
+        var discount = Number($('#usePoint2').text().slice(0, -1));
         var nowPoint = '${pointDTO2.pointNow}' - $('#textUsePoint').val();
+		var couNm = $('#myCouponList').val().split('_')[0];
         //가맹점 식별코드
         IMP.init('imp27865884');
         IMP.request_pay({
@@ -102,25 +112,28 @@ function pointUseAll(){
             pay_method : 'card',
             merchant_uid : '${memberDTO.userId}' + new Date().getTime(),
             name : '핏티드' , //결제창에서 보여질 이름
+            buyer_name: '${memberDTO.userNm}',
+            buyer_tel: '${memberDTO.userPhone}',
             amount : amount, //실제 결제되는 가격
         }, function(rsp) {
            console.log(rsp);
-           
-           
+
+
             if (rsp.success) {
                 var msg = '결제가 완료되었습니다.';
                 var add = "";
                 add += '${addressDTO.address }' + "  " +'${addressDTO.addressDetails }';
                 var addZipcode= "";
                 addZipcode += '${addressDTO.addressZipcode }';
-				
+//                 var couNm = $('#myCouponList').val().split('_')[0];
                 alert(msg);
-              
+
                 $.ajax({
                     url: "orderComplete",
                    type: "POST",
                    data: { 'ordUser'    		:'${memberDTO.userId}',
 	                       'ordGetNm'   		:'${addressDTO.addressGetNm}',
+	                       'couNm'				: couNm,
 	                       'ordGetZipcode'		: addZipcode,
 	                       'ordGetAddress' 	   	: add,
 	                       'ordGetPhone'    	:'${addressDTO.addressGetPhone }',
@@ -134,7 +147,7 @@ function pointUseAll(){
 
                    dataType:"json",
                 })
-              
+
                 location.href = '${pageContext.request.contextPath}/main/main';
             } else {
               var msg = rsp.error_msg;
@@ -143,24 +156,23 @@ function pointUseAll(){
         });
      }
   </script>
-  
-	<script> 
- var point2 = '${pointDTO2.pointNow}'; 
-      $(function() { 
-         $('#textUsePoint').change(function() { 
-            if($('#textUsePoint').val() - point2 > 0) { 
-              alert('사용 가능 포인트를 초과하였습니다.') 
-               $('#textUsePoint').val(point2); 
+
+	<script>
+ var point2 = '${pointDTO2.pointNow}';
+      $(function() {
+         $('#textUsePoint').change(function() {
+            if($('#textUsePoint').val() - point2 > 0) {
+              alert('사용 가능 포인트를 초과하였습니다.')
+               $('#textUsePoint').val(point2);
               document.getElementById('usePoint2').innerHTML=point2+"원";
-			  document.getElementById('total2').innerHTML=${total}-point2+"원"; 
+			  document.getElementById('total2').innerHTML=${total}-point2+"원";
             }else if($('#textUsePoint').val() < 1000) {
-              alert('최소 사용 가능 포인트는 1000P 입니다.') 
+              alert('최소 사용 가능 포인트는 1000P 입니다.')
               document.getElementById('usePoint2').innerHTML="1000원";
-			  document.getElementById('total2').innerHTML=${total}-1000+"원"; 
-               $('#textUsePoint').val(1000); 
-            }
-         }) 
-      }) 
+			  document.getElementById('total2').innerHTML=${total}-1000+"원";
+               $('#textUsePoint').val(1000);
+         })
+      })
    </script>
 	<body>
 	<!-- 메뉴단 -->
@@ -277,7 +289,7 @@ function pointUseAll(){
 
 							<c:if test="${addressDTO.address ne null }">
 								<button type="submit" class="site-btn mb-3 mt-1">배송지
-									수정</button>
+									저장</button>
 								<button type="reset" class="site-btn mb-3 mt-1">취소</button>
 								</form>
 							</c:if>
@@ -303,10 +315,10 @@ function pointUseAll(){
 												id="textUsePoint"
 												name="textUsePoint" placeholder="1,000 P부터 사용 가능"
 												min='1000' max="${pointDTO2.pointNow}"
-												onblur="point(value)">
+												onblur="calc(this)">
 <!-- 																						onKeyPress="return checkNum(event)" -->
 <!-- 																						onkeyup="removeChar(event)" onblur="fnUsePoint()" -->
-				                          	<button type="button" class="site-btn" onclick="clearPoint()">
+				                          	<button type="button" class="site-btn" onclick="calc(this)">
 												삭제
 											</button>
 <!-- 				                      </form> -->
@@ -316,7 +328,7 @@ function pointUseAll(){
 										사용 가능 포인트 <em class="text-num-bold">${pointDTO2.pointNow}</em> P
 									</p>
 									<button type="button" class="site-btn float-right" id="pointUseAll"
-														onclick="pointUseAll();">
+														onclick="calc(this)">
 										전액 사용
 									</button>
 								</div>
@@ -324,7 +336,7 @@ function pointUseAll(){
 								<!-- 쿠폰 -->
 									<div class="mb-3 mt-5">
 										<select id="myCouponList"
-											class="form-select form-control" name="myCouponList">
+											class="form-select form-control" name="myCouponList" onchange="calc(this)">
 										</select>
 									</div>
 								</div>
@@ -357,7 +369,7 @@ function pointUseAll(){
 	<!-- Footer Sect
 	<!-- Footer Section Begin -->
 	<jsp:include page="../inc/footer.jsp" />
-	
+
 </body>
 
 <script
