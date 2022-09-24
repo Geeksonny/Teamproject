@@ -103,7 +103,8 @@
 	<update id="updateCoupon">
 		UPDATE COUPON
 			SET COU_YN = "N"
-			WHERE COU_NUM =#{couNum}
+			WHERE COU_NUM =#{couNm}
+			  AND COU_USER_NM=#{userId}
 	</update>
 
 

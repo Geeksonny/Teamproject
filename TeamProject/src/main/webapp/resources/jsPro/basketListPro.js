@@ -6,25 +6,6 @@ $(document).ready(function(){
 itemTotal(); // 전체 합계
 myCoupon(); // 쿠폰 선택
 
-// 주문시 선택항목 없으면 경고창
-$('#orderChk').on("click",function (){
-
-	var valueArr = new Array();   // valueArr에 체크된 데이터가 배열로 저장
-	var list = $("input[name='CheckRow']"); // list는 CheckRow(그페이지에 있는 행수)가 저장됨
-	for(var i =0; i <list.length; i++){ // 그페이지에 있는 행수 만큼 for문을 돌리되
-		if(list[i].checked){            // 선택되어 있으면 배열값에 저장
-			valueArr.push(list[i].value);
-		}
-	}
-
-	if (valueArr.length == 0){ //valueArr길이가 0이면 경고창
-		alert("항목을 선택하세요");
-		return false;
-
-	}
-
-
-}); // #orderChk
 
 
 }); // documnet

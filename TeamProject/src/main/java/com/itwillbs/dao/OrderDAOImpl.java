@@ -42,7 +42,6 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public void updateQuantity(Map<String, Object> sMap) {
-		System.out.println("updateQuantityDAO");
 		sqlSession.update(namespace + ".updateQuantity", sMap);
 
 	}
@@ -73,7 +72,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	@Override
 	public void updateCoupon(Map<String, Object> sMap) {
-		System.out.println("updateCouponDAOImpl");
+		System.out.println("updateCouponDAOImpl!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		sqlSession.update(namespace + ".updateCoupon", sMap);
 	}
 
