@@ -17,11 +17,11 @@ import com.itwillbs.domain.ViewDTO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
-	
+
 	//마이바티스 객체생성
 	@Inject
 	private SqlSession sqlSession;
-	
+
 	private static final String namespace="com.itwillbs.mappers.boardMapper";
 
 	@Override
@@ -35,13 +35,13 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public List<BoardDTO> getBoardList(PageDTO pageDTO) {
-		return sqlSession.selectList(namespace+".getBoardList",pageDTO);
+	public List<BoardDTO> getBoardList(BoardDTO boardDTO) {
+		return sqlSession.selectList(namespace+".getBoardList",boardDTO);
 	}
 
 	@Override
-	public int getBoardCount() {
-		return sqlSession.selectOne(namespace+".getBoardCount");
+	public int getBoardCount(BoardDTO boardDTO) {
+		return sqlSession.selectOne(namespace+".getBoardCount", boardDTO);
 	}
 	@Override
 	public BoardDTO getBoard(int boardNum) {
@@ -50,7 +50,7 @@ public class BoardDAOImpl implements BoardDAO{
 
 	@Override
 	public BoardDTO numCheck(BoardDTO boardDTO) {
-		
+
 		return sqlSession.selectOne(namespace+".numCheck", boardDTO);
 	}
 
@@ -62,12 +62,12 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public void updateFile(BoardDTO boardDTO) {
 		sqlSession.update(namespace+".updateFile", boardDTO);
-		
+
 	}
-	
+
 	@Override
 	public void deleteBoard(BoardDTO boardDTO) {
-		
+
 		sqlSession.delete(namespace+".deleteBoard", boardDTO);
 	}
 
@@ -85,36 +85,27 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public void viewinsert(ViewDTO viewDTO) {
 		sqlSession.insert(namespace+".viewinsert", viewDTO);
-		
+
 	}
 
 	@Override
 	public void viewup(int boardNum) {
 		sqlSession.update(namespace+".viewup", boardNum);
-		
-		
+
+
 	}
 
 	@Override
 	public void rCountsub(int boardNum) {
-		sqlSession.update(namespace+".rCountsub", boardNum);		
+		sqlSession.update(namespace+".rCountsub", boardNum);
 	}
 
 	@Override
 	public void rCount(int boardNum) {
-		sqlSession.update(namespace+".rCount", boardNum);		
+		sqlSession.update(namespace+".rCount", boardNum);
 	}
 
-//
-//	@Override
-//	public List<BoardDTO> searchBoard(SearchDTO boardDTO) {
-//		return sqlSession.selectList(namespace+".searchBoard",boardDTO);
-//	}
 
-	@Override
-	public List<BoardDTO> searchBoard(BoardDTO boardDTO) {
-		return sqlSession.selectList(namespace+".searchBoard",boardDTO);
-	}
 
 
 

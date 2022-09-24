@@ -11,15 +11,15 @@ import com.itwillbs.domain.SearchDTO;
 import com.itwillbs.domain.ViewDTO;
 
 public interface BoardDAO {
-	//추상메서드 
+	//추상메서드
 	void insertBoard(BoardDTO boardDTO);
-	
+
 	Integer getMaxNum();
 
-	List<BoardDTO> getBoardList(PageDTO pageDTO);
+	List<BoardDTO> getBoardList(BoardDTO boardDTO);
 
-	int getBoardCount();
-	
+	int getBoardCount(BoardDTO boardDTO);
+
 	BoardDTO getBoard(int boardNum);
 
 	BoardDTO numCheck(BoardDTO boardDTO);
@@ -27,9 +27,9 @@ public interface BoardDAO {
 	void updateBoard(BoardDTO boardDTO);
 
 	void updateFile(BoardDTO boardDTO);
-	
+
 	void deleteBoard(BoardDTO boardDTO);
-	
+
 	BoardDTO PassCheck(BoardDTO boardDTO);
 
 	ViewDTO viewcheck(ViewDTO viewDTO);
@@ -42,12 +42,11 @@ public interface BoardDAO {
 
 	void rCount(int boardNum);
 
-	List<BoardDTO> searchBoard(BoardDTO boardDTO);
-
-	
 
 
 
-	
-	
+
+
+
+
 }

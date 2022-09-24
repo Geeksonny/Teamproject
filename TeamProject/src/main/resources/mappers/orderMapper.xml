@@ -4,9 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.itwillbs.mappers.orderMapper">
-	
+
 	<insert id="insertOrder" >
-	
+
 			INSERT INTO ORDER_BOARD(
 					USER_ID
 				   ,ORD_GET_NM
@@ -30,14 +30,14 @@
 				   ,#{ordFinalPrice}
 				    )
 	</insert>
-	
+
 <!--  결제시 결제 리스트에 값 넣기	 -->
 
 	<insert id="isertOrderList">
 			INSERT INTO ORDER_LIST(
 				 ORD_NUM
 			 	,ORD_L_USER
-			 	,ORD_L_CODE 
+			 	,ORD_L_CODE
 			 	,ORD_L_QUANTITY
 			 	,ORD_L_PRICE
 			 	,ORD_DELIVERY_STATUS
@@ -55,27 +55,27 @@
 				 ,"Y"
 			)
 	</insert>
-	
-<!-- 결제시 재고 수량 변경 --> 
+
+<!-- 결제시 재고 수량 변경 -->
 	<update id="updateQuantity">
-		UPDATE PRODUCT_LIST 
+		UPDATE PRODUCT_LIST
 			SET PROD_L_QUANTITY = PROD_L_QUANTITY - #{ordLQuantity}
 		 	WHERE PROD_L_CODE		=#{prodLCode}
 	</update>
-	
-	
+
+
 <!-- 결제시 장바구니 초기화 -->
 	<delete id="removeItemBasket">
-		DELETE FROM SHOPPING_BASKET 
+		DELETE FROM SHOPPING_BASKET
 			WHERE SB_USER=#{userId}
 	</delete>
-	
+
 <!-- 제품 수량 가져오기 -->
 	<select id="getQuantityList" resultType="com.itwillbs.domain.ProdDTO">
 		SELECT * FROM PRODUCT_LIST
 			WHERE PROD_L_CODE		=#{prodLCode}
-	</select>	
-	
+	</select>
+
 <!--  사용한 포인트 입력 -->
 	<insert id="insertUsePoint">
 		INSERT INTO POINT(
@@ -99,7 +99,13 @@
 			,0
 			)
 	</insert>
-	
+
+	<update id="updateCoupon">
+		UPDATE COUPON
+			SET COU_YN = "N"
+			WHERE COU_NUM =#{couNum}
+	</update>
+
 <!-- 		<select  id="selectCouponList" resultType="com.itwillbs.domain.CouponDTO" parameterType="com.itwillbs.domain.CouponDTO"> -->
 <!-- 			SELECT 	  NUM -->
 <!-- 					 ,COU_USER_NM -->
@@ -112,6 +118,6 @@
 <!-- 			  FROM 	 COUPON -->
 <!-- 			 WHERE 	 COU_USER_NM =#{couUserNm} -->
 <!-- 	</select> -->
-	
+
 
 </mapper>

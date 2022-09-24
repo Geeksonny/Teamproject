@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -26,18 +27,22 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">주문 /</span> 주문 목록</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">회원 /</span> 주문 관리</h4>
 
               <div class="row">
                 <div class="col-md-12">
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/addr">
-                      <i class="bx bx-buildings me-1"></i> 배송지 관리</a>
+                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/user">
+                      <i class="bx bx-buildings me-1"></i> 회원 관리</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" href="${pageContext.request.contextPath }/mypage/order">
-                      <i class="bx bx-buildings me-1"></i> 주문 목록</a>
+                      <a class="nav-link active" href="${pageContext.request.contextPath }/admin/order">
+                      <i class="bx bx-buildings me-1"></i> 주문 관리</a>
+                    </li>
+                     <li class="nav-item">
+                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/addr">
+                      <i class="bx bx-buildings me-1"></i> 배송 관리</a>
                     </li>
                   </ul>
 
@@ -53,13 +58,11 @@
                     <thead>
                       <tr>
                         <th>num</th>
-                        <th>주문 코드</th>
-                        <th>주문번호</th>
-                        <th>주문자</th>
-                        <th>업체명</th>
+                        <th>상품정보</th>
                         <th>할인가</th>
                         <th>최종 가격</th>
                         <th>주문일</th>
+                        <th>주문상태</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -67,15 +70,10 @@
                       <tr>
                         <td>${orderListDTO.trnum}</td>
                         <td>${orderListDTO.ordLCode}</td>
-                        <td>${orderListDTO.compId}</td>
-                        <td>${orderListDTO.ordLPrice}</td>
-                        <td>${orderListDTO.ordLCouponnum}</td>
-                        <td>${orderListDTO.ordLUser}</td>
-                        <td>${orderListDTO.compNm}</td>
                         <td>${orderListDTO.ordCouponDc}</td>
                         <td>${orderListDTO.ordFinalprice}</td>
-                        <td>${orderListDTO.ordLDate}</td>
-                        <td>
+                        <td>${fn:substring(orderListDTO.ordLDate,0,16)}</td>
+                        <td>${fn:substring(orderListDTO.ordLDate,0,16)}</td>
                       </tr>
 					 </c:forEach>
                     </tbody>
@@ -87,20 +85,20 @@
 			          <ul class="pagination" style="margin-left: 45%; margin-right: 55%;">
 			            <li class="page-item">
                             <c:if test="${pageDTO.startPage > pageDTO.pageBlock }">
-								<a class="page-link" href="${pageContext.request.contextPath }/admin/order?pageNum=${pageDTO.startPage - pageDTO.pageBlock}" aria-label="Previous">
+								<a class="page-link" href="${pageContext.request.contextPath }/mypage/order?pageNum=${pageDTO.startPage - pageDTO.pageBlock}" aria-label="Previous">
 								<span aria-hidden="true">&laquo;</span>
 							</a>
 							</c:if>
 						 </li>
 							<c:forEach var="i" begin="${pageDTO.startPage }" end="${pageDTO.endPage }" step="1">
 						 <li class="page-item">
-						 		<a class="page-link" href="${pageContext.request.contextPath }/admin/order?pageNum=${i}">${i}</a>
+						 		<a class="page-link" href="${pageContext.request.contextPath }/mypage/order?pageNum=${i}">${i}</a>
 						 </li>
 							</c:forEach>
 
 						 <li class="page-item">
 							<c:if test="${pageDTO.endPage < pageDTO.pageCount }">
-								<a class="page-link" href="${pageContext.request.contextPath }/admin/order?pageNum=${pageDTO.startPage + pageDTO.pageBlock}" aria-label="Next">
+								<a class="page-link" href="${pageContext.request.contextPath }/mypage/order?pageNum=${pageDTO.startPage + pageDTO.pageBlock}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span>
 								</a>
 							</c:if>
