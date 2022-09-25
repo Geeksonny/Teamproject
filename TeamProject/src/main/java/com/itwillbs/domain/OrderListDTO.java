@@ -3,6 +3,7 @@ package com.itwillbs.domain;
 import java.sql.Timestamp;
 
 public class OrderListDTO extends OrderDTO{
+	private OrderDTO orderDTO;
 	private int trnum;
 	private int ordNum;
 	private String ordLCode; 			// 상품코드
@@ -11,7 +12,7 @@ public class OrderListDTO extends OrderDTO{
 	private String ordLUserNm; 			// 주문자 이름
 	private String compNm; 				// 회사 이름
 
-	
+
 	private int ordLNum;				// 주문번호		
 	private int ordLQuantity; 			// 주문수량
 	private int ordLPrice;    			// 개별가격
@@ -178,15 +179,22 @@ public class OrderListDTO extends OrderDTO{
 	public void setOrdLNum(int ordLNum) {
 		this.ordLNum = ordLNum;
 	}
+	public OrderDTO getOrderDTO() {
+		return orderDTO;
+	}
+	public void setOrderDTO(OrderDTO orderDTO) {
+		this.orderDTO = orderDTO;
+	}
 	@Override
 	public String toString() {
-		return "OrderListDTO [trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode=" + ordLCode + ", ordLProdnm="
-				+ ordLProdnm + ", ordLUser=" + ordLUser + ", ordLUserNm=" + ordLUserNm + ", compNm=" + compNm
-				+ ", ordLNum=" + ordLNum + ", ordLQuantity=" + ordLQuantity + ", ordLPrice=" + ordLPrice + ", ordLDate="
-				+ ordLDate + ", compId=" + compId + ", ordDeliveryStatus=" + ordDeliveryStatus + ", individualPrice="
-				+ individualPrice + ", ordLDelivNumber=" + ordLDelivNumber + ", count=" + count + ", ordPurchasestatus="
-				+ ordPurchasestatus + ", ge50Count=" + ge50Count + ", ne50Count=" + ne50Count + ", eq50Couunt="
-				+ eq50Couunt + ", ordLCouponnum=" + ordLCouponnum + ", ordRefund=" + ordRefund + "]";
+		return "OrderListDTO [orderDTO=" + orderDTO + ", trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode="
+				+ ordLCode + ", ordLProdnm=" + ordLProdnm + ", ordLUser=" + ordLUser + ", ordLUserNm=" + ordLUserNm
+				+ ", compNm=" + compNm + ", ordLNum=" + ordLNum + ", ordLQuantity=" + ordLQuantity + ", ordLPrice="
+				+ ordLPrice + ", ordLDate=" + ordLDate + ", compId=" + compId + ", ordDeliveryStatus="
+				+ ordDeliveryStatus + ", individualPrice=" + individualPrice + ", ordLDelivNumber=" + ordLDelivNumber
+				+ ", count=" + count + ", ordPurchasestatus=" + ordPurchasestatus + ", ge50Count=" + ge50Count
+				+ ", ne50Count=" + ne50Count + ", eq50Couunt=" + eq50Couunt + ", ordLCouponnum=" + ordLCouponnum
+				+ ", ordRefund=" + ordRefund + "]";
 	}
 	
 

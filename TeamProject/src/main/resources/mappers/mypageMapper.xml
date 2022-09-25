@@ -92,9 +92,33 @@
 	</update>
 	
 	
-<!--	 resultMap="OrderListDTO" -->
+
+<!-- 	<resultMap type="com.itwillbs.domain.OrderDTO" id="OrderDTO"> -->
+<!-- 		<result column="NUM" property="num" /> -->
+<!-- 		<result column="ORD_COUPONDC" property="ordCouponDc" /> -->
+<!-- 		<result column="ORD_FINALPRICE" property="ordFinalPrice" /> -->
+<!-- 	</resultMap> -->
+
+<!-- 	<resultMap type="com.itwillbs.domain.OrderListDTO" id="OrderListDTO"> -->
+<!-- 		<result column="ORD_L_CODE" property="ordLCode" /> -->
+<!-- 		<result column="ORD_L_USER" property="userId" /> -->
+<!-- 		<result column="ORD_L_QUANTITY" property="ordLQuantity" /> -->
+<!-- 		<result column="ORD_L_PRICE" property="ordLPrice" /> -->
+
+<!-- 		<result column="ORD_L_COUPONNUM" property="ordLCouponnum" /> -->
+<!-- 		<result column="ORD_DELIVERY_STATUS" property="ordDeliveryStatus" /> -->
+<!-- 		<result column="ORD_L_DELIV_NUMBER" property="ordLDelivNumber" /> -->
+<!-- 		<result column="ORD_PURCHASESTATUS" property="ordPurchasestatus" /> -->
+		
+<!-- 		<result column="ORD_L_DATE" property="ordLDate" /> -->
+<!-- 		<result column="ORD_REFUND" property="ordRefund" /> -->
+<!-- 		<result column="ORD_L_NUM" property="ordLNum" /> -->
+<!-- 		<collection property="orderDTO" resultMap="OrderListDTO" /> -->
+<!-- 	</resultMap> -->
+
+
 <!-- 	유저가 주문목록 같고오기 -->
-	<select id="getMyOrdList" parameterType="com.itwillbs.domain.OrderListDTO" >
+	<select id="getMyOrdList" resultType="com.itwillbs.domain.OrderListDTO"  >
 		SELECT   l.ORD_L_CODE			 
 				,l.ORD_L_QUANTITY       
 				,l.ORD_L_PRICE          
@@ -111,7 +135,9 @@
 		WHERE   l.ORD_L_USER= #{userId}
 		ORDER BY   l.ORD_L_DATE
    DESC LIMIT    #{startRow}, #{pageSize}
+	
 	</select>
+	
 	
 	<select id="getMyOrdListCount" resultType="java.lang.Integer">
 
