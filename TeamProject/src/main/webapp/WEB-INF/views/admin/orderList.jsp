@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -50,35 +51,52 @@
                 <hr class="my-0" />
                 <div class="card-body">
                 <div class="table-responsive text-nowrap">
-	                <div style="padding:1rem;">
-	                 <button type="submit" class="btn btn-outline-primary" onclick="deleteValue();">선택 삭제</button>
-	                </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>번호</th>
+                        <th>주문일</th>
+                        <th>주문 번호</th>
                         <th>주문 코드</th>
                         <th>주문자</th>
-                        <th>업체명</th>
-                        <th>가격</th>
-                        <th>할인가</th>
-                        <th>최종 가격</th>
                         <th>수량</th>
-                        <th>주문일</th>
+                        <th>가격</th>
+                        <th>쿠폰 번호</th>
+                        <th>업체명</th>
+                        <th>구매 상태</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                      <c:forEach var="orderListDTO" items="${orderList}" >
                       <tr>
-                        <td>${orderListDTO.num}</td>
+                        <td><fmt:formatDate pattern="yy-MM-dd" value="${orderListDTO.ordLDate }"/></td>
+                        <td><strong>${orderListDTO.num}</strong></td>
                         <td>${orderListDTO.ordLCode}</td>
                         <td>${orderListDTO.ordLUser}</td>
-                        <td>${orderListDTO.compId}</td>
-                        <td>${orderListDTO.ordLPrice}</td>
-                        <td>${orderListDTO.ordLCouponnum}</td>
-                        <td>${orderListDTO.ordFinalprice}</td>
                         <td>${orderListDTO.ordLQuantity}</td>
-                        <td>${orderListDTO.ordLDate}</td>
+                        <td>${orderListDTO.ordLPrice}</td>
+                        <td>
+                        <c:set var="cou" value="${orderListDTO.ordLCouponnum }" />
+                         <c:choose>
+                      		<c:when test="${cou eq null}">
+                               <span class="badge bg-label-secondary">미사용</span>
+                      		</c:when>
+                      		<c:when test="${cou ne null}">
+                        		<span class="badge bg-primary" >${cou}</span>
+                      		</c:when>
+                         </c:choose>
+                        </td>
+                        <td><strong>${orderListDTO.compNm}</strong></td>
+                        <td>
+                        <c:set var="yn" value="${orderListDTO.ordPurchasestatus }" />
+                        <c:choose>
+                        	<c:when test="${yn eq 'Y'}">
+                        		<span class="badge bg-label-primary">주문완료</span>
+                      		</c:when>
+                      		<c:when test="${yn eq 'N'}">
+                        		<span class="badge bg-label-danger">주문취소</span>
+                      		</c:when>
+				 		</c:choose>
+                        </td>
                         <td>
                       </tr>
 					 </c:forEach>

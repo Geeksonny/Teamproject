@@ -226,9 +226,19 @@
 		  FROM PRODUCT_LIST
 	</select>
 	<select id="getProductList" resultType="com.itwillbs.domain.ProdDTO">
-		SELECT *
-		  FROM PRODUCT_LIST
-	  ORDER BY PROD_L_CODE DESC LIMIT #{startRow}, #{pageSize}
+		SELECT PL.PROD_L_NUM					AS prodLNum
+			   ,PL.PROD_L_CODE					AS prodLCode
+			   ,PL.PROD_L_MAINIMG				AS prodLMainimg
+			   ,PL.PROD_L_PRODNM                AS prodLProdnm
+			   ,PL.PROD_L_PRICE                 AS prodLPrice
+			   ,CI.COMP_NM                  	AS compNm
+			   ,PL.PROD_L_OPTION1            	AS prodLOption1
+			   ,PL.PROD_L_UPLOADDATE           	AS prodLUploaddate
+		 FROM COMPANY_INFO 						AS CI
+		 JOIN PRODUCT_LIST 						AS PL
+		   ON (CI.COMP_ID = PL.PROD_L_COMPNM)
+	 ORDER BY PL.PROD_L_UPLOADDATE DESC
+	 	LIMIT #{startRow}, #{pageSize}
 	</select>
 
 <!-- 관리자 / 주문 리스트 -->
@@ -237,9 +247,24 @@
 		  FROM ORDER_LIST
 	</select>
 	<select id="getOrderList" resultType="com.itwillbs.domain.OrderListDTO">
-		SELECT *
-		  FROM ORDER_LIST
-	  ORDER BY ORD_L_DATE DESC LIMIT #{startRow}, #{pageSize}
+		SELECT @rownum:=@rownum+1				AS num
+			   ,OL.ORD_L_CODE					AS ordLCode
+			   ,OL.ORD_L_USER					AS ordLUser
+		       ,OL.ORD_L_QUANTITY               AS ordLQuantity
+		       ,OL.ORD_L_PRICE                  AS ordLPrice
+		       ,OL.ORD_L_COUPONNUM              AS ordLCouponnum
+		       ,PL.PROD_L_COMPNM				AS prodLCompnm
+		       ,CI.COMP_NM                      AS compNm
+		       ,OL.ORD_PURCHASESTATUS           AS ordPurchasestatus
+		       ,OL.ORD_L_DATE                  	AS ordLDate
+		 FROM COMPANY_INFO 						AS CI
+		 JOIN PRODUCT_LIST 						AS PL
+		   ON (CI.COMP_ID = PL.PROD_L_COMPNM)
+		 JOIN ORDER_LIST 						AS OL
+		   ON (OL.ORD_L_CODE = PL.PROD_L_CODE)
+		WHERE (@rownum:=0)=0
+	 ORDER BY OL.ORD_L_DATE DESC
+	    LIMIT #{startRow}, #{pageSize}
 	</select>
 
 </mapper>

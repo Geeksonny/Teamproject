@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -50,21 +51,37 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>상품코드</th>
-                        <th>상품이미지</th>
-                        <th>업체명</th>
+                        <th>상품 번호</th>
+                        <th>상품 코드</th>
+                        <th>상품 이미지</th>
                         <th>상품명</th>
+                        <th>가격</th>
+                        <th>업체명</th>
                         <th>분류</th>
+                        <th>등록일</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                      <c:forEach var="prodDTO" items="${productList}" >
                       <tr>
+                        <td style="vertical-align: middle">${prodDTO.prodLNum}</td>
                         <td style="vertical-align: middle">${prodDTO.prodLCode}</td>
                         <td><img src="${pageContext.request.contextPath }/resources/img/product/${prodDTO.prodLMainimg}" width="150"/></td>
-                        <td style="vertical-align: middle">${prodDTO.prodLCompnm}</td>
                         <td style="vertical-align: middle">${prodDTO.prodLProdnm}</td>
-                        <td style="vertical-align: middle">${prodDTO.prodLOption1}</td>
+                        <td style="vertical-align: middle">${prodDTO.prodLPrice}</td>
+                        <td style="vertical-align: middle"><span class="badge bg-secondary">${prodDTO.compNm}</span></td>
+                        <td style="vertical-align: middle">
+                        <c:set var="op" value="${prodDTO.prodLOption1}" />
+                         <c:choose>
+                      		<c:when test="${op eq 'FOOD'}">
+                               <span class="badge bg-label-warning">음식</span>
+                      		</c:when>
+                      		<c:when test="${op eq 'PROD'}">
+                        		<span class="badge bg-label-info">용품</span>
+                      		</c:when>
+                         </c:choose>
+                         </td>
+                        <td style="vertical-align: middle"><fmt:formatDate pattern="yy-MM-dd" value="${prodDTO.prodLUploaddate}"/></td>
                       </tr>
 					 </c:forEach>
                     </tbody>

@@ -157,7 +157,7 @@
 	<select id="getOrdList" resultType="com.itwillbs.domain.OrderListDTO">
 		SELECT 	 @rownum:=@rownum+1 as trnum
 <!-- 				 게시판에 tr반복이라 구분숫자를 주기 위해	 -->
-				,OB.NUM 									as num
+				,OB.NUM 									as prodLNum
 				,OL.ORD_L_COUPONNUM 						as ordLCouponnum
 				,OL.ORD_L_USER 								as ordLUser
 				,OL.ORD_L_CODE                              as ordLCode

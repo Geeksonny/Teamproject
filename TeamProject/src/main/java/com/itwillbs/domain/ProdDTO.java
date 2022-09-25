@@ -21,6 +21,9 @@ public class ProdDTO extends PageDTO {
 	private String prodLDetail;
 	private int prodLQuantity;
 
+	// 회사 이름
+	private String compNm;
+
 	// 검색, 카테고리 기능
 	private String srhText;
 	private String category;
@@ -32,6 +35,13 @@ public class ProdDTO extends PageDTO {
 	private int rating;
 	private Timestamp replyDate;
 
+
+	public String getCompNm() {
+		return compNm;
+	}
+	public void setCompNm(String compNm) {
+		this.compNm = compNm;
+	}
 	public int getProdLNum() {
 		return prodLNum;
 	}
@@ -168,8 +178,23 @@ public class ProdDTO extends PageDTO {
 
 	@Override
 	public String toString() {
-		return "ProdReplyDTO [replyNum=" + replyNum + ", prodLNum=" + prodLNum + ", userId=" + userId + ", content="
-				+ content + ", rating=" + rating + ", replyDate=" + replyDate + "]";
+		return "ProdDTO [prodLNum=" + prodLNum + ", prodLCode=" + prodLCode + ", prodLOption1=" + prodLOption1
+				+ ", prodLOption2=" + prodLOption2 + ", prodLOption3=" + prodLOption3 + ", prodLOption4=" + prodLOption4
+				+ ", prodLOption5=" + prodLOption5 + ", prodLProdnm=" + prodLProdnm + ", prodLPrice=" + prodLPrice
+				+ ", prodLUploaddate=" + prodLUploaddate + ", prodLCompnm=" + prodLCompnm + ", prodLMainimg="
+				+ prodLMainimg + ", prodLSubimg=" + prodLSubimg + ", prodLDetail=" + prodLDetail + ", prodLQuantity="
+				+ prodLQuantity + ", srhText=" + srhText + ", category=" + category + ", userId=" + userId
+				+ ", replyNum=" + replyNum + ", content=" + content + ", rating=" + rating + ", replyDate=" + replyDate
+				+ "]";
 	}
+
+//	@Override
+//	public String toString() {
+//		return "ProdReplyDTO [replyNum=" + replyNum + ", prodLNum=" + prodLNum + ", userId=" + userId + ", content="
+//				+ content + ", rating=" + rating + ", replyDate=" + replyDate + "]";
+//	}
+
+
+
 
 }

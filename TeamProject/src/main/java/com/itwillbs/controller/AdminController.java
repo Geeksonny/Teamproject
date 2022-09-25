@@ -210,6 +210,7 @@ public class AdminController {
 
 		// pageBlock  startPage endPage count pageCount
 		int count=memberService.getProductCount();
+		System.out.println("co:"+count);
 		int pageBlock=10;
 		int startPage=(currentPage-1)/pageBlock*pageBlock+1;
 		int endPage=startPage+pageBlock-1;
@@ -223,6 +224,7 @@ public class AdminController {
 		pageDTO.setEndPage(endPage);
 		pageDTO.setPageCount(pageCount);
 		model.addAttribute("productList", productList);
+		System.out.println("prl:"+productList);
 		model.addAttribute("pageDTO", pageDTO);
 
 		return "admin/productList";
