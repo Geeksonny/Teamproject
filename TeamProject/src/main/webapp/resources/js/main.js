@@ -192,8 +192,17 @@
         var $button = $(this);
         var oldValue = $button.parent().find('input').val();
         var index = $button.parent().find('input')[0].id.split('_')[2];
-        if ($button.hasClass('inc')) {
-            var newVal = parseFloat(oldValue) + 1;
+
+        var optionMax= $('#quantity_'+index).val(); // 디비저정된 수량 최대값
+
+        if ($button.hasClass('inc') && oldValue <= optionMax) {
+            if(oldValue == optionMax){
+				alert("재고수량이상으로 주문하실수 없습니다.");
+				var newVal = oldValue;
+			}else {
+             newVal = parseFloat(oldValue) + 1;
+
+			}
         } else {
             // Don't allow decrementing below zero
             if (oldValue > 0) {
@@ -202,12 +211,27 @@
                 newVal = 0;
             }
         }
+
+
+
+
+
+//        if ($button.hasClass('inc')) {
+//            var newVal = parseFloat(oldValue) + 1;
+//        } else {
+//            // Don't allow decrementing below zero
+//            if (oldValue > 0) {
+//                var newVal = parseFloat(oldValue) - 1;
+//            } else {
+//                newVal = 0;
+//            }
+//        }
         $button.parent().find('input').val(newVal);
         var price = $('#price_' + index).val(); // 개별 가격
 
         var total = newVal * price ; // 개별 가격 * 새로 바뀐 수량
-		var total = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(total); // 원으로 바꾸기
-        $('#total_' + index).text(total); // total에 뿌려주기
+		var total = new Intl.NumberFormat().format(total); // 원으로 바꾸기
+        $('#total_' + index).text(total +"원"); // total에 뿌려주기
 
 
 		var totalSum = 0;  // 총 합계 구하기
@@ -242,10 +266,10 @@
 
 
 		}
-		var total = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(total);
-		var itemDC = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(itemDC);
-		$("#itemDcPrice").html(itemDC); // 할인가격 표시
-		$("#itemTotalPrice").html(total);
+		var total = new Intl.NumberFormat().format(total);
+		var itemDC = new Intl.NumberFormat().format(itemDC);
+		$("#itemDcPrice").html(itemDC + "원"); // 할인가격 표시
+		$("#itemTotalPrice").html(total + "원");
 
 	});
 
