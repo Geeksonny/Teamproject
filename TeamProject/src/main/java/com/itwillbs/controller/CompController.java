@@ -429,7 +429,7 @@ public class CompController {
 		orderListDTO.setOrdDeliveryStatus("3"); //배송취소로 셋팅
 		orderListDTO.setOrdRefund("12"); // 환불완료로 셋팅
 		compService.refundDeliveryStatusUpdate(orderListDTO); // 배송취소, 환불완료로 디비수정
-		compService.couponUpdate(orderListDTO); // 쿠폰 돌려주기
+		compService.pointUpdate(orderListDTO); // 포인트 돌려주기
 		compService.prodquantityUpdate(orderListDTO); // 물품수량 되돌리기
 		return "redirect:/comp/ordList";
 	}
@@ -501,11 +501,13 @@ public class CompController {
 		String prodLCodeUser = request.getParameter("CheckRow");
 		 String prodLCode = prodLCodeUser.split(",")[0];
 		 String ordUser = prodLCodeUser.split(",")[1];
+		 int num = Integer.parseInt(prodLCodeUser.split(",")[2]);
 
 		// 디비에서 조회
 		OrderListDTO orderListDTO1 = new OrderListDTO();
 		orderListDTO1.setOrdLUser(ordUser);
 		orderListDTO1.setOrdLCode(prodLCode);
+		orderListDTO1.setNum(num);
 		OrderListDTO orderListDTO = compService.getOrdListDet(orderListDTO1);
 
 		// model에 데이터 저장
