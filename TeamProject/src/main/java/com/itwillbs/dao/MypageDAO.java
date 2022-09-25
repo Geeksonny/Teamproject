@@ -2,9 +2,11 @@ package com.itwillbs.dao;
 
 import java.util.List;
 
+import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.MypageDTO;
 import com.itwillbs.domain.OrderListDTO;
 import com.itwillbs.domain.PageDTO;
+import com.itwillbs.domain.ProdDTO;
 
 public interface MypageDAO {
 
@@ -20,9 +22,18 @@ public interface MypageDAO {
 	void replyCount(MypageDTO mypageDTO);
 
 	MypageDTO mypageselect(MypageDTO mypageDTO);
-	//ë§ˆì´í˜ì´ì§€ ì£¼ë¬¸ëª©ë¡
-	List<OrderListDTO> getMyOrdList(PageDTO pageDTO);
-	//ë§ˆì´í˜ì´ì§€ ì£¼ë¬¸ëª©ë¡ ìˆ˜ëŸ‰
-	int getMyOrdListCount(PageDTO pageDTO);
+
+	List<BoardDTO> getBoardList(BoardDTO boardDTO);
+
+	int getBoardCount();
+
+	List<BoardDTO> getBoardLikeList(BoardDTO boardDTO);
+	
+	List<ProdDTO> getPordLikeList(PageDTO pageDTO);
+	//¸¶ÀÌÆäÀÌÁö ÁÖ¹®¸ñ·Ï
+		List<OrderListDTO> getMyOrdList(PageDTO pageDTO);
+		//¸¶ÀÌÆäÀÌÁö ÁÖ¹®¸ñ·Ï ¼ö·®
+		int getMyOrdListCount(PageDTO pageDTO);
+
 
 }

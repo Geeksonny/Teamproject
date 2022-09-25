@@ -17,7 +17,7 @@ import com.itwillbs.service.ProdLikeService;
 @Controller
 public class ProdLikeController {
 
-	//객체생성 부모인터페이스 = 자식클래스
+	//媛앹껜�깮�꽦 遺�紐⑥씤�꽣�럹�씠�뒪 = �옄�떇�겢�옒�뒪
 	@Inject
 	private  ProdLikeService prodLikeService;
 
@@ -32,10 +32,11 @@ public class ProdLikeController {
 		prodLikeDTO prodLikeDTO2 = prodLikeService.prodLikeCheck(prodLikeDTO);
 		
 		if(userId != null) {
-			if(prodLikeDTO2 == null) {
-				prodLikeService.inserProdLike(prodLikeDTO);
-			}else {
+			if(prodLikeDTO2 != null) {
 				prodLikeService.deleteProdLike(prodLikeDTO);
+			}else {
+				
+				prodLikeService.inserProdLike(prodLikeDTO);
 			}
 		}else {
 			return"/notlogin/msg4";

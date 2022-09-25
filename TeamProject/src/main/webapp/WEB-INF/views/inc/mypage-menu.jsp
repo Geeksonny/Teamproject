@@ -131,13 +131,13 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath }/member/forms-basic-inputs" class="menu-link">
+                  <a href="${pageContext.request.contextPath }/mypage/boardList?userNicknm=${sessionScope.userId}" class="menu-link">
                     <div data-i18n="Basic Inputs">나의 글 목록</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath }/member/forms-basic-inputs" class="menu-link">
-                    <div data-i18n="Basic Inputs">나의 댓글</div>
+                  <a href="${pageContext.request.contextPath }/mypage/prodLikeList?userId=${sessionScope.userId}" class="menu-link">
+                    <div data-i18n="Basic Inputs">좋아요한 상품</div>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -146,7 +146,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath }/member/forms-input-groups" class="menu-link">
+                  <a href="${pageContext.request.contextPath }/mypage/likeList?userId=${sessionScope.userId}" class="menu-link">
                     <div data-i18n="Input groups">좋아요</div>
                   </a>
                 </li>
