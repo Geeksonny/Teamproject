@@ -13,18 +13,12 @@
             <div class="hero__items set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/hero/hero-01.jpg">
                 <div class="container">
                     <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
+                        <div class="col-xl-5 col-lg-7 col-md-5">
                             <div class="hero__text">
-                                <h6>광고단</h6>
-                                <h2>이벤트나 광고</h2>
-                                <p>설명설명</p>
-                                <a href="#" class="primary-btn">보러가기<span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
+                                <h6>새 소식</h6>
+                                <h2 style="color:#fff; text-shadow:-2px 1px 15px #000;">핏티드 X HEALTHY 한정 콜라보 </h2>
+<!--                                 <p style="background-color:#000">핏티등와 HEALTHY가 콜라보한 신상품을 만나보세요!</p> -->
+                                <a href="${pageContext.request.contextPath }/product/shop" class="primary-btn mt-3">스토어 가기<span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -35,16 +29,9 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>광고단2</h6>
-                                <h2>이벤트나 광고2</h2>
-                                <p>설명설명2</p>
-                                <a href="#" class="primary-btn">보러가기<span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
+                                <h6 style="color:#000">공지사항</h6>
+                                <h2>핏티드 가입 시 <br>1000P 즉시 적립</h2>
+                                <a href="${pageContext.request.contextPath }/member/join" class="primary-btn mt-3" style="background-color:#3a4046;">가입하기<span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -55,16 +42,9 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>광고단2</h6>
-                                <h2>이벤트나 광고2</h2>
-                                <p>설명설명2</p>
-                                <a href="#" class="primary-btn">보러가기<span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
+                                <h6>커뮤니티</h6>
+                                <h2>핏티드 가입 시 <br>1000P 즉시 적립</h2>
+                                <a href="${pageContext.request.contextPath }/board/list" class="primary-btn mt-3">커뮤니티 가기<span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -349,39 +329,39 @@
         </div>
     </section>
 
-    <!-- 커뮤니티란 -->
-    <section class="instagram spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="instagram__pic">
-                        <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-1.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-2.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-3.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-4.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-5.jpg"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-6.jpg"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="instagram__text">
-                        <h2>커뮤니티</h2>
-                        <p>#오.운.완 이벤트 같은 설명, 당첨자 발표 등등</p>
-                        <h3>후기 보러가기</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!--     커뮤니티란 -->
+<!--     <section class="instagram spad"> -->
+<!--         <div class="container"> -->
+<!--             <div class="row"> -->
+<!--                 <div class="col-lg-8"> -->
+<!--                     <div class="instagram__pic"> -->
+<%--                         <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-1.jpg"></div> --%>
+<%--                         <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-2.jpg"></div> --%>
+<%--                         <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-3.jpg"></div> --%>
+<%--                         <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-4.jpg"></div> --%>
+<%--                         <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-5.jpg"></div> --%>
+<%--                         <div class="instagram__pic__item set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/instagram/instagram-6.jpg"></div> --%>
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-4"> -->
+<!--                     <div class="instagram__text"> -->
+<!--                         <h2>커뮤니티</h2> -->
+<!--                         <p>#오.운.완 이벤트 같은 설명, 당첨자 발표 등등</p> -->
+<!--                         <h3>후기 보러가기</h3> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </section> -->
 
-    <!-- 인기트레이너란 -->
+    <!-- 커뮤니티 -->
     <section class="latest spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <span>Daily Trainning</span>
-                        <h2>8월 인기 트레이너</h2>
+                        <span>COMMUNITY</span>
+                        <h2>인기 포스트 TOP 3</h2>
                     </div>
                 </div>
             </div>
@@ -390,9 +370,9 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-1.jpg"></div>
                         <div class="blog__item__text">
-                            <span>소개소개</span>
-                            <h5>헬스 몇 년 경력 무슨 자격증의 트레이너 소개</h5>
-                            <a href="#">신청하기</a>
+                            <span>작성자</span>
+                            <h5>제목</h5>
+                            <a href="#">보러가기</a>
                         </div>
                     </div>
                 </div>
@@ -400,9 +380,9 @@
                 	<div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-2.jpg"></div>
                     <div class="blog__item">
                         <div class="blog__item__text">
-                            <span>소개소개</span>
-                            <h5>홈트레이닝 PT 트레이너 소개</h5>
-                            <a href="#">신청하기</a>
+                            <span>날짜</span>
+                            <h5>제목</h5>
+                            <a href="#">보러가기</a>
                         </div>
                     </div>
                 </div>
@@ -410,9 +390,9 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-3.jpg"></div>
                         <div class="blog__item__text">
-                            <span>소개소개</span>
-                            <h5>크로스핏 트레이너 소개</h5>
-                            <a href="#">신청하기</a>
+                            <span>날짜</span>
+                            <h5>제목</h5>
+                            <a href="#">보러가기</a>
                         </div>
                     </div>
                 </div>

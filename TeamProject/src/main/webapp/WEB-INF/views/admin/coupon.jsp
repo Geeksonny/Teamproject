@@ -93,8 +93,8 @@
               <div class="row mb-5">
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
+                    <img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px">
                     <div class="card-header">쿠폰 코드 &nbsp;
-                    	<a href=#> X</a>
                     </div>
                     <div class="card-body">
                       <h5 class="card-title">쿠폰 이름 <span class="text-warning">30% 할인</span> </h5>
@@ -110,8 +110,8 @@
                 </div>
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
+                    <img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px">
                     <div class="card-header">쿠폰 코드 &nbsp;
-                    	<a href=#> X</a>
                     </div>
                     <div class="card-body">
                       <h5 class="card-title">쿠폰 이름 <span class="text-warning">30% 할인</span> </h5>
@@ -128,7 +128,7 @@
                  <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
                     <div class="card-header">쿠폰 코드 &nbsp;
-                    	<a href=#> X</a>
+                    <img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px">
                     </div>
                     <div class="card-body">
                       <h5 class="card-title">쿠폰 이름 <span class="text-warning">30% 할인</span> </h5>

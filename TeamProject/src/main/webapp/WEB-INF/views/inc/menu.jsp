@@ -71,8 +71,35 @@
 <div class="offcanvas-menu-wrapper">
     <div class="offcanvas__option">
         <div class="offcanvas__links">
-	        <a href="${pageContext.request.contextPath }/member/login">로그인</a>
-	        <a href="${pageContext.request.contextPath }/member/join">회원가입</a>
+
+            <c:if test="${(empty sessionScope)}">
+				<!-- sessionScope 아이디가 비어있는 경우 로그인 / 회원가입 -->
+				<a href="${pageContext.request.contextPath }/member/login">로그인</a>
+				<a href="${pageContext.request.contextPath }/member/join">회원가입</a>
+			</c:if>
+
+			<c:if test="${ !(empty sessionScope.userId)}">
+				<!-- sessionScope 아이디가 userId에 admin이 아닐 경우 환영글 / 로그아웃 -->
+				<c:if test="${sessionScope.userId ne 'admin'}">
+					<a href="${pageContext.request.contextPath }/mypage">마이페이지</a>
+					<a href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
+				</c:if>
+			</c:if>
+
+			<c:if test="${ !(empty sessionScope.compId )}">
+				<!-- sessionScope 아이디가 compId에 admin이 아닐 경우 마이페이지 -->
+					<a href="${pageContext.request.contextPath }/comp/compMain">업체페이지</a>
+					<a href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
+			</c:if>
+
+                        <!-- 비어있는 경우가 아닌 경우 == 스코프가 비어있지 않으면 if문이 동작 조건연산자 -->
+			<c:if test="${ !(empty sessionScope.userId )}">
+				<!-- sessionScope 아이디가 admin일 경우 관리자페이지 -->
+				<c:if test="${sessionScope.userId eq 'admin'}">
+					<a href="${pageContext.request.contextPath }/adminpage">관리자페이지</a>
+					<a href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
+				</c:if>
+			</c:if>
 
         </div>
         <div class="offcanvas__top__hover">
@@ -87,7 +114,10 @@
     </div>
     <div id="mobile-menu-wrap"></div>
     <div class="offcanvas__text">
-        <p>운동에 대한 어쩌구 장바구니/포인트관리 같은 거 있어도 될 듯</p>
+		<c:if test="${!(empty sessionScope.userId)}">
+			<a href="javascript:openPop();" class="mr-3 ml-3" >포인트 충전</a> |
+			<a href="${pageContext.request.contextPath }/order/cart" class="mr-3  ml-3">장바구니</a>
+		</c:if>
     </div>
 </div>
 <!-- 회원메뉴단(모바일) 끝 -->
@@ -98,11 +128,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-7">
-                    <div class="header__top__left">
-                     <div class="offcanvas__links">
+                    <div class="header__top__left ml-5">
+                     <div class="header__top__links ml-5">
 						<c:if test="${!(empty sessionScope.userId)}">
-						<a href="javascript:openPop();" class="mr-3 ml-3" >포인트 충전</a> |
-						<a href="${pageContext.request.contextPath }/order/cart" class="mr-3  ml-3">장바구니</a>
+							<a href="javascript:openPop();" class="mr-3 ml-3" >포인트 충전</a> |
+							<a href="${pageContext.request.contextPath }/order/cart" class="mr-3  ml-3">장바구니</a>
 						</c:if>
 
                     </div>
@@ -140,6 +170,7 @@
 									<a href="${pageContext.request.contextPath }/member/logout">로그아웃</a>
 								</c:if>
 							</c:if>
+
                         </div>
                         <div class="header__top__hover">
                         </div>
@@ -183,7 +214,7 @@
     <div class="popup_layer" id="popup_layer" style="display: none;">
   	<div class="popup_box">
       <div style="height: 10px; width: 375px; float: top;">
-        <a href="javascript:closePop();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close" width="30px" height="30px"></a>
+        <a href="javascript:closePop();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close" width="70px"></a>
      </div>
    <!--팝업 컨텐츠 영역-->
       <div class="popup_cont">

@@ -56,7 +56,7 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>num</th>
+                        <th>번호</th>
                         <th>주문 코드</th>
                         <th>주문자</th>
                         <th>업체명</th>

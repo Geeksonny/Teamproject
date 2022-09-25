@@ -52,7 +52,8 @@
 		PRODUCT_LIKE = PRODUCT_LIKE - 1
 		where USER_ID=#{userId}
 	</update>
-<!-- 	유저가 주문목록 같고오기 -->
+
+<!-- 	유저가 주문목록 갖고오기 -->
 	<select id="getMyOrdList" resultType="com.itwillbs.domain.OrderListDTO">
 
 		SELECT   @rownum:=@rownum+1 as trnum
@@ -83,6 +84,7 @@
 		WHERE   ORD_L_USER=#{userId}
 
 	</select>
+
 <!-- 	<select id="getMyOrdList" resultType="com.itwillbs.domain.OrderListDTO"> -->
 
 <!-- 		SELECT   @rownum:=@rownum+1 as trnum -->
