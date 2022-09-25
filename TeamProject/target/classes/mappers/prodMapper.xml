@@ -30,7 +30,10 @@
 			              ,PR.PROD_L_SUBIMG
 			              ,PR.PROD_L_DETAIL
 			              ,PR.PROD_L_QUANTITY
+			              ,PL.avgRating
 					  FROM projectdb.PRODUCT_LIST PR
+					  LEFT OUTER JOIN (SELECT PROD_L_NUM,ROUND(AVG(RATING)) AS avgRating FROM projectdb.PRODUCT_REPLY GROUP BY PROD_L_NUM) PL
+		  				ON PR.PROD_L_NUM = PL.PROD_L_NUM
 			  ) PR
 		  WHERE 1=1
 		 <!-- 검색 기능 -->
@@ -47,28 +50,33 @@
 		 <!-- 검색 기능 -->
 		 <!-- 카테고리 기능 -->
 		 <if test="category != null and category != ''">
-		 	AND PROD_L_OPTION3 = #{category}
+			AND (
+				REGEXP_LIKE (PROD_L_OPTION2 , #{category})
+				OR REGEXP_LIKE (PROD_L_OPTION3 , #{category})
+				OR REGEXP_LIKE (PROD_L_OPTION4 , #{category})
+				OR REGEXP_LIKE (PROD_L_OPTION5 , #{category})
+				)
 		 </if>
 		 <!-- 카테고리 기능 -->
-		 ORDER BY PR.PROD_L_NUM DESC
-		 ) PROD
-		 LIMIT #{startRow}, #{pageSize}
-
-		 <!--
-		 정렬 방법 높은가격,낮은가격
 		 ORDER BY
+		 <!-- 정렬 방법 높은가격,낮은가격 -->
 		 <choose>
+		 	<when test="gridColumn == 'priceNew'">
+	  			PR.PROD_L_NUM DESC
+	  		</when>
 	  		<when test="gridColumn == 'priceDesc'">
-	  			PROD_L_PRICE DESC
+	  			PR.PROD_L_PRICE DESC
 	  		</when>
 	  		<when test="gridColumn == 'priceAsc'">
-	  			PROD_L_PRICE ASC
+	  			PR.PROD_L_PRICE ASC
 	  		</when>
 	  		<otherwise>
-		    	PROD_L_NUM DESC
-	    </otherwise>
+		    	PR.PROD_L_NUM DESC
+	   		 </otherwise>
 	  	</choose>
-	  	 -->
+	  	<!-- 정렬 방법 높은가격,낮은가격 -->
+		 ) PROD
+		 LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<select id="selectProdListCnt" parameterType="com.itwillbs.domain.ProdDTO" resultType="java.lang.Integer">
@@ -111,8 +119,14 @@
 		 <!-- 검색 기능 -->
 		 <!-- 카테고리 기능 -->
 		 <if test="category != null and category != ''">
-		 	AND PROD_L_OPTION3 = #{category}
+			AND (
+				REGEXP_LIKE (PROD_L_OPTION2 , #{category})
+				OR REGEXP_LIKE (PROD_L_OPTION3 , #{category})
+				OR REGEXP_LIKE (PROD_L_OPTION4 , #{category})
+				OR REGEXP_LIKE (PROD_L_OPTION5 , #{category})
+				)
 		 </if>
+		 <!-- 카테고리 기능 -->
 	</select>
 
 	<select id="selectProdDetail" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
@@ -143,11 +157,16 @@
 		      ,R.CONTENT
 		      ,R.RATING
 		      ,R.REPLY_DATE
+		      ,(SELECT round(AVG(B.RATING)) AS AV FROM PRODUCT_REPLY B WHERE B.PROD_L_NUM  = L.PROD_L_NUM) AS avgRating
+		      ,(SELECT COUNT(B.PROD_L_NUM) FROM PRODUCT_REPLY B WHERE B.PROD_L_NUM  = L.PROD_L_NUM) AS countRating
 	      FROM PRODUCT_REPLY R
 	      LEFT OUTER JOIN PRODUCT_LIST L ON R.PROD_L_NUM = L.PROD_L_NUM
 	      LEFT OUTER JOIN USER_INFO U ON R.USER_ID = U.USER_ID
-	     WHERE L.PROD_L_NUM = #{prodLNum}
+	     WHERE 1=1
+		   AND L.PROD_L_NUM = #{prodLNum}
+		 ORDER BY R.REPLY_DATE DESC
 	</select>
+
 	<!-- 댓글등록 -->
   	<insert id="enrollReply" parameterType="com.itwillbs.domain.ProdDTO">
   		INSERT INTO PRODUCT_REPLY(PROD_L_NUM, USER_ID, CONTENT, RATING)
@@ -162,5 +181,79 @@
 		   AND PROD_L_NUM = #{prodLNum}
 	</select>
 
+	<!-- 추천 상품 -->
+	<select id="selectProdRelatedList" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT PROD_L_NUM
+              ,PROD_L_CODE
+              ,PROD_L_OPTION1
+              ,PROD_L_OPTION2
+              ,PROD_L_OPTION3
+              ,PROD_L_OPTION4
+              ,PROD_L_OPTION5
+              ,PROD_L_PRODNM
+              ,PROD_L_PRICE
+              ,PROD_L_UPLOADDATE
+              ,PROD_L_COMPNM
+              ,PROD_L_MAINIMG
+              ,PROD_L_SUBIMG
+              ,PROD_L_DETAIL
+              ,PROD_L_QUANTITY
+		  FROM projectdb.PRODUCT_LIST
+		 WHERE 1=1
+		 <if test="prodLOption3 != null and prodLOption3 != ''">
+		 	AND PROD_L_OPTION3 = #{prodLOption3}
+		 </if>
+		 ORDER BY RAND() LIMIT 4
+	</select>
+
+	<select id="selectProdNewList" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT PL.PROD_L_NUM
+              ,PL.PROD_L_CODE
+              ,PL.PROD_L_OPTION1
+              ,PL.PROD_L_OPTION2
+              ,PL.PROD_L_OPTION3
+              ,PL.PROD_L_OPTION4
+              ,PL.PROD_L_OPTION5
+              ,PL.PROD_L_PRODNM
+              ,PL.PROD_L_PRICE
+              ,PL.PROD_L_UPLOADDATE
+              ,PL.PROD_L_COMPNM
+              ,PL.PROD_L_MAINIMG
+              ,PL.PROD_L_SUBIMG
+              ,PL.PROD_L_DETAIL
+              ,PL.PROD_L_QUANTITY
+              ,PR.avgRating
+		  FROM projectdb.PRODUCT_LIST PL
+		  LEFT OUTER JOIN (SELECT PROD_L_NUM,ROUND(AVG(RATING)) AS avgRating FROM projectdb.PRODUCT_REPLY GROUP BY PROD_L_NUM) PR
+		  	ON PR.PROD_L_NUM = PL.PROD_L_NUM
+		 ORDER BY PL.PROD_L_CODE DESC LIMIT 8
+	</select>
+
+	<select id="selectProdBsList" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT PL.PROD_L_NUM
+              ,PL.PROD_L_CODE
+              ,PL.PROD_L_OPTION1
+              ,PL.PROD_L_OPTION2
+              ,PL.PROD_L_OPTION3
+              ,PL.PROD_L_OPTION4
+              ,PL.PROD_L_OPTION5
+              ,PL.PROD_L_PRODNM
+              ,PL.PROD_L_PRICE
+              ,PL.PROD_L_UPLOADDATE
+              ,PL.PROD_L_COMPNM
+              ,PL.PROD_L_MAINIMG
+              ,PL.PROD_L_SUBIMG
+              ,PL.PROD_L_DETAIL
+              ,PL.PROD_L_QUANTITY
+              ,PR.avgRating
+		  FROM projectdb.PRODUCT_LIST PL
+		 INNER JOIN( SELECT A.ORD_L_CODE,A.ORD_L_QUANTITY FROM
+			 			( SELECT ORD_L_CODE, SUM(ORD_L_QUANTITY) AS ORD_L_QUANTITY FROM projectdb.ORDER_LIST GROUP BY ORD_L_CODE) A
+						 ORDER BY ORD_L_QUANTITY DESC LIMIT 4
+					) QU
+			ON PL.PROD_L_CODE = QU.ORD_L_CODE
+		  LEFT OUTER JOIN (SELECT PROD_L_NUM,ROUND(AVG(RATING)) AS avgRating FROM projectdb.PRODUCT_REPLY GROUP BY PROD_L_NUM) PR
+		  	ON PR.PROD_L_NUM = PL.PROD_L_NUM
+	</select>
 
 </mapper>

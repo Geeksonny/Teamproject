@@ -200,11 +200,6 @@ public class MemberController {
 		return "redirect:/main/main";
 	}
 
-	// 메인
-	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public String indexMain() {
-		return "main/main";
-	}
 
 	@RequestMapping(value = "/basic/basic-badge-button", method = RequestMethod.GET)
 	public String basicBasicBadgeButton() {
