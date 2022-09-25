@@ -120,7 +120,6 @@
 					 ,CONCAT(COU_NUM,'_',COU_DC) as couNumCouDc
 			  FROM 	 COUPON
 			 WHERE 	 COU_USER_NM =#{couUserNm}
-			   AND   COU_YN = "Y"
 		</select>
 
 </mapper>
