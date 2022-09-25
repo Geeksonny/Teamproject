@@ -4,29 +4,31 @@ import java.sql.Timestamp;
 
 public class OrderListDTO extends OrderDTO{
 	private int trnum;
-	private int ordNum          ;
-	private String ordLCode        ; // 상품코드
-	private String ordLProdnm        ; // 상품이름
-	private String ordLUser; // 주문자 아이디
-	private String ordLUserNm; // 주문자 이름
-	private String compNm; // 회사 이름
+	private int ordNum;
+	private String ordLCode; 			// 상품코드
+	private String ordLProdnm; 			// 상품이름
+	private String ordLUser; 			// 주문자 아이디
+	private String ordLUserNm; 			// 주문자 이름
+	private String compNm; 				// 회사 이름
 
-	private int ordLQuantity; // 주문수량
-	private int ordLPrice;    // 개별가격
-	private Timestamp ordLDate;
-	private String compId;  // 회사아이디
-	private String ordDeliveryStatus; // 배송상태
-	private int individualPrice;	  // 개별물품 총합
 	
-	private String ordLDelivNumber;   //운송장 번호
+	private int ordLNum;				// 주문번호		
+	private int ordLQuantity; 			// 주문수량
+	private int ordLPrice;    			// 개별가격
+	private Timestamp ordLDate;
+	private String compId;			 	// 회사아이디
+	private String ordDeliveryStatus;	// 배송상태
+	private int individualPrice;	 	// 개별물품 총합
+	
+	private String ordLDelivNumber;   	//운송장 번호
 	private int count;
 	private String ordPurchasestatus;	//구매상태
 
-	private String ge50Count; //50개이상 상품수량
-	private String ne50Count; //50개 미만 상품수량
-	private String eq50Couunt; // 0개 상품 수량
-	private String ordLCouponnum; //사용 쿠폰 넘버
-	private String ordRefund; //환불 여부
+	private String ge50Count; 			//50개이상 상품수량
+	private String ne50Count; 			//50개 미만 상품수량
+	private String eq50Couunt; 			// 0개 상품 수량
+	private String ordLCouponnum; 		//사용 쿠폰 넘버
+	private String ordRefund; 			//환불 여부
 
 	public int getTrnum() {
 		return trnum;
@@ -170,17 +172,23 @@ public class OrderListDTO extends OrderDTO{
 	public void setIndividualPrice(int individualPrice) {
 		this.individualPrice = individualPrice;
 	}
+	public int getOrdLNum() {
+		return ordLNum;
+	}
+	public void setOrdLNum(int ordLNum) {
+		this.ordLNum = ordLNum;
+	}
 	@Override
 	public String toString() {
 		return "OrderListDTO [trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode=" + ordLCode + ", ordLProdnm="
 				+ ordLProdnm + ", ordLUser=" + ordLUser + ", ordLUserNm=" + ordLUserNm + ", compNm=" + compNm
-				+ ", ordLQuantity=" + ordLQuantity + ", ordLPrice=" + ordLPrice + ", ordLDate=" + ordLDate + ", compId="
-				+ compId + ", ordDeliveryStatus=" + ordDeliveryStatus + ", ordFinalprice="
-				+ ", ordLDelivNumber=" + ordLDelivNumber + ", count=" + count + ", ordPurchasestatus="
+				+ ", ordLNum=" + ordLNum + ", ordLQuantity=" + ordLQuantity + ", ordLPrice=" + ordLPrice + ", ordLDate="
+				+ ordLDate + ", compId=" + compId + ", ordDeliveryStatus=" + ordDeliveryStatus + ", individualPrice="
+				+ individualPrice + ", ordLDelivNumber=" + ordLDelivNumber + ", count=" + count + ", ordPurchasestatus="
 				+ ordPurchasestatus + ", ge50Count=" + ge50Count + ", ne50Count=" + ne50Count + ", eq50Couunt="
-				+ eq50Couunt + ", ordLCouponnum=" + ordLCouponnum + "]";
+				+ eq50Couunt + ", ordLCouponnum=" + ordLCouponnum + ", ordRefund=" + ordRefund + "]";
 	}
-
+	
 
 
 }

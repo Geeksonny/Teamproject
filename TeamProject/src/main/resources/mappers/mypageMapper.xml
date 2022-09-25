@@ -92,30 +92,27 @@
 	</update>
 	
 	
-	<!-- 	유저가 주문목록 갖고오기 -->
-	<select id="getMyOrdList" resultType="com.itwillbs.domain.OrderListDTO">
-
-		SELECT   @rownum:=@rownum+1 as trnum
-				,ol.ORD_L_CODE			 as ordLCode
-				,ol.ORD_L_QUANTITY       as ordLQuantity
-				,ol.ORD_L_PRICE          as ordLPrice
-				,ol.ORD_L_COUPONNUM      as ordLCouponnum
-				,ol.ORD_DELIVERY_STATUS  as ordDeliveryStatus
-				,ol.ORD_L_DELIV_NUMBER   as ordLDelivNumber
-				,ol.ORD_PURCHASESTATUS   as ordPurchasestatus
-				,ol.ORD_L_DATE           as ordLDate
-				,ob.NUM					 as num
-				,ob.ORD_COUPONDC         as ordCouponDc
-				,ob.ORD_FINALPRICE       as ordFinalPrice
-		 FROM   ORDER_LIST as ol JOIN ORDER_BOARD as ob
-		   ON   (ol.ORD_L_USER=ob.USER_ID) JOIN PRODUCT_LIST pl
-		   ON	(ol.ORD_L_CODE=pl.PROD_L_CODE)
-		WHERE   (@rownum:=0)=0
-		  AND   ol.ORD_L_USER=#{userId}
-	 ORDER BY   ol.ORD_L_CODE
-   DESC LIMIT   #{startRow}, #{pageSize}
-                ,#{pageSize}
+<!--	 resultMap="OrderListDTO" -->
+<!-- 	유저가 주문목록 같고오기 -->
+	<select id="getMyOrdList" parameterType="com.itwillbs.domain.OrderListDTO" >
+		SELECT   l.ORD_L_CODE			 
+				,l.ORD_L_QUANTITY       
+				,l.ORD_L_PRICE          
+				,l.ORD_L_COUPONNUM      
+				,l.ORD_DELIVERY_STATUS  
+				,l.ORD_L_DELIV_NUMBER   
+				,l.ORD_PURCHASESTATUS   
+				,l.ORD_L_DATE          
+		        ,l.ORD_L_NUM			
+				,b.ORD_COUPONDC         
+				,b.ORD_FINALPRICE       
+		 FROM   ORDER_LIST l join ORDER_BOARD b
+		   ON   (l.ORD_L_NUM=b.NUM)
+		WHERE   l.ORD_L_USER= #{userId}
+		ORDER BY   l.ORD_L_DATE
+   DESC LIMIT    #{startRow}, #{pageSize}
 	</select>
+	
 	<select id="getMyOrdListCount" resultType="java.lang.Integer">
 
 		SELECT  count(ORD_L_USER)
