@@ -75,6 +75,7 @@
 											</td>
 											<td class="cart__price">
 												<input type="hidden" id="price_${basketDTO.num}" value="${basketDTO.sbProdPrice }">
+												<input type="hidden" id="quantity_${basketDTO.num}" value="${basketDTO.prodLQuantity }">
 <!-- 												수량증가시 증가버튼 누른 가격만 갖고오기 -->
 												<div id="total_${basketDTO.num}" class="total"><fmt:formatNumber value="${basketDTO.sbTotalPrice }" pattern="###,###,###"/>원</div>
 											</td>
