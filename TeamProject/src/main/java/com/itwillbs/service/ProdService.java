@@ -13,7 +13,7 @@ public interface ProdService {
 	public ProdDTO selectProdDetail(ProdDTO prodDTO);
 
 	/* 상품 id 이름 */
-	public ProdDTO getProdNumName(ProdDTO prodDTO);
+	public List<ProdDTO> getProdNumName(ProdDTO prodDTO);
 
 	/* 댓글 등록 */
 	public void enrollReply(ProdDTO prodDTO);
@@ -21,4 +21,12 @@ public interface ProdService {
 	/* 댓글 존재 체크 */
 	public int checkReply(ProdDTO prodDTO);
 
+	/* 추천 상품 리스트 */
+	public List<ProdDTO> selectProdRelatedList(ProdDTO details);
+
+	/* 메인화면 - 신상품 리스트 */
+	public List<ProdDTO> selectProdNewList(ProdDTO prodDTO);
+
+	/* 메인화면 - 많이 팔린 상품 리스트 */
+	public List<ProdDTO> selectProdBsList(ProdDTO prodDTO);
 }
