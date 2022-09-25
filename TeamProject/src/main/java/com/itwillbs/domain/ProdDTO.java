@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class ProdDTO extends PageDTO {
 
-	// 상품
+	// �긽�뭹
 	private int prodLNum;
 	private String prodLCode;
 	private String prodLOption1;
@@ -21,11 +21,11 @@ public class ProdDTO extends PageDTO {
 	private String prodLDetail;
 	private int prodLQuantity;
 
-	// 검색, 카테고리 기능
+	// 寃��깋, 移댄뀒怨좊━ 湲곕뒫
 	private String srhText;
 	private String category;
 
-	// 리뷰 관련
+	// 由щ럭 愿��젴
 	private String userId;
 	private int replyNum;
 	private String content;
@@ -165,7 +165,10 @@ public class ProdDTO extends PageDTO {
 	public void setReplyDate(Timestamp replyDate) {
 		this.replyDate = replyDate;
 	}
-
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		return "ProdReplyDTO [replyNum=" + replyNum + ", prodLNum=" + prodLNum + ", userId=" + userId + ", content="

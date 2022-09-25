@@ -450,7 +450,7 @@ $(document).ready(function(){
 									<img src="${pageContext.request.contextPath }/resources/img/product/${prodList.prodLMainimg}" alt="위의 이미지를 누르면 연결됩니다."/>
 								</a>
                                     <ul class="product__hover">
-                    	 	           <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+                    	 	           <li><a href="${pageContext.request.contextPath }/product/likeinsert?prodLCode=${prodDTO.prodLCode}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
                     		           <li><a href="${pageContext.request.contextPath }/order/cart"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>
                                    </ul>
                                 </div>
