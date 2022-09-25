@@ -36,7 +36,7 @@
 var category = "";
 
 function searchProd(comp){
-		debugger;
+		//debugger;
 	var pageNum = "1";
 
 	if(comp.tagName == 'A'){
@@ -49,6 +49,7 @@ function searchProd(comp){
 
 	// 검색창
 	var srhText = $('#srhText').val();
+	var gridColumn =  $('#gridColumn').val();
 
 	$.ajax({
     	url: '${pageContext.request.contextPath }/product/shopAjax',
@@ -56,17 +57,16 @@ function searchProd(comp){
 		data : {
 			"category":category,
 			"srhText":srhText,
-			"pageNum":pageNum
+			"pageNum":pageNum,
+			"gridColumn":gridColumn
 		},
 		dataType: "json",
 		success:function( data ) {
 // 			debugger;
 			// 상품 뿌려주기
 			printProdList(data.prodList);
-
 			// 페이징 처리
 			printPaging(data.prodDTO);
-
 		}
 	});
 }
@@ -136,6 +136,7 @@ function printPaging(dto){
 		$('#product__pagination').append('<a class="search page" data-value="' + pageNum + '"  href="#">&gt; &gt;</a> ')
 	}
 
+	// 카테고리 지정
 	$('.search').click(function(){
 		searchProd(this);
 	});
@@ -145,6 +146,8 @@ function printPaging(dto){
 <!-- 이벤트 시작 -->
 // 검색창 이벤트
 $(document).ready(function(){
+
+	var gridColumn;
 	$('.search').click(function(){
 		searchProd(this);
 	});
@@ -166,6 +169,11 @@ $(document).ready(function(){
 			$("#srhText").focus();
 			return;
 		}
+		searchProd(this);
+	});
+
+	$('#gridColumn').change(function () {
+		//gridColumn = this.options[this.selectedIndex].value;
 		searchProd(this);
 	});
 });
@@ -246,12 +254,11 @@ $(document).ready(function(){
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-<%--                 	<form action="${pageContext.request.contextPath }/product/shop"> --%>
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
-                                <input type="text" id="srhText" name="srhText">
-                                <button type="submit" id="submit" class="search">
-                                <span class="icon_search"></span></button>
+	                        <input type="text" id="srhText" name="srhText">
+	                        <button type="submit" id="submit" class="search">
+	                        <span class="icon_search"></span></button>
                         </div>
                         <!-- 화면 왼쪽 카테고리 시작 -->
                         <div class="shop__sidebar__accordion">
@@ -265,7 +272,6 @@ $(document).ready(function(){
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
                                                 <ul class="nice-scroll">
-                                                <!-- to do -->
                                                		<li><a href="#" id="clothes" class="clothes">옷</a>
                                                			<ul class="sub1" style="display: none">
                                                				<li><a class="search" href="#" id="P0101">ㅡ　상의</a></li>
@@ -303,16 +309,16 @@ $(document).ready(function(){
                                                 <ul class="nice-scroll">
                                                 	<li><a href="#" id="supplement" class="supplement">보충제</a>
                                                			<ul class="sub4" style="display: none">
-                                               				<li><a href="#" id="protein" id="F0101">ㅡ　프로틴</a></li>
-                                               				<li><a href="#" id="booster" id="F0102">ㅡ　부스터</a></li>
-                                               				<li><a href="#" id="nutritive" id="F0103">ㅡ　영양제</a></li>
+                                               				<li><a class="search" href="#" id="F0101">ㅡ　프로틴</a></li>
+                                               				<li><a class="search" href="#" id="F0102">ㅡ　부스터</a></li>
+                                               				<li><a class="search" href="#" id="F0103">ㅡ　영양제</a></li>
                                                			</ul>
                                                		</li>
                                                		<li><a href="#" id="meal" class="meal">식단</a>
                                                			<ul class="sub5" style="display: none">
-                                               				<li><a href="#" id="chicken" id="F0201">ㅡ　닭가슴살</a></li>
-                                               				<li><a href="#" id="salad" id="F0202">ㅡ　샐러드</a></li>
-                                               				<li><a href="#" id="lunchbox" id="F0203">ㅡ　도시락</a></li>
+                                               				<li><a class="search" href="#" id="F0201">ㅡ　닭가슴살</a></li>
+                                               				<li><a class="search" href="#" id="F0202">ㅡ　샐러드</a></li>
+                                               				<li><a class="search" href="#" id="F0203">ㅡ　도시락</a></li>
                                                			</ul>
                                                		</li>
                                                 </ul>
@@ -321,25 +327,6 @@ $(document).ready(function(){
                                     </div>
                                 </div>
                                 <!-- 식품 카테고리 끝 -->
-                                <!-- 가격 카테고리 시작 -->
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseThree">가격대</a>
-                                    </div>
-                                    <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__price">
-                                                <ul>
-                                                    <li><a href="#">5000원 이하</a></li>
-                                                    <li><a href="#">5000원 ~ 10000원</a></li>
-                                                    <li><a href="#">10000원 ~ 20000원</a></li>
-                                                    <li><a href="#">0000원 이상</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 가격 카테고리 끝 -->
                                 <!-- 사이즈 카테고리 시작 -->
                                 <div class="card">
                                     <div class="card-heading">
@@ -348,21 +335,15 @@ $(document).ready(function(){
                                     <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__size">
-                                                <label for="xs" id="xs" class="xs">XS
-                                                    <input type="radio" id="xs">
-                                                </label>
-                                                <label for="s" id="s" class="s">S
-                                                    <input type="radio" id="s">
-                                                </label>
-                                                <label for="m" id="m" class="m">M
-                                                    <input type="radio" id="m">
-                                                </label>
-                                                <label for="l" id="l" class="l">L
-                                                    <input type="radio" id="l">
-                                                </label>
-                                                <label for="xl" id="xl" class="xl">XL
-                                                    <input type="radio" id="xl">
-                                                </label>
+	                                            <ul class="nice-scroll">
+		                                            <ul>
+			                                            <li><a class="search" href="#" id="S01">ㅡ XS</a></li>
+			                                            <li><a class="search" href="#" id="S02">ㅡ S</a></li>
+			                                            <li><a class="search" href="#" id="S03">ㅡ M</a></li>
+			                                            <li><a class="search" href="#" id="S04">ㅡ L</a></li>
+			                                            <li><a class="search" href="#" id="S05">ㅡ XL</a></li>
+		                                            </ul>
+                                            	</ul>
                                             </div>
                                         </div>
                                     </div>
@@ -376,70 +357,70 @@ $(document).ready(function(){
                                     <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__color">
-                                                <label class="c-1" for="sp-1">
-                                                    <input type="radio" id="sp-1">
-                                                </label>
-                                                <label class="c-2" for="sp-2">
-                                                    <input type="radio" id="sp-2">
-                                                </label>
-                                                <label class="c-3" for="sp-3">
-                                                    <input type="radio" id="sp-3">
-                                                </label>
-                                                <label class="c-4" for="sp-4">
-                                                    <input type="radio" id="sp-4">
-                                                </label>
-                                                <label class="c-5" for="sp-5">
-                                                    <input type="radio" id="sp-5">
-                                                </label>
-                                                <label class="c-6" for="sp-6">
-                                                    <input type="radio" id="sp-6">
-                                                </label>
-                                                <label class="c-7" for="sp-7">
-                                                    <input type="radio" id="sp-7">
-                                                </label>
-                                                <label class="c-8" for="sp-8">
-                                                    <input type="radio" id="sp-8">
-                                                </label>
-                                                <label class="c-9" for="sp-9">
-                                                    <input type="radio" id="sp-9">
-                                                </label>
+                                            	<ul>
+		                                            <li><a class="search" href="#" id="C01">ㅡ RED</a></li>
+		                                            <li><a class="search" href="#" id="C02">ㅡ ORANGE</a></li>
+		                                            <li><a class="search" href="#" id="C03">ㅡ YELLOW</a></li>
+		                                            <li><a class="search" href="#" id="C04">ㅡ GREEN</a></li>
+		                                            <li><a class="search" href="#" id="C05">ㅡ BLUE</a></li>
+		                                            <li><a class="search" href="#" id="C06">ㅡ NAVY</a></li>
+		                                            <li><a class="search" href="#" id="C07">ㅡ PURPLE</a></li>
+		                                            <li><a class="search" href="#" id="C08">ㅡ GRAY</a></li>
+		                                            <li><a class="search" href="#" id="C09">ㅡ PINK</a></li>
+		                                            <li><a class="search" href="#" id="C010">ㅡ WHITE</a></li>
+		                                            <li><a class="search" href="#" id="C011">ㅡ BLACK</a></li>
+	                                            </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- 색상 카테고리 끝 -->
+                                <!-- 맛 카테고리 시작 -->
+                                <div class="card">
+                                    <div class="card-heading">
+                                        <a data-toggle="collapse" data-target="#collapseFive">TASTE</a>
+                                    </div>
+                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="shop__sidebar__color">
+                                            	<ul>
+		                                            <li><a class="search" href="#" id="T01">ㅡ 초코</a></li>
+		                                            <li><a class="search" href="#" id="T02">ㅡ 딸기</a></li>
+		                                            <li><a class="search" href="#" id="T03">ㅡ 바나나</a></li>
+		                                            <li><a class="search" href="#" id="T04">ㅡ 포도</a></li>
+		                                            <li><a class="search" href="#" id="T05">ㅡ 쿠키</a></li>
+		                                            <li><a class="search" href="#" id="T06">ㅡ 커피</a></li>
+		                                            <li><a class="search" href="#" id="T07">ㅡ 바닐라</a></li>
+	                                            </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 맛 카테고리 끝 -->
                             </div>
                         </div>
                     </div>
-<!--                     </form> -->
                 </div>
                 <div class="col-lg-9">
                     <div class="shop__product__option">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>전체 상품 개수 : </p>
+                                    <p>전체 상품 개수 : ${prodDTO.count} 개</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__right">
-                                    <p>정렬</p>
-                                    <select>
-                                        <option value="">신상품순</option>
-                                        <option value="">낮은 가격순</option>
-                                        <option value="">높은 가격순</option>
+                                    <p>정렬 : </p>
+                                    <select id="gridColumn" name="gridColumn">
+                                        <option value="priceNew">신상품순</option>
+                                        <option value="priceDesc">높은 가격순</option>
+                                        <option value="priceAsc">낮은 가격순</option>
                                     </select>
-                                    <select id="dataPerPage">
-								        <option value="10">10개씩보기</option>
-								        <option value="15">15개씩보기</option>
-								        <option value="20">20개씩보기</option>
-									</select>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <!-- 상품 뿌려주는 곳 시작 -->
                     <div class="row" id="prodContainer">
                     	<c:forEach var="prodList" items="${prodList}">
@@ -449,22 +430,22 @@ $(document).ready(function(){
                                 <a href="${pageContext.request.contextPath }/product/details?prodLNum=${prodList.prodLNum}">
 									<img src="${pageContext.request.contextPath }/resources/img/product/${prodList.prodLMainimg}" alt="위의 이미지를 누르면 연결됩니다."/>
 								</a>
-                                    <ul class="product__hover">
-                    	 	           <li><a href="${pageContext.request.contextPath }/product/likeinsert?prodLCode=${prodDTO.prodLCode}"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
-                    		           <li><a href="${pageContext.request.contextPath }/order/cart"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>
-                                   </ul>
+                                <ul class="product__hover">
+               	 	           		<li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+               		            	<li><a href="${pageContext.request.contextPath }/order/cart"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>
+                                </ul>
                                 </div>
                                 <div class="product__item__text">
                                    <h7>${prodList.prodLProdnm}</h7>
                                    <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
                                    <h5> <fmt:formatNumber value="${prodList.prodLPrice}" pattern="###,###,###원"/></h5>
-<%-- 									<h5>${prodList.prodLPrice}원</h5> --%>
                                     <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
+<%--                                     	<c:if test="!="> 나머지 회색깔로 채우기..? <i class="fa fa-star-o"></i> --%>
+                                    	<c:forEach var="i" begin="1" end="${prodList.avgRating}">
+							           	<i class="fa fa-star" style="color:orange"></i>
+							            </c:forEach>
+								        (${prodList.avgRating})
+<%-- 								        </c:if> --%>
                                     </div>
                                 </div>
                             </div>
@@ -472,7 +453,6 @@ $(document).ready(function(){
                         </c:forEach>
                     </div>
                     <!-- 상품 뿌려주는 곳 끝 -->
-
                     <!-- 페이지 (페이징 처리) 시작 -->
                     <div class="row">
                         <div class="col-lg-12">
@@ -490,15 +470,11 @@ $(document).ready(function(){
                         </div>
                     </div>
                     <!-- 페이지 (페이징 처리) 끝 -->
-
                 </div>
             </div>
         </div>
     </section>
     <!-- Shop Section End -->
-
-
-
     <!-- Footer -->
     <jsp:include page="../inc/footer.jsp"/>
 </body>
