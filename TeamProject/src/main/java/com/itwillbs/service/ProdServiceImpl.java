@@ -47,7 +47,7 @@ public class ProdServiceImpl implements ProdService{
 
 	/* 상품 id 이름 */
 	@Override
-	public ProdDTO getProdNumName(ProdDTO prodDTO) {
+	public List<ProdDTO> getProdNumName(ProdDTO prodDTO) {
 		return prodDAO.getProdNumName(prodDTO);
 	}
 
@@ -61,6 +61,24 @@ public class ProdServiceImpl implements ProdService{
 	@Override
 	public int checkReply(ProdDTO prodDTO) {
 		return prodDAO.checkReply(prodDTO);
+	}
+
+	/* 추천 상품 리스트 */
+	@Override
+	public List<ProdDTO> selectProdRelatedList(ProdDTO details) {
+		return prodDAO.selectProdRelatedList(details);
+	}
+
+	/* 메인화면 - 신상품 리스트 */
+	@Override
+	public List<ProdDTO> selectProdNewList(ProdDTO prodDTO) {
+		return prodDAO.selectProdNewList(prodDTO);
+	}
+
+	/* 메인화면 - 많이 팔린 상품 리스트 */
+	@Override
+	public List<ProdDTO> selectProdBsList(ProdDTO prodDTO) {
+		return prodDAO.selectProdBsList(prodDTO);
 	}
 
 }

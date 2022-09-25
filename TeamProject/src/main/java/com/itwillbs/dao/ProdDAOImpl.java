@@ -33,8 +33,8 @@ public class ProdDAOImpl implements ProdDAO{
 	}
 
 	@Override
-	public ProdDTO getProdNumName(ProdDTO prodDTO) {
-		return (ProdDTO) sqlSession.selectOne(namespace+".getProdNumName",prodDTO);
+	public List<ProdDTO> getProdNumName(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace+".getProdNumName",prodDTO);
 	}
 
 	@Override
@@ -45,6 +45,21 @@ public class ProdDAOImpl implements ProdDAO{
 	@Override
 	public int checkReply(ProdDTO prodDTO) {
 		return sqlSession.selectOne(namespace+".checkReply",prodDTO);
+	}
+
+	@Override
+	public List<ProdDTO> selectProdRelatedList(ProdDTO details) {
+		return sqlSession.selectList(namespace+".selectProdRelatedList",details);
+	}
+
+	@Override
+	public List<ProdDTO> selectProdNewList(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace+".selectProdNewList",prodDTO);
+	}
+
+	@Override
+	public List<ProdDTO> selectProdBsList(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace+".selectProdBsList",prodDTO);
 	}
 
 }

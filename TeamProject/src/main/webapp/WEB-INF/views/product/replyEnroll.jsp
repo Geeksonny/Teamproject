@@ -165,6 +165,7 @@
 					debugger;
 					alert("리뷰가 등록되었습니다.");
 					window.close();
+					opener.parent.location.reload();
 				}
 
 			});

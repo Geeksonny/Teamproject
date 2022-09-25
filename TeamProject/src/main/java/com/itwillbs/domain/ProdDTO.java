@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class ProdDTO extends PageDTO {
 
-	// �긽�뭹
+	// 상품
 	private int prodLNum;
 	private String prodLCode;
 	private String prodLOption1;
@@ -21,27 +21,25 @@ public class ProdDTO extends PageDTO {
 	private String prodLDetail;
 	private int prodLQuantity;
 
-	// 회사 이름
-	private String compNm;
+	// 별점 평균, 카운트
+	private int avgRating;
+	private int countRating;
 
-	// 검색, 카테고리 기능
+	// 검색, 카테고리, 정렬 기능
 	private String srhText;
 	private String category;
+	private String gridColumn;
 
-	// 由щ럭 愿��젴
+	// 리뷰 관련
 	private String userId;
 	private int replyNum;
 	private String content;
 	private int rating;
 	private Timestamp replyDate;
 
+	// 사업자
+	private String compNm;
 
-	public String getCompNm() {
-		return compNm;
-	}
-	public void setCompNm(String compNm) {
-		this.compNm = compNm;
-	}
 	public int getProdLNum() {
 		return prodLNum;
 	}
@@ -145,6 +143,12 @@ public class ProdDTO extends PageDTO {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	public String getGridColumn() {
+		return gridColumn;
+	}
+	public void setGridColumn(String gridColumn) {
+		this.gridColumn = gridColumn;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -175,9 +179,24 @@ public class ProdDTO extends PageDTO {
 	public void setReplyDate(Timestamp replyDate) {
 		this.replyDate = replyDate;
 	}
-
-
-
+	public int getAvgRating() {
+		return avgRating;
+	}
+	public void setAvgRating(int avgRating) {
+		this.avgRating = avgRating;
+	}
+	public int getCountRating() {
+		return countRating;
+	}
+	public void setCountRating(int countRating) {
+		this.countRating = countRating;
+	}
+	public String getCompNm() {
+		return compNm;
+	}
+	public void setCompNm(String compNm) {
+		this.compNm = compNm;
+	}
 
 	@Override
 	public String toString() {
@@ -186,18 +205,10 @@ public class ProdDTO extends PageDTO {
 				+ ", prodLOption5=" + prodLOption5 + ", prodLProdnm=" + prodLProdnm + ", prodLPrice=" + prodLPrice
 				+ ", prodLUploaddate=" + prodLUploaddate + ", prodLCompnm=" + prodLCompnm + ", prodLMainimg="
 				+ prodLMainimg + ", prodLSubimg=" + prodLSubimg + ", prodLDetail=" + prodLDetail + ", prodLQuantity="
-				+ prodLQuantity + ", srhText=" + srhText + ", category=" + category + ", userId=" + userId
-				+ ", replyNum=" + replyNum + ", content=" + content + ", rating=" + rating + ", replyDate=" + replyDate
-				+ "]";
+				+ prodLQuantity + ", avgRating=" + avgRating + ", countRating=" + countRating + ", srhText=" + srhText
+				+ ", category=" + category + ", gridColumn=" + gridColumn + ", userId=" + userId + ", replyNum="
+				+ replyNum + ", content=" + content + ", rating=" + rating + ", replyDate=" + replyDate + ", compNm="
+				+ compNm + "]";
 	}
-
-//	@Override
-//	public String toString() {
-//		return "ProdReplyDTO [replyNum=" + replyNum + ", prodLNum=" + prodLNum + ", userId=" + userId + ", content="
-//				+ content + ", rating=" + rating + ", replyDate=" + replyDate + "]";
-//	}
-
-
-
 
 }

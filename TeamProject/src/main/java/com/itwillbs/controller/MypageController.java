@@ -171,7 +171,7 @@ public class MypageController {
 				pageDTO.setEndPage(endPage);
 				pageDTO.setPageCount(pageCount);
 				// �뜲�씠�꽣 �떞�븘�꽌 list.jsp �씠�룞
-//				System.out.println(ordList.toString());
+				System.out.println(ordList.toString());
 
 				model.addAttribute("ordList", ordList);
 				model.addAttribute("pageDTO", pageDTO);

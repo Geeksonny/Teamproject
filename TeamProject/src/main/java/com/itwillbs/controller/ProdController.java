@@ -41,10 +41,6 @@ public class ProdController {
 	@Inject
 	private CommonService commonService;
 
-	//업로드 경로 servlet-context.mxl upload폴더 경로 이름
-	@Resource(name = "uploadPath")
-	private String uploadPath;
-
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
 	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
@@ -112,6 +108,7 @@ public class ProdController {
 		String category = req.getParameter("category");
 		String srhText = req.getParameter("srhText");
 		String pageNum = req.getParameter("pageNum");
+		String gridColumn = req.getParameter("gridColumn");
 
 		if(pageNum == null) {
 			pageNum = "1";
@@ -141,7 +138,7 @@ public class ProdController {
 
 		prodDTO.setCategory(category);
 		prodDTO.setSrhText(srhText);
-
+		prodDTO.setGridColumn(gridColumn);
 		// ---------------- 페이징 처리(Ajax) 끝
 
 		List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
@@ -162,11 +159,24 @@ public class ProdController {
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
 
+			List<ProdDTO> prodReply = prodService.getProdNumName(prodDTO);
+			if(prodReply.size() > 0) {
+				prodDTO.setAvgRating(prodReply.get(0).getAvgRating());
+				prodDTO.setCountRating(prodReply.get(0).getCountRating());
+				details.setRating(prodReply.get(0).getAvgRating());
+			}else {
+				prodDTO.setAvgRating(0);
+				prodDTO.setCountRating(0);
+				details.setRating(0);
+			}
+
 			// 추천꺼 LIST
-//			List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
+			List<ProdDTO> prodRelatedList= prodService.selectProdRelatedList(details);
 
 			mv.addObject("details", details);
+			mv.addObject("prodReply", prodReply);
 			// 추천 꺼 만들기
+			mv.addObject("prodRelatedList", prodRelatedList);
 			mv.addObject("prodDTO", prodDTO);
 			mv.setViewName("product/details");
 
@@ -229,12 +239,35 @@ public class ProdController {
 			map.put("check", "F"); // 이미 리뷰 쓴 경우
 		}else {
 			prodService.enrollReply(prodDTO); //insert
-			ProdDTO reply =  prodService.getProdNumName(prodDTO);
-			map.put("reply", reply);
+			List<ProdDTO> prodReply = prodService.getProdNumName(prodDTO);
+			map.put("prodReply", prodReply);
 			map.put("code", "S");
 		}
 		map.put("prodDTO", prodDTO);
 		return map;
 	}
+
+
+	// 메인화면
+	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
+		try {
+			ModelAndView mv = new ModelAndView();
+			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
+			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
+			// 데이터 담기
+			mv.addObject("newProdList", newProdList);
+			mv.addObject("bsProdList", bsProdList);
+			mv.addObject("prodDTO", prodDTO);
+			mv.setViewName("main/main");
+
+			return mv;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
 
 }
