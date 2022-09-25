@@ -96,6 +96,7 @@ public class BoardController {
 		boardDTO.setPageCount(pageCount);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardDTO", boardDTO);
+		System.out.println("bDTO"+boardList.toString());
 
 		// 주소변경없이 이동
 		// WEB-INF/views/board/list.jsp 이동

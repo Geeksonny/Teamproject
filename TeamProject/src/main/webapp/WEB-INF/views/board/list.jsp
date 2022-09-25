@@ -1,10 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.tcol {
+	background-color:#000;
+}
+</style>
+<script type="text/javascript"
+src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var yn=$({boardNotice}).val();
+			if(yn=='1'){
+				alert("yn");
+				$('.boardTr').addClass("tcol");
 
+			}
+	});
+</script>
 </head>
 <body>
 <!-- 메뉴단 -->
@@ -52,7 +69,7 @@
       <div class="table-responsive">
      	    <div class="shop__sidebar__search mb-2 col-3">
             <form action="${pageContext.request.contextPath }/board/list">
-	             <input type="text" id="srhText" name="srhText" placeholder="글제목,글쓴이을 입력하시오">
+	             <input type="text" id="srhText" name="srhText" placeholder="제목, 작성자를 적어주세요">
                  <button type="submit" id="submit" class="search">
                  <span class="icon_search"></span></button>
               </form>
@@ -61,25 +78,24 @@
           <thead>
             <tr>
               <th scope="col">글번호</th>
-              <th scope="col">글쓴이</th>
+              <th scope="col">작성자</th>
               <th scope="col">제목</th>
-              <th scope="col">등록 날짜</th>
-              <th scope="col">조회수</th>
+              <th scope="col">등록일</th>
+              <th scope="col">조회</th>
               <th scope="col">좋아요</th>
             </tr>
           </thead>
           <tbody>
             <c:forEach var="boardDTO"  items="${boardList}" >
-				<tr>
-					<td>${boardDTO.boardNum }</td>
+				<tr id=boardTr class="" style="cursor:pointer;" onClick="location.href='${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}'">
+
+					<td>${boardDTO.boardNum } <input type="text" id="boardNotice" value="${boardDTO.boardNotice }"></td>
 					<td>${boardDTO.userNicknm}</td>
-					<td><a href="${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}">
-					${boardDTO.boardSubject }(${boardDTO.boardRcount}) </a></td>
-					<td>${boardDTO.boardDate }</td>
+					<td><strong>${boardDTO.boardSubject } </strong><span style="color:#85888d; font-size: 0.8rem;">(${boardDTO.boardRcount})</span></td>
+					<td><fmt:formatDate pattern="yy-MM-dd" value="${boardDTO.boardDate }"/></td>
 					<td>${boardDTO.boardReadcount }</td>
 					<td>${boardDTO.boardLikecount }</td>
 				</tr>
-
 			</c:forEach>
           </tbody>
 

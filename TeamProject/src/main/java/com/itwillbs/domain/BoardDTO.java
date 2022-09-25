@@ -17,18 +17,18 @@ public class BoardDTO extends PageDTO {
 	private String boardNotice;
 
 
-	public String getBoardNotice() {
-		return boardNotice;
-	}
-	public void setBoardNotice(String boardNotice) {
-		this.boardNotice = boardNotice;
-	}
 
 	private String srhText;
 	private String category;
 
 
 
+	public String getBoardNotice() {
+		return boardNotice;
+	}
+	public void setBoardNotice(String boardNotice) {
+		this.boardNotice = boardNotice;
+	}
 	public String getSrhText() {
 		return srhText;
 	}
@@ -108,7 +108,8 @@ public class BoardDTO extends PageDTO {
 		return "BoardDTO [boardNum=" + boardNum + ", userNicknm=" + userNicknm + ", boardPass=" + boardPass
 				+ ", boardSubject=" + boardSubject + ", boardContent=" + boardContent + ", boardLikecount="
 				+ boardLikecount + ", boardReadcount=" + boardReadcount + ", boardRcount=" + boardRcount
-				+ ", boardDate=" + boardDate + ", boardFile=" + boardFile + "]";
+				+ ", boardDate=" + boardDate + ", boardFile=" + boardFile + ", boardNotice=" + boardNotice
+				+ ", srhText=" + srhText + ", category=" + category + "]";
 	}
 
 
