@@ -91,11 +91,15 @@ function myCoupon(){
 			success:function( data ) {
 				if(data.code=="S") {
 					$('#myCouponList').append("<option value='0_0'>" + "선택" + "</option>");
+					
 					var codeList = data.couponList;
 				      for(var i = 0; i < codeList.length ; i++){
+				    	 if(codeList[i].couYn!='N'){
+				    		 
 				        var option = "<option value='" + codeList[i].couNumCouDc + "'>" + codeList[i].couNm + "</option>";
 				        $('#myCouponList').append(option);
-				      }
+						}
+				    	 }
 				} else {
 					alert("ERROR : Common Code");
 				}
@@ -123,6 +127,7 @@ function myCoupon(){
         var discount = Number($('#usePoint2').text().slice(0, -1));
         var nowPoint = '${pointDTO2.pointNow}' - $('#textUsePoint').val();
 		var couNm = $('#myCouponList').val().split('_')[0];
+		var ordLCouponnum = $('#myCouponList').val().split('_')[0];
         //가맹점 식별코드
         IMP.init('imp27865884');
         IMP.request_pay({
@@ -132,6 +137,7 @@ function myCoupon(){
             name : '핏티드' , //결제창에서 보여질 이름
             buyer_name: '${memberDTO.userNm}',
             buyer_tel: '${memberDTO.userPhone}',
+            buyer_email: '${memberDTO.userEmail}',
             amount : amount, //실제 결제되는 가격
         }, function(rsp) {
            console.log(rsp);
@@ -153,6 +159,7 @@ function myCoupon(){
 	                       'ordGetNm'   		:'${addressDTO.addressGetNm}',
 	                       'couNm'				: couNm,
 	                       'couYn'				: 'N',
+	                       'ordLCouponnum'		: ordLCouponnum,
 	                       'ordGetZipcode'		: addZipcode,
 	                       'ordGetAddress' 	   	: add,
 	                       'ordGetPhone'    	:'${addressDTO.addressGetPhone }',
@@ -450,10 +457,10 @@ function myCoupon(){
   </script>
 
 
-<!-- jQuery -->
+<!— jQuery —>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!-- iamport.payment.js -->
+<!— iamport.payment.js —>
 <script type="text/javascript"
 	src="https://cdn.iamport.kr/js/iamport.payment-{SDK-최신버전}.js"></script>
 

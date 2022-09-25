@@ -103,8 +103,9 @@ public class OrderController {
 	      sMap.put("pointUsed", request.getParameter("pointUsed"));
 	      sMap.put("couNm", request.getParameter("couNm"));
 	      sMap.put("couYn", request.getParameter("couYn"));
+	      sMap.put("ordLCouponnum", request.getParameter("ordLCouponnum"));
 
-	      System.out.println(sMap);
+	      
 	      orderService.insertOrder(sMap);
 	      basketDTO.setSbUser((String)session.getAttribute("userId"));
 	      List<BasketDTO> basketList=basketService.getBasketList(basketDTO);
@@ -123,7 +124,7 @@ public class OrderController {
 	      	 orderService.insertUsePoint(sMap);
 	      	 orderService.updateCoupon(sMap);
 	      	 orderService.removeItemBasket(sMap);
-
+	      	System.out.println(sMap);
 	      return "redirect:/main/main";
 	 }
 
