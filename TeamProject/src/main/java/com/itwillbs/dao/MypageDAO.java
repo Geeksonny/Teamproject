@@ -30,9 +30,9 @@ public interface MypageDAO {
 	List<BoardDTO> getBoardLikeList(BoardDTO boardDTO);
 	
 	List<ProdDTO> getPordLikeList(PageDTO pageDTO);
-	//¸¶ÀÌÆäÀÌÁö ÁÖ¹®¸ñ·Ï
-		List<OrderListDTO> getMyOrdList(PageDTO pageDTO);
-		//¸¶ÀÌÆäÀÌÁö ÁÖ¹®¸ñ·Ï ¼ö·®
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
+		List<OrderListDTO> getOrdList(PageDTO pageDTO);
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		int getMyOrdListCount(PageDTO pageDTO);
 
 

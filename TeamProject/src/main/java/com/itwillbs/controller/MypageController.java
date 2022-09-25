@@ -154,7 +154,7 @@ public class MypageController {
 				pageDTO.setPageNum(pageNum);
 				pageDTO.setCurrentPage(currentPage);
 				pageDTO.setUserId(userId);
-				List<OrderListDTO> ordList = mypageService.getMyOrdList(pageDTO); // 二쇰Ц 臾쇨굔 由ъ뒪�듃 媛뽮퀬�삤湲�
+				List<OrderListDTO> ordList = mypageService.getOrdList(pageDTO); // 二쇰Ц 臾쇨굔 由ъ뒪�듃 媛뽮퀬�삤湲�
 				int count = mypageService.getMyOrdListCount(pageDTO); // �뾽泥� �쟾泥� 臾쇨굔 由ъ뒪�듃 媛��닔
 				// �럹�씠吏�
 				int pageBlock = 10;

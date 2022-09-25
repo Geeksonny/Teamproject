@@ -75,8 +75,8 @@ public class MypageDAOImpl implements MypageDAO {
 	}
 	
 	@Override
-	public List<OrderListDTO> getMyOrdList(PageDTO pageDTO) {
-		return sqlSession.selectList(namespace+".getMyOrdList", pageDTO);
+	public List<OrderListDTO> getOrdList(PageDTO pageDTO) {
+		return sqlSession.selectList(namespace+".getOrdList", pageDTO);
 	}
 
 	@Override

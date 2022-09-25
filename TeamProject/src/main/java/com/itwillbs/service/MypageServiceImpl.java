@@ -99,9 +99,9 @@ public class MypageServiceImpl implements MypageService {
 				
 				return mypageDAO.getPordLikeList(pageDTO);
 	}
-	// ¸¶ÀÌÆäÀÌÁö ÁÖ¹®¸ñ·Ï
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
 		@Override
-		public List<OrderListDTO> getMyOrdList(PageDTO pageDTO) {
+		public List<OrderListDTO> getOrdList(PageDTO pageDTO) {
 			// pageSize  pageNum  currentPage
 			int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
 			int endRow=startRow+pageDTO.getPageSize()-1;
@@ -110,7 +110,7 @@ public class MypageServiceImpl implements MypageService {
 
 			pageDTO.setStartRow(startRow-1);
 			pageDTO.setEndRow(endRow);
-			return mypageDAO.getMyOrdList(pageDTO);
+			return mypageDAO.getOrdList(pageDTO);
 		}
 
 		@Override

@@ -68,10 +68,10 @@
                     <tbody class="table-border-bottom-0">
                      <c:forEach var="orderListDTO" items="${ordList}" >
                       <tr>
-                        <td>${orderListDTO.num}</td>
+                        <td>${orderListDTO.trnum}</td>
                         <td>${orderListDTO.ordLCode}</td>
                         <td>${orderListDTO.ordCouponDc}</td>
-                        <td>${orderListDTO.ordCouponDc}</td>
+                        <td>${orderListDTO.ordFinalPrice}</td>
                         <td>${fn:substring(orderListDTO.ordLDate,0,16)}</td>
                         <td>${orderListDTO.ordDeliveryStatus}</td>
                       </tr>
