@@ -8,7 +8,8 @@
 	<insert id="insertOrder" >
 
 			INSERT INTO ORDER_BOARD(
-					USER_ID
+					NUM
+				   ,USER_ID
 				   ,ORD_GET_NM
 				   ,ORD_GET_ZIPCODE
 				   ,ORD_GET_ADDRESS
@@ -19,7 +20,10 @@
 				   ,ORD_FINALPRICE
 				   )
 			VALUES(
-					#{userId}
+					(SELECT NUM
+                       FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) + 1 AS NUM
+                                            FROM ORDER_BOARD) A)
+				   ,#{userId}
 				   ,#{ordGetNm}
 				   ,#{ordGetZipcode}
 				   ,#{ordGetAddress}
@@ -33,28 +37,35 @@
 
 <!--  결제시 결제 리스트에 값 넣기	 -->
 
-	<insert id="isertOrderList">
-			INSERT INTO ORDER_LIST(
-				 ORD_NUM
-			 	,ORD_L_USER
-			 	,ORD_L_CODE
-			 	,ORD_L_QUANTITY
-			 	,ORD_L_PRICE
-			 	,ORD_DELIVERY_STATUS
-				,ORD_PURCHASESTATUS
-				)
-			VALUE(
-				  (SELECT ORD_NUM
+	 <insert id="isertOrderList">
+         INSERT INTO ORDER_LIST(
+             ORD_NUM
+             ,ORD_L_USER
+             ,ORD_L_CODE
+             ,ORD_L_QUANTITY
+             ,ORD_L_PRICE
+             ,ORD_DELIVERY_STATUS
+            ,ORD_PURCHASESTATUS
+            ,ORD_L_NUM
+            ,ORD_L_COUPONNUM
+            )
+         VALUES(
+              (SELECT ORD_NUM
                     FROM   (SELECT IFNULL(MAX(CAST(ORD_NUM AS UNSIGNED)), 0) + 1 AS ORD_NUM
                              FROM ORDER_LIST) A)
-				 ,#{ordLUser}
-				 ,#{ordLCode}
-				 ,#{ordLQuantity}
-				 ,#{ordLPrice}
-				 ,"0"
-				 ,"Y"
-			)
-	</insert>
+             ,#{ordLUser}
+             ,#{ordLCode}
+             ,#{ordLQuantity}
+             ,#{ordLPrice}
+             ,"0"
+             ,"Y"
+             ,(SELECT A.ORD_L_NUM
+                FROM (SELECT IFNULL(MAX(NUM), 1) AS ORD_L_NUM
+                    FROM ORDER_BOARD) A)
+             ,#{ordLCouponnum}       
+         )
+   </insert>
+
 
 <!-- 결제시 재고 수량 변경 -->
 	<update id="updateQuantity">
@@ -78,27 +89,31 @@
 
 <!--  사용한 포인트 입력 -->
 	<insert id="insertUsePoint">
-		INSERT INTO POINT(
-			POINT_NUM
-		   ,USER_ID
-		   ,POINT_DATE
-		   ,POINT_TYPE
-		   ,POINT_NOW
-		   ,POINT_USED
-		   ,POINT_CHARGE
-			)
-		VALUES(
-			 (SELECT A.POINTNUM
-			    FROM (SELECT MAX(POINT_NUM) + 1 AS POINTNUM
-			    	    FROM POINT) A)
-			,#{userId}
-			,#{pointDate}
-			,"포인트 사용"
-			,#{pointNow}
-			,#{pointUsed}
-			,0
-			)
-	</insert>
+      INSERT INTO POINT(
+         POINT_NUM
+         ,USER_ID
+         ,POINT_DATE
+         ,POINT_TYPE
+         ,POINT_USED_OB_NUM
+         ,POINT_NOW
+         ,POINT_USED
+         ,POINT_CHARGE
+         )
+      VALUES(
+          (SELECT A.POINTNUM
+             FROM (SELECT MAX(POINT_NUM) + 1 AS POINTNUM
+                    FROM POINT) A)
+         ,#{userId}
+         ,#{pointDate}
+         ,"포인트 사용"
+         ,(SELECT NUM
+                           FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) AS NUM
+                                    FROM ORDER_BOARD) A)
+         ,#{pointNow}
+         ,#{pointUsed}
+         ,0
+         )
+   </insert>
 
 	<update id="updateCoupon">
 		UPDATE COUPON

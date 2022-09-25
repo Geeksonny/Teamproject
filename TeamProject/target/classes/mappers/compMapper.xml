@@ -157,7 +157,8 @@
 	<select id="getOrdList" resultType="com.itwillbs.domain.OrderListDTO">
 		SELECT 	 @rownum:=@rownum+1 as trnum
 <!-- 				 게시판에 tr반복이라 구분숫자를 주기 위해	 -->
-				,OB.NUM 									as prodLNum
+				,OB.NUM										as num
+				,OB.ORD_TOTAL_PRICE							as ordTotalPrice
 				,OL.ORD_L_COUPONNUM 						as ordLCouponnum
 				,OL.ORD_L_USER 								as ordLUser
 				,OL.ORD_L_CODE                              as ordLCode
@@ -165,7 +166,7 @@
 				,OL.ORD_PURCHASESTATUS   					as ordPurchasestatus
 				,OL.ORD_L_DATE                              as ordLDate
 				,OL.ORD_DELIVERY_STATUS                     as ordDeliveryStatus
-				,(OL.ORD_L_QUANTITY * OL.ORD_L_PRICE)      as ordFinalprice
+				,(OL.ORD_L_QUANTITY * OL.ORD_L_PRICE)      as individualPrice
 				,OL.ORD_REFUND									as ordRefund
 		  FROM	ORDER_LIST as OL JOIN ORDER_BOARD as OB
 			ON  (OL.ORD_L_USER = OB.USER_ID)
@@ -174,6 +175,8 @@
 		   AND   OL.ORD_L_CODE IN (SELECT PROD_L_CODE
 		 							FROM PRODUCT_LIST
 		 						   WHERE PROD_L_COMPNM=#{compId})
+		   AND   OL.ORD_L_NUM = OB.NUM
+		 ORDER BY  OL.ORD_L_DATE
 		 LIMIT 	#{startRow}	,#{pageSize}
 	</select>
 
@@ -186,6 +189,7 @@
 		 WHERE   OL.ORD_L_CODE IN (SELECT PROD_L_CODE
                         			 FROM PRODUCT_LIST
                         			WHERE PROD_L_COMPNM = #{compId})
+           AND   OL.ORD_L_NUM = OB.NUM
 	</select>
 <!-- 	송장번호입력 -->
 	<update id="delivNumberInsert">
@@ -283,9 +287,10 @@
     			    FROM USER_INFO
   				   WHERE USER_ID=#{ordLUser}) as ordLUserNm
 		 FROM   ORDER_LIST as ol JOIN ORDER_BOARD as ob
-		   ON   (ol.ORD_L_USER=ob.USER_ID)
-		WHERE   ORD_L_USER=#{ordLUser}
-		  AND   ol.ORD_L_CODE = #{ordLCode};
+		   ON   (ol.ORD_L_NUM=ob.NUM)
+		WHERE   ol.ORD_L_USER=#{ordLUser}
+		  AND   ol.ORD_L_CODE = #{ordLCode}
+		  AND	ol.ORD_L_NUM=#{num}
 
 	</select>
 	<!-- 배송취소, 환불완료로 디비수정 -->
@@ -296,19 +301,48 @@
 	     WHERE  ORD_L_CODE    		=#{ordLCode}
 	       AND  ORD_L_USER 			=#{ordLUser}
 	       AND	ORD_PURCHASESTATUS	="N"
+	       AND  ORD_L_NUM =#{num}
+
 	</update>
-	<!-- 쿠폰 돌려주기 -->
-	<update id="couponUpdate">
-		UPDATE  COUPON
-		   SET  COU_YN          ="Y"
-	     WHERE  COU_USER_NM     =#{ordLUser}
-	       AND  COU_NUM			=#{ordLCouponnum}
-	</update>
+
 	<!-- 물품수량 되돌리기 -->
 	<update id="prodquantityUpdate">
 		UPDATE  PRODUCT_LIST
 		   SET  PROD_L_QUANTITY =(PROD_L_QUANTITY + #{ordLQuantity})
 	     WHERE  PROD_L_CODE     =#{ordLCode}
 	</update>
+	<!-- 포인트 되돌리기 -->
+
+	<insert id="pointUpdate">
+		INSERT INTO 	POINT(
+								USER_ID
+							   ,POINT_NUM
+						       ,POINT_TYPE
+						       ,POINT_NOW
+						       ,POINT_USED
+						       ,POINT_CHARGE
+			                   ,POINT_USED_OB_NUM
+		          		      )
+
+			 SELECT 			#{ordLUser}
+							   ,(SELECT POINT_NUM
+					       		 FROM   (SELECT IFNULL(MAX(CAST(POINT_NUM AS UNSIGNED)), 0) + 1 AS POINT_NUM
+							 	   	       FROM POINT) A)
+						       ,"포인트 환불"
+						       ,(POINT_NOW + (POINT_USED * (#{individualPrice}/#{ordTotalPrice})))
+						       ,(POINT_USED - (POINT_USED * (#{individualPrice}/#{ordTotalPrice})))
+						       ,(POINT_USED * (#{individualPrice}/#{ordTotalPrice}))
+			                   ,#{num}
+			   FROM 			POINT
+			  WHERE   			USER_ID  = #{ordLUser}
+				AND             POINT_USED_OB_NUM = #{num}
+				AND             POINT_NUM = (SELECT MAX(POINT_NUM)
+											   FROM POINT
+			               					  where POINT_USED_OB_NUM = #{num}
+			               					    and USER_ID     = #{ordLUser}
+											 )
+
+	</insert>
+
 
 </mapper>
