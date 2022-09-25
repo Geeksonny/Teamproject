@@ -64,7 +64,7 @@ public class BoardController {
 	//	가상주소 시작점 http://localhost:8080/myweb2/board/list
     //	가상주소 시작점 http://localhost:8080/myweb2/board/list?pageNum=2
 	@RequestMapping(value = "/board/list", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model model,  @ModelAttribute BoardDTO boardDTO) {
+	public String list(HttpServletRequest request, Model model,  @ModelAttribute BoardDTO boardDTO, HttpSession session) {
 		// 한화면에 보여줄 글개수
 		int pageSize=10;
 		//현페이지 번호
@@ -96,8 +96,7 @@ public class BoardController {
 		boardDTO.setPageCount(pageCount);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("boardDTO", boardDTO);
-		System.out.println("bDTO"+boardList.toString());
-
+		System.out.println("세션"+session.hashCode());
 		// 주소변경없이 이동
 		// WEB-INF/views/board/list.jsp 이동
 		return "/board/list";

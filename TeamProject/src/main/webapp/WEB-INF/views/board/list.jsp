@@ -5,23 +5,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-.tcol {
-	background-color:#000;
-}
-</style>
+
 <script type="text/javascript"
 src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		var yn=$({boardNotice}).val();
-			if(yn=='1'){
-				alert("yn");
-				$('.boardTr').addClass("tcol");
 
-			}
-	});
+$(document).ready(function(){
+var yn= $('#boardNotice');
+
+if(yn.value=='1'){
+   $('#boardTr').addClass("tcol");
+
+}
+});
+
 </script>
+
+<style>
+.tcol {
+	background-color:#e6f9f3;
+}
+</style>
 </head>
 <body>
 <!-- 메뉴단 -->
@@ -77,24 +81,24 @@ src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
         <table class="table table-hover table">
           <thead>
             <tr>
-              <th scope="col">글번호</th>
-              <th scope="col">작성자</th>
-              <th scope="col">제목</th>
-              <th scope="col">등록일</th>
-              <th scope="col">조회</th>
-              <th scope="col">좋아요</th>
+              <th scope="col" style="text-align:center; width:10%">번호</th>
+              <th scope="col" style="text-align:center; width:55%">제목</th>
+              <th scope="col" style="text-align:center; ">작성자</th>
+              <th scope="col" style="text-align:center; ">등록일</th>
+              <th scope="col" style="text-align:center; ">조회</th>
+              <th scope="col" style="text-align:center; ">좋아요</th>
             </tr>
           </thead>
           <tbody>
             <c:forEach var="boardDTO"  items="${boardList}" >
-				<tr id=boardTr class="" style="cursor:pointer;" onClick="location.href='${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}'">
+				<tr id="boardTr" style="cursor:pointer;" onClick="location.href='${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}'">
 
-					<td>${boardDTO.boardNum } <input type="text" id="boardNotice" value="${boardDTO.boardNotice }"></td>
-					<td>${boardDTO.userNicknm}</td>
-					<td><strong>${boardDTO.boardSubject } </strong><span style="color:#85888d; font-size: 0.8rem;">(${boardDTO.boardRcount})</span></td>
-					<td><fmt:formatDate pattern="yy-MM-dd" value="${boardDTO.boardDate }"/></td>
-					<td>${boardDTO.boardReadcount }</td>
-					<td>${boardDTO.boardLikecount }</td>
+					<td style="text-align:center; width:10%">${boardDTO.boardNum }<input type="text" id="boardNotice" value="${boardDTO.boardNotice }" name="boardNotice" hidden></td>
+					<td style="width:55%; padding-left:3%"><strong>${boardDTO.boardSubject } </strong><span style="color:#85888d; font-size: 0.8rem;">(${boardDTO.boardRcount})</span></td>
+					<td style="text-align:center; ">${boardDTO.userNicknm}</td>
+					<td style="text-align:center; "><fmt:formatDate pattern="yy-MM-dd" value="${boardDTO.boardDate }"/></td>
+					<td style="text-align:center; ">${boardDTO.boardReadcount }</td>
+					<td style="text-align:center; ">${boardDTO.boardLikecount }</td>
 				</tr>
 			</c:forEach>
           </tbody>
@@ -104,7 +108,7 @@ src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
         <c:if test="${userId != null}">
 
         	<div align="right">
-			<a href="${pageContext.request.contextPath }/board/fwrite"><button type="button" class="btn btn-primary" >게시글 작성하기</button></a>
+			<a href="${pageContext.request.contextPath }/board/fwrite"><button type="button" class="site-btn" >게시글 작성하기</button></a>
 			</div>
         </c:if>
 
