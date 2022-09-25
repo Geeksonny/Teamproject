@@ -108,8 +108,10 @@
 							<form action="${pageContext.request.contextPath }/comp/refund" method="post">
                       			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
                       			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
-                      			<input type="hidden" value="${orderListDTO.ordLCouponnum }" name="ordLCouponnum" id="ordLCouponnum">
                       			<input type="hidden" value="${orderListDTO.ordLQuantity }" name="ordLQuantity" id="ordLQuantity">
+                      			<input type="hidden" value="${orderListDTO.num }" name="num" id="num">
+                      			<input type="hidden" value="${orderListDTO.ordTotalPrice }" name="ordTotalPrice" id="ordTotalPrice">
+                      			<input type="hidden" value="${orderListDTO.individualPrice }" name="individualPrice" id="individualPrice">
                       			<div id="delivNumber_${orderListDTO.trnum}">
                      	  		<c:set var="ordRefund" value="${orderListDTO.ordRefund }"  />
                      	  		<c:set var="purchasestatus" value="${orderListDTO.ordPurchasestatus }" />

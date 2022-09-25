@@ -301,6 +301,8 @@
 	     WHERE  ORD_L_CODE    		=#{ordLCode}
 	       AND  ORD_L_USER 			=#{ordLUser}
 	       AND	ORD_PURCHASESTATUS	="N"
+	       AND  ORD_L_NUM =#{num}
+
 	</update>
 
 	<!-- 물품수량 되돌리기 -->
