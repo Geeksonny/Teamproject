@@ -21,14 +21,10 @@ public class ProdDTO extends PageDTO {
 	private String prodLDetail;
 	private int prodLQuantity;
 
-<<<<<<< HEAD
 	// 회사 이름
 	private String compNm;
 
 	// 검색, 카테고리 기능
-=======
-	// 寃��깋, 移댄뀒怨좊━ 湲곕뒫
->>>>>>> refs/remotes/origin/main
 	private String srhText;
 	private String category;
 
@@ -179,10 +175,10 @@ public class ProdDTO extends PageDTO {
 	public void setReplyDate(Timestamp replyDate) {
 		this.replyDate = replyDate;
 	}
-	
-	
-	
-	
+
+
+
+
 	@Override
 	public String toString() {
 		return "ProdDTO [prodLNum=" + prodLNum + ", prodLCode=" + prodLCode + ", prodLOption1=" + prodLOption1
