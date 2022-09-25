@@ -8,7 +8,8 @@
 	<insert id="insertOrder" >
 
 			INSERT INTO ORDER_BOARD(
-					USER_ID
+				    NUM
+				   ,USER_ID
 				   ,ORD_GET_NM
 				   ,ORD_GET_ZIPCODE
 				   ,ORD_GET_ADDRESS
@@ -18,8 +19,11 @@
 				   ,ORD_COUPONDC
 				   ,ORD_FINALPRICE
 				   )
-			VALUES(
-					#{userId}
+			VALUES(     
+		  		    (SELECT NUM
+                   		       FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) + 1 AS NUM
+                          		         FROM ORDER_BOARD) A)
+				   ,#{userId}
 				   ,#{ordGetNm}
 				   ,#{ordGetZipcode}
 				   ,#{ordGetAddress}
@@ -83,6 +87,7 @@
 		   ,USER_ID
 		   ,POINT_DATE
 		   ,POINT_TYPE
+		   ,POINT_USED_OB_NUM
 		   ,POINT_NOW
 		   ,POINT_USED
 		   ,POINT_CHARGE
@@ -94,6 +99,9 @@
 			,#{userId}
 			,#{pointDate}
 			,"포인트 사용"
+			,(SELECT NUM
+                    	    FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) AS NUM
+                           	      FROM ORDER_BOARD) A)
 			,#{pointNow}
 			,#{pointUsed}
 			,0
