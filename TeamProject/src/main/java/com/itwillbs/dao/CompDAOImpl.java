@@ -143,17 +143,16 @@ public class CompDAOImpl implements CompDAO {
 		sqlSession.update(namespace + ".refundDeliveryStatusUpdate", orderListDTO);
 
 	}
-	// 쿠폰 돌려주기
-	@Override
-	public void couponUpdate(OrderListDTO orderListDTO) {
-		sqlSession.update(namespace + ".couponUpdate", orderListDTO);
 
-	}
 	// 물품수량 되돌리기
 	@Override
 	public void prodquantityUpdate(OrderListDTO orderListDTO) {
 		sqlSession.update(namespace + ".prodquantityUpdate", orderListDTO);
 
+	}
+	@Override
+	public void pointUpdate(OrderListDTO orderListDTO) {
+		sqlSession.update(namespace + ".pointUpdate", orderListDTO);
 	}
 
 
