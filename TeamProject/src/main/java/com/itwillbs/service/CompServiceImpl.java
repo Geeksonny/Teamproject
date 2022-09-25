@@ -186,17 +186,19 @@ public class CompServiceImpl implements CompService {
 
 	}
 
-	// 쿠폰 돌려주기
-	@Override
-	public void couponUpdate(OrderListDTO orderListDTO) {
-		compDAO.couponUpdate(orderListDTO);
 
-	}
 
 	// 물품수량 되돌리기
 	@Override
 	public void prodquantityUpdate(OrderListDTO orderListDTO) {
 		compDAO.prodquantityUpdate(orderListDTO);
+
+	}
+
+	// 포인트 돌려주기
+	@Override
+	public void pointUpdate(OrderListDTO orderListDTO) {
+		compDAO.pointUpdate(orderListDTO);
 
 	}
 

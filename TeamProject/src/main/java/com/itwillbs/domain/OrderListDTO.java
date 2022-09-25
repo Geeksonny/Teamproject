@@ -16,7 +16,8 @@ public class OrderListDTO extends OrderDTO{
 	private Timestamp ordLDate;
 	private String compId;  // 회사아이디
 	private String ordDeliveryStatus; // 배송상태
-	private int ordFinalprice;
+	private int individualPrice;	  // 개별물품 총합
+	
 	private String ordLDelivNumber;   //운송장 번호
 	private int count;
 	private String ordPurchasestatus;	//구매상태
@@ -82,12 +83,7 @@ public class OrderListDTO extends OrderDTO{
 	public void setOrdDeliveryStatus(String ordDeliveryStatus) {
 		this.ordDeliveryStatus = ordDeliveryStatus;
 	}
-	public int getOrdFinalprice() {
-		return ordFinalprice;
-	}
-	public void setOrdFinalprice(int ordFinalprice) {
-		this.ordFinalprice = ordFinalprice;
-	}
+	
 
 	public String getOrdLDelivNumber() {
 		return ordLDelivNumber;
@@ -168,12 +164,18 @@ public class OrderListDTO extends OrderDTO{
 	public void setOrdRefund(String ordRefund) {
 		this.ordRefund = ordRefund;
 	}
+	public int getIndividualPrice() {
+		return individualPrice;
+	}
+	public void setIndividualPrice(int individualPrice) {
+		this.individualPrice = individualPrice;
+	}
 	@Override
 	public String toString() {
 		return "OrderListDTO [trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode=" + ordLCode + ", ordLProdnm="
 				+ ordLProdnm + ", ordLUser=" + ordLUser + ", ordLUserNm=" + ordLUserNm + ", compNm=" + compNm
 				+ ", ordLQuantity=" + ordLQuantity + ", ordLPrice=" + ordLPrice + ", ordLDate=" + ordLDate + ", compId="
-				+ compId + ", ordDeliveryStatus=" + ordDeliveryStatus + ", ordFinalprice=" + ordFinalprice
+				+ compId + ", ordDeliveryStatus=" + ordDeliveryStatus + ", ordFinalprice="
 				+ ", ordLDelivNumber=" + ordLDelivNumber + ", count=" + count + ", ordPurchasestatus="
 				+ ordPurchasestatus + ", ge50Count=" + ge50Count + ", ne50Count=" + ne50Count + ", eq50Couunt="
 				+ eq50Couunt + ", ordLCouponnum=" + ordLCouponnum + "]";

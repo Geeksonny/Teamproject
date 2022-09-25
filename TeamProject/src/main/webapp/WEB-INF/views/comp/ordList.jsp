@@ -64,7 +64,7 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
 					  <c:forEach var="orderListDTO" items="${ordList }" varStatus="status">
-                      <tr onClick="location.href='${pageContext.request.contextPath }/comp/ordListDet?CheckRow=${orderListDTO.ordLCode },${orderListDTO.ordLUser }'" style="cursor:pointer;">
+                      <tr onClick="location.href='${pageContext.request.contextPath }/comp/ordListDet?CheckRow=${orderListDTO.ordLCode },${orderListDTO.ordLUser },${orderListDTO.num }'" style="cursor:pointer;">
                         <td><fmt:formatDate pattern="yy-MM-dd" value="${orderListDTO.ordLDate }"/></td>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${orderListDTO.num }</strong></td>
                         <td>
@@ -74,7 +74,7 @@
                         ${orderListDTO.ordLUser }
                         </td>
                         <td>
-                          ${orderListDTO.ordFinalprice }
+                          ${orderListDTO.individualPrice }
                         </td>
 
                         <td  onclick="event.cancelBubble=true">
@@ -108,8 +108,10 @@
 							<form action="${pageContext.request.contextPath }/comp/refund" method="post">
                       			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
                       			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
-                      			<input type="hidden" value="${orderListDTO.ordLCouponnum }" name="ordLCouponnum" id="ordLCouponnum">
                       			<input type="hidden" value="${orderListDTO.ordLQuantity }" name="ordLQuantity" id="ordLQuantity">
+                      			<input type="hidden" value="${orderListDTO.num }" name="num" id="num">
+                      			<input type="hidden" value="${orderListDTO.ordTotalPrice }" name="ordTotalPrice" id="ordTotalPrice">
+                      			<input type="hidden" value="${orderListDTO.individualPrice }" name="individualPrice" id="individualPrice">
                       			<div id="delivNumber_${orderListDTO.trnum}">
                      	  		<c:set var="ordRefund" value="${orderListDTO.ordRefund }"  />
                      	  		<c:set var="purchasestatus" value="${orderListDTO.ordPurchasestatus }" />
