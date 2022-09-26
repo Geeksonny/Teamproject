@@ -313,22 +313,19 @@ public class AdminController {
 	}
 
 	// 쿠폰 페이지
+
 	@RequestMapping(value = "/admin/coupon", method = RequestMethod.GET)
-	public String coupon() {
+	public String ordList(HttpServletRequest request, Model model, HttpSession session,
+			@ModelAttribute CouponDTO couponDTO) {
+
+		List<CouponDTO> couponList = compService.getCouponList();
+		// 데이터 담아서 list.jsp 이동
+		model.addAttribute("couponList", couponList);
+
+		// 주소변경없이 이동
+		// WEB-INF/views/board/list.jsp 이동
 		return "admin/coupon";
 	}
-		@RequestMapping(value = "/admin/coupon", method = RequestMethod.GET)
-		public String ordList(HttpServletRequest request, Model model, HttpSession session,
-				@ModelAttribute CouponDTO couponDTO) {
-
-			List<CouponDTO> couponList = compService.getCouponList();
-			// 데이터 담아서 list.jsp 이동
-			model.addAttribute("couponList", couponList);
-
-			// 주소변경없이 이동
-			// WEB-INF/views/board/list.jsp 이동
-			return "admin/coupon";
-		}
 
 
 

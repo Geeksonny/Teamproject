@@ -41,7 +41,7 @@
                       <i class="bx bx-buildings me-1"></i> 주문 관리</a>
                     </li>
                      <li class="nav-item">
-                      <a class="nav-link active" href="${pageContext.request.contextPath }/admin/addr">
+                      <a class="nav-link active" href="${pageContext.request.contextPath }/admin/orderb">
                       <i class="bx bx-buildings me-1"></i> 배송 관리</a>
                     </li>
                   </ul>
