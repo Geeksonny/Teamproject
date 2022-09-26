@@ -220,6 +220,31 @@ $(document).ready(function(){
 	        $(".sub5").slideDown();
 	    }
 	});
+	$(".size").click(function(){
+	    if($(".sub6").is(":visible")){
+	        $(".sub6").slideUp();
+	    }
+	    else{
+	        $(".sub6").slideDown();
+	    }
+	});
+	$(".colors").click(function(){
+	    if($(".sub7").is(":visible")){
+	        $(".sub7").slideUp();
+	    }
+	    else{
+	        $(".sub7").slideDown();
+	    }
+	});
+	$(".taste").click(function(){
+	    if($(".sub8").is(":visible")){
+	        $(".sub8").slideUp();
+	    }
+	    else{
+	        $(".sub8").slideDown();
+	    }
+	});
+
 });
 <!-- 이벤트 끝 -->
 
@@ -326,76 +351,58 @@ $(document).ready(function(){
                                     </div>
                                 </div>
                                 <!-- 식품 카테고리 끝 -->
-                                <!-- 사이즈 카테고리 시작 -->
+
+
+                                <!-- 옵션 카테고리 시작 -->
                                 <div class="card">
                                     <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFour">Size</a>
+                                        <a data-toggle="collapse" data-target="#collapseFour">Option</a>
                                     </div>
-                                    <div id="collapseFour" class="collapse show" data-parent="#accordionExample">
+                                    <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
-                                            <div class="shop__sidebar__size">
-	                                            <ul class="nice-scroll">
-		                                            <ul>
-			                                            <li><a class="search" href="#" id="S01">ㅡ XS</a></li>
-			                                            <li><a class="search" href="#" id="S02">ㅡ S</a></li>
-			                                            <li><a class="search" href="#" id="S03">ㅡ M</a></li>
-			                                            <li><a class="search" href="#" id="S04">ㅡ L</a></li>
-			                                            <li><a class="search" href="#" id="S05">ㅡ XL</a></li>
-		                                            </ul>
-                                            	</ul>
+                                            <div class="shop__sidebar__categories">
+                                                <ul class="nice-scroll">
+                                               		<li><a href="#" id="size" class="size">Size</a>
+                                               			<ul class="sub6" style="display: none">
+	                                               			<li><a class="search" href="#" id="S01">ㅡ XS</a></li>
+				                                            <li><a class="search" href="#" id="S02">ㅡ S</a></li>
+				                                            <li><a class="search" href="#" id="S03">ㅡ M</a></li>
+				                                            <li><a class="search" href="#" id="S04">ㅡ L</a></li>
+				                                            <li><a class="search" href="#" id="S05">ㅡ XL</a></li>
+                                               			</ul>
+                                               		</li>
+                                               		<li><a href="#" id="colors" class="colors">Colors</a>
+                                               			<ul class="sub7" style="display: none">
+                                               				<li><a class="search" href="#" id="C01">ㅡ RED</a></li>
+				                                            <li><a class="search" href="#" id="C02">ㅡ ORANGE</a></li>
+				                                            <li><a class="search" href="#" id="C03">ㅡ YELLOW</a></li>
+				                                            <li><a class="search" href="#" id="C04">ㅡ GREEN</a></li>
+				                                            <li><a class="search" href="#" id="C05">ㅡ BLUE</a></li>
+				                                            <li><a class="search" href="#" id="C06">ㅡ NAVY</a></li>
+				                                            <li><a class="search" href="#" id="C07">ㅡ PURPLE</a></li>
+				                                            <li><a class="search" href="#" id="C08">ㅡ GRAY</a></li>
+				                                            <li><a class="search" href="#" id="C09">ㅡ PINK</a></li>
+				                                            <li><a class="search" href="#" id="C010">ㅡ WHITE</a></li>
+				                                            <li><a class="search" href="#" id="C011">ㅡ BLACK</a></li>
+                                               			</ul>
+                                               		</li>
+                                               		<li><a href="#" id="taste" class="taste">TASTE</a>
+                                               			<ul class="sub8" style="display: none">
+                                               				<li><a class="search" href="#" id="T01">ㅡ 초코</a></li>
+				                                            <li><a class="search" href="#" id="T02">ㅡ 딸기</a></li>
+				                                            <li><a class="search" href="#" id="T03">ㅡ 바나나</a></li>
+				                                            <li><a class="search" href="#" id="T04">ㅡ 포도</a></li>
+				                                            <li><a class="search" href="#" id="T05">ㅡ 쿠키</a></li>
+				                                            <li><a class="search" href="#" id="T06">ㅡ 커피</a></li>
+				                                            <li><a class="search" href="#" id="T07">ㅡ 바닐라</a></li>
+                                               			</ul>
+                                               		</li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- 사이즈 카테고리 끝 -->
-                                <!-- 색상 카테고리 시작 -->
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">Colors</a>
-                                    </div>
-                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__color">
-                                            	<ul>
-		                                            <li><a class="search" href="#" id="C01">ㅡ RED</a></li>
-		                                            <li><a class="search" href="#" id="C02">ㅡ ORANGE</a></li>
-		                                            <li><a class="search" href="#" id="C03">ㅡ YELLOW</a></li>
-		                                            <li><a class="search" href="#" id="C04">ㅡ GREEN</a></li>
-		                                            <li><a class="search" href="#" id="C05">ㅡ BLUE</a></li>
-		                                            <li><a class="search" href="#" id="C06">ㅡ NAVY</a></li>
-		                                            <li><a class="search" href="#" id="C07">ㅡ PURPLE</a></li>
-		                                            <li><a class="search" href="#" id="C08">ㅡ GRAY</a></li>
-		                                            <li><a class="search" href="#" id="C09">ㅡ PINK</a></li>
-		                                            <li><a class="search" href="#" id="C010">ㅡ WHITE</a></li>
-		                                            <li><a class="search" href="#" id="C011">ㅡ BLACK</a></li>
-	                                            </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 색상 카테고리 끝 -->
-                                <!-- 맛 카테고리 시작 -->
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFive">TASTE</a>
-                                    </div>
-                                    <div id="collapseFive" class="collapse show" data-parent="#accordionExample">
-                                        <div class="card-body">
-                                            <div class="shop__sidebar__color">
-                                            	<ul>
-		                                            <li><a class="search" href="#" id="T01">ㅡ 초코</a></li>
-		                                            <li><a class="search" href="#" id="T02">ㅡ 딸기</a></li>
-		                                            <li><a class="search" href="#" id="T03">ㅡ 바나나</a></li>
-		                                            <li><a class="search" href="#" id="T04">ㅡ 포도</a></li>
-		                                            <li><a class="search" href="#" id="T05">ㅡ 쿠키</a></li>
-		                                            <li><a class="search" href="#" id="T06">ㅡ 커피</a></li>
-		                                            <li><a class="search" href="#" id="T07">ㅡ 바닐라</a></li>
-	                                            </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 맛 카테고리 끝 -->
+                                <!-- 옵션 카테고리 끝 -->
                             </div>
                         </div>
                     </div>
@@ -439,11 +446,9 @@ $(document).ready(function(){
                                    <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
                                    <h5> <fmt:formatNumber value="${prodList.prodLPrice}" pattern="###,###,###원"/></h5>
                                     <div class="rating">
-<%--                                     	<c:if test="!="> 나머지 회색깔로 채우기..? <i class="fa fa-star-o"></i> --%>
                                     	<c:forEach var="i" begin="1" end="${prodList.avgRating}">
 							           	<i class="fa fa-star" style="color:orange"></i>
 							            </c:forEach>
-<%-- 								        </c:if> --%>
                                     </div>
                                 </div>
                             </div>
