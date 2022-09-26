@@ -81,7 +81,6 @@
                             <span class="label">New</span>
                             <ul class="product__hover">
                	 	           <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
-               		           <li><a href="${pageContext.request.contextPath }/order/cart"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -109,28 +108,17 @@
 							<span class="label">Hot</span>
                             <ul class="product__hover">
                                 <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
-                                <li><a href="../mypage/cart.jsp"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>
                            </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6>${bsProdList.prodLProdnm}</h6>
+                           <h7>${bsProdList.prodLProdnm}</h7>
+                           <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
+                           <h5> <fmt:formatNumber value="${bsProdList.prodLPrice}" pattern="###,###,###원"/></h5>
                             <div class="rating">
-                                <c:forEach var="i" begin="1" end="${bsProdList.avgRating}">
+                             <c:forEach var="i" begin="1" end="${bsProdList.avgRating}">
 				             	<i class="fa fa-star" style="color:orange"></i>
 				             </c:forEach>
-                            </div>
-                            <h5>8000원</h5>
-                            <div class="product__color__select">
-                                <label for="pc-4">
-                                    <input type="radio" id="pc-4">
-                                </label>
-                                <label class="active black" for="pc-5">
-                                    <input type="radio" id="pc-5">
-                                </label>
-                                <label class="grey" for="pc-6">
-                                    <input type="radio" id="pc-6">
-                                </label>
-                            </div>
+                           </div>
                         </div>
                     </div>
                 </div>
