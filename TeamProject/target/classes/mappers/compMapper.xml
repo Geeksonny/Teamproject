@@ -367,8 +367,14 @@
 	</insert>
 <!-- 	admin 쿠폰리스트갖고오기 -->
 	<select id="getCouponList" resultType="com.itwillbs.domain.CouponDTO">
-		SELECT *
-		  FROM COUPON_INFO
+		SELECT
+				 NUM
+				,COU_NUM
+				,COU_NM
+				,COU_DET
+				,round((1 - COU_DC)*100,0) as couDc
+				,COU_INFO_DATE
+		  FROM   COUPON_INFO
 	</select>
 <!-- 	admin 쿠폰 삭제 -->
 	<delete id="deleteCoupon">
