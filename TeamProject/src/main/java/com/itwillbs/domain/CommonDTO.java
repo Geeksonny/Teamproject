@@ -9,11 +9,20 @@ public class CommonDTO {
 	private String srhHighCd;
 	private String[] srhCdOpt;
 
+	private String userId;
 	private String pkCd;
 	private String comCd;
 	private String columnNm;
 	private String tableNm;
 
+
+
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getCdOpt() {
 		return cdOpt;
 	}

@@ -33,5 +33,10 @@ public class CommonDAOImpl implements CommonDAO {
 		return sqlSession.selectOne(namespace+".getCount" ,commonDTO);
 	}
 
+	@Override
+	public int getMemCount(CommonDTO commonDTO) {
+		return sqlSession.selectOne(namespace+".getMemCount" ,commonDTO);
+	}
+
 
 }

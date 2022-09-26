@@ -13,5 +13,6 @@ public interface CommonDAO {
 
 	// 카운트
 	int getCount(CommonDTO commonDTO);
+	int getMemCount(CommonDTO commonDTO);
 
 }

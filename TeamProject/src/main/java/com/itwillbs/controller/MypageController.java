@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.AddressDTO;
 import com.itwillbs.domain.BoardDTO;
+import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.CompDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.MypageDTO;
@@ -36,6 +37,7 @@ import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.mail.MailUtils;
 import com.itwillbs.mail.TempKey;
 import com.itwillbs.service.AddressService;
+import com.itwillbs.service.CommonService;
 import com.itwillbs.service.CompService;
 import com.itwillbs.service.MemberService;
 import com.itwillbs.service.MypageService;
@@ -54,7 +56,8 @@ public class MypageController {
 	private MypageService mypageService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-
+	@Inject
+	private CommonService commonService;
 
 	// 留덉씠�럹�씠吏�
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
@@ -63,6 +66,29 @@ public class MypageController {
 		MemberDTO memberDTO = memberService.getMember(userId);
 		PointDTO pointDTO = pointService.getMember(userId);
 		AddressDTO addressDTO = addressService.getAddress(userId);
+
+		// 쿠폰 개수
+		CommonDTO commonDTO =  new CommonDTO();
+		commonDTO.setTableNm("COUPON"); 		// 기준 컬럼
+		commonDTO.setColumnNm("COU_USER_ID");
+		commonDTO.setUserId((String)session.getAttribute("userId"));
+		int couCount = commonService.getMemCount(commonDTO);
+		model.addAttribute("couCount", couCount);
+
+		// 주문
+		commonDTO.setTableNm("ORDER_LIST"); 		// 기준 컬럼
+		commonDTO.setColumnNm("ORD_L_USER");
+		commonDTO.setUserId((String)session.getAttribute("userId"));
+		int ordCount = commonService.getMemCount(commonDTO);
+		model.addAttribute("ordCount", ordCount);
+
+		// 주문
+		commonDTO.setTableNm("SHOPPING_BASKET"); 		// 기준 컬럼
+		commonDTO.setColumnNm("SB_USER");
+		commonDTO.setUserId((String)session.getAttribute("userId"));
+		int sbCount = commonService.getMemCount(commonDTO);
+		System.out.println(sbCount);
+		model.addAttribute("sbCount", sbCount);
 
 		MypageDTO mypageDTO =new MypageDTO();
 		mypageDTO.setUserId((String)session.getAttribute("userId"));
@@ -123,13 +149,6 @@ public class MypageController {
 //		("msg", "�젙蹂� �닔�젙�씠 �셿猷뚮릺�뿀�뒿�땲�떎. �떎�떆 濡쒓렇�씤�빐二쇱꽭�슂.");
 
 		return "redirect:/member/login";
-	}
-
-
-	// 留덉씠�럹�씠吏� - �쉶�썝�뿰寃� �젙蹂�
-	@RequestMapping(value = "/mypage/connection", method = RequestMethod.GET)
-	public String connection() {
-		return "mypage/userConnection";
 	}
 
 	// 留덉씠�럹�씠吏� - 二쇰Ц �젙蹂�
@@ -265,7 +284,7 @@ public class MypageController {
 
 		return "mypage/boardList";
 	}
-	
+
 	@RequestMapping(value = "/mypage/likeList", method = RequestMethod.GET)
 	public String likeList(HttpServletRequest request, Model model, HttpSession session, BoardDTO boardDTO) {
 		// 한 화면에 보여줄 글개수
@@ -303,7 +322,7 @@ public class MypageController {
 
 		return "mypage/likeList";
 	}
-	
+
 	@RequestMapping(value = "/mypage/prodLikeList", method = RequestMethod.GET)
 	public String prodLikeList(HttpServletRequest request, Model model, HttpSession session, ProdDTO prodDTO) {
 		// 한 화면에 보여줄 글개수

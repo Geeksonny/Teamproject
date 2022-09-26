@@ -31,5 +31,10 @@ public class CommonServiceImpl implements CommonService {
 		return commonDAO.getCount(commonDTO);
 	}
 
+	@Override
+	public int getMemCount(CommonDTO commonDTO) {
+		return commonDAO.getMemCount(commonDTO);
+	}
+
 
 }

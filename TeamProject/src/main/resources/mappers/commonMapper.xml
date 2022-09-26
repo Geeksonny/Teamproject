@@ -23,10 +23,15 @@
 			SELECT concat(#{comCd},(DATE_FORMAT(NOW(), '%y%m%d')),(lpad((max(ifnull(substr(${columnNm}, 9),0))+1),3,'0'))) AS pkCd FROM projectdb.${tableNm}
 		</select>
 
-
 	<!-- 카운트 -->
 		<select id="getCount" resultType="int">
 			SELECT	COUNT(*)
 			FROM	projectdb.${tableNm}
+		</select>
+	<!-- 멤버 카운트 -->
+		<select id="getMemCount" resultType="int">
+			SELECT	COUNT(*)
+			FROM	projectdb.${tableNm}
+			WHERE	${columnNm}=#{userId}
 		</select>
 </mapper>

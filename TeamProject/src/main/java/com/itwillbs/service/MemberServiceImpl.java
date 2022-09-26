@@ -235,7 +235,23 @@ public class MemberServiceImpl implements MemberService{
 	public int getProductCount() {
 		return memberDAO.getProductCount();
 	}
+	// 배송 리스트
+	@Override
+	public List<OrderDTO> getOrderBList(PageDTO pageDTO) {
+		// pageSize  pageNum  currentPage
+		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
+		int endRow=startRow+pageDTO.getPageSize()-1;
 
+		// sql => limit #{startRow -1}, #{pageSize}
+
+		pageDTO.setStartRow(startRow-1);
+		pageDTO.setEndRow(endRow);
+		return memberDAO.getOrderBList(pageDTO);
+	}
+	@Override
+	public int getOrderBCount() {
+		return memberDAO.getOrderBCount();
+	}
 
 
 

@@ -54,12 +54,10 @@
                             </div>
                           </div>
                           <span class="fw-semibold d-block mb-1">쿠폰</span>
-                          <h3 class="card-title mb-2">000 개</h3>
+                          <h3 class="card-title mb-2">${couCount } 개</h3>
                         </div>
                       </div>
                     </div>
-                    <!-- </div>
-    <div class="row"> -->
                     <div class="col-3 mb-4">
                       <div class="card">
                         <div class="card-body">
@@ -68,12 +66,12 @@
                               <img src="${pageContext.request.contextPath }/resources/assets/img/icons/unicons/wallet-info.png" alt="Credit Card" class="rounded" />
                             </div>
                           </div>
-                          <span class="d-block mb-1">최근 주문</span>
-                          <h3 class="card-title text-nowrap mb-2">0월 0일</h3>
+                          <span class="fw-semibold d-block mb-1">주문 수</span>
+                          <h3 class="card-title mb-2">${ordCount } 건</h3>
                         </div>
                       </div>
                     </div>
-                   <div class="col-3 mb-4">
+                     <div class="col-3 mb-4">
                       <div class="card">
                         <div class="card-body">
                           <div class="card-title d-flex align-items-start justify-content-between">
@@ -81,11 +79,12 @@
                               <img src="${pageContext.request.contextPath }/resources/assets/img/icons/unicons/cc-warning.png" alt="Credit Card" class="rounded" />
                             </div>
                           </div>
-                          <span class="d-block mb-1">배송 상태</span>
-                          <h3 class="card-title text-nowrap mb-2">배송 완료</h3>
+                          <span class="fw-semibold d-block mb-1">장바구니 상품</span>
+                          <h3 class="card-title mb-2">${sbCount } 개</h3>
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -145,8 +144,8 @@
                          </div>
                       </div>
                       <div class="col-md-4">
-                        <div class="card-body">
-                          <div class="text-center">
+                        <div class="card-title">
+                          <div class="text-center mt-4">
                           현재 배송지
                           </div>
                         </div>

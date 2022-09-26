@@ -64,6 +64,10 @@ public interface MemberDAO {
 	// 상품 리스트
 	public List<ProdDTO> getProductList(PageDTO pageDTO);
 	public int getProductCount();
+	// 배송 리스트
+	public List<OrderDTO> getOrderBList(PageDTO pageDTO);
+	public int getOrderBCount();
+
 
 
 

@@ -267,4 +267,26 @@
 	    LIMIT #{startRow}, #{pageSize}
 	</select>
 
+<!-- 관리자 / 배송 리스트 -->
+	<select id="getOrderBCount" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		  FROM ORDER_BOARD
+	</select>
+	<select id="getOrderBList" resultType="com.itwillbs.domain.OrderDTO">
+		SELECT @rownum:=@rownum+1				AS num
+				,USER_ID						AS ordUser
+                ,ORD_GET_NM						AS ordGetNm
+                ,ORD_GET_ADDRESS				AS ordGetAddress
+                ,ORD_GET_PHONE					AS ordGetPhone
+                ,ORD_TOTAL_PRICE				AS ordTotalPrice
+                ,ORD_COUPONDC					AS ordCouponDc
+                ,ORD_FINALPRICE					AS ordFinalPrice
+                ,ORD_DELIVERY_MESSAGE			AS ordDeliveryMessage
+		FROM ORDER_BOARD
+	   WHERE (@rownum:=0)=0
+	   ORDER BY NUM DESC
+	   LIMIT #{startRow}, #{pageSize}
+
+	</select>
+
 </mapper>

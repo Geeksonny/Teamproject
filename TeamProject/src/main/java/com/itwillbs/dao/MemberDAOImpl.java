@@ -165,8 +165,15 @@ public class MemberDAOImpl implements MemberDAO{
 	public int getProductCount() {
 		return sqlSession.selectOne(namespace + ".getProductCount");
 	}
-
-
+	// 배송 리스트
+	@Override
+	public List<OrderDTO> getOrderBList(PageDTO pageDTO) {
+		return sqlSession.selectList(namespace + ".getOrderBList", pageDTO);
+	}
+	@Override
+	public int getOrderBCount() {
+		return sqlSession.selectOne(namespace + ".getOrderBCount");
+	}
 
 
 

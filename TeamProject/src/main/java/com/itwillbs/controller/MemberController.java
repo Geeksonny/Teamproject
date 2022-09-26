@@ -189,7 +189,6 @@ public class MemberController {
 		return "redirect:/member/login";
 	}
 
-
 	// 로그아웃
 	@RequestMapping(value = "/member/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
@@ -200,52 +199,6 @@ public class MemberController {
 		return "redirect:/main/main";
 	}
 
-
-	@RequestMapping(value = "/basic/basic-badge-button", method = RequestMethod.GET)
-	public String basicBasicBadgeButton() {
-		return "basic/basic-badge-button";
-	}
-	@RequestMapping(value = "/basic/basic-form", method = RequestMethod.GET)
-	public String basicBasicForm() {
-		return "basic/basic-form";
-	}
-	@RequestMapping(value = "/basic/basic-menu-table", method = RequestMethod.GET)
-	public String basicBasicMenuTable() {
-		return "basic/basic-menu-table";
-	}
-
-	@RequestMapping(value = "/member/cards-basic", method = RequestMethod.GET)
-	public String memberCardsBasic() {
-		return "basic/cards-basic";
-	}
-	@RequestMapping(value = "/member/form-layouts-horizontal", method = RequestMethod.GET)
-	public String memberFormLayoutsHorizontal() {
-		return "basic/form-layouts-horizontal";
-	}
-	@RequestMapping(value = "/member/form-layouts-vertical", method = RequestMethod.GET)
-	public String memberFormLayoutsVertical() {
-		return "basic/form-layouts-vertical";
-	}
-	@RequestMapping(value = "/member/forms-basic-inputs", method = RequestMethod.GET)
-	public String memberFormBasicInputs() {
-		return "basic/forms-basic-inputs";
-	}
-	@RequestMapping(value = "/member/forms-input-groups", method = RequestMethod.GET)
-	public String memberFormInputGroups() {
-		return "basic/forms-input-groups";
-	}
-	@RequestMapping(value = "/member/tables", method = RequestMethod.GET)
-	public String memberTables() {
-		return "basic/tables";
-	}
-	@RequestMapping(value = "/member/ui-buttons", method = RequestMethod.GET)
-	public String memberUiButtons() {
-		return "basic/ui-buttons";
-	}
-	@RequestMapping(value = "/member/ui-pagination", method = RequestMethod.GET)
-	public String memberUiPagination() {
-		return "basic/ui-pagination";
-	}
 
 
 
