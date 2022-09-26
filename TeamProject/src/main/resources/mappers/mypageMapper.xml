@@ -104,7 +104,8 @@
 				,l.ORD_L_DELIV_NUMBER   
 				,l.ORD_PURCHASESTATUS   
 				,l.ORD_L_DATE          
-		        ,l.ORD_L_NUM			
+		        ,l.ORD_L_NUM
+		        ,l.ORD_NUM			
 				,b.ORD_COUPONDC         
 				,b.ORD_FINALPRICE
 				,p.PROD_L_PRODNM

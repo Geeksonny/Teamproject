@@ -86,12 +86,17 @@
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> ${fn:substring(pointDTO.pointDate,0,16)}  </td>
                         <td>${pointDTO.pointType }</td>
-                        <c:if test="${ pointDTO.pointUsed ne 0}">
-                        <td><span class="badge bg-danger">-${pointDTO.pointUsed }</span></td>
-                        </c:if>
-                        <c:if test="${ pointDTO.pointCharge ne 0}">
-                        <td><span class="badge bg-label-primary me-1">${pointDTO.pointCharge }</span></td>
-                        </c:if>
+                        <c:choose>
+                        	<c:when test="${pointDTO.pointUsed ne 0 && pointDTO.pointCharge eq 0  }">
+		                        <td><span class="badge bg-danger">-${pointDTO.pointUsed }</span></td>
+                        	</c:when>
+                        	<c:when test="${pointDTO.pointUsed eq 0 && pointDTO.pointCharge ne 0  }">
+                        		<td><span class="badge bg-label-primary me-1">${pointDTO.pointCharge }</span></td>	
+                        	</c:when>
+                        	<c:otherwise>
+                        		<td><span class="badge bg-label-primary me-1">${pointDTO.pointCharge }</span></td>
+                        	</c:otherwise>
+                        </c:choose>
                         <td><strong>${pointDTO.pointNow }</strong></td>
                       </tr>
 					 </c:forEach>

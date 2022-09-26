@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 public class OrderListDTO extends OrderDTO{
 	private OrderDTO orderDTO;
 	private ProdDTO prodDTO;
-	
 	private String prodLProdnm;
 	private String prodLMainimg;
 	
