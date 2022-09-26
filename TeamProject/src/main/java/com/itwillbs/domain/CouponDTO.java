@@ -4,14 +4,14 @@ import java.sql.Timestamp;
 
 public class CouponDTO {
 	private int num        ;
-	private String couUserNm  ;
+	private String couUserId  ;
 	private String couNum     ;
 	private String couNm      ;
 	private float couDc      ;
 	private String couYn      ;
 	private Timestamp couDate;
 	private String couNumCouDc;
-
+	private String couDet;
 
 	public int getNum() {
 		return num;
@@ -19,11 +19,11 @@ public class CouponDTO {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getCouUserNm() {
-		return couUserNm;
+	public String getCouUserId() {
+		return couUserId;
 	}
-	public void setCouUserNm(String couUserNm) {
-		this.couUserNm = couUserNm;
+	public void setCouUserId(String couUserId) {
+		this.couUserId = couUserId;
 	}
 	public String getCouNum() {
 		return couNum;
@@ -61,6 +61,14 @@ public class CouponDTO {
 	public void setCouNumCouDc(String couNumCouDc) {
 		this.couNumCouDc = couNumCouDc;
 	}
+	public String getCouDet() {
+		return couDet;
+	}
+	public void setCouDet(String couDet) {
+		this.couDet = couDet;
+	}
+
+
 
 
 

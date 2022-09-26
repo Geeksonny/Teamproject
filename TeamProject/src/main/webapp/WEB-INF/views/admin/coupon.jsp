@@ -11,6 +11,8 @@
   data-template="vertical-menu-template-free"
 >
   <head>
+  <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/jsPro/coupon.js"></script>
   </head>
 
   <body>
@@ -33,50 +35,55 @@
 
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" action="${pageContext.request.contextPath}/mypage/modifyPro" method="POST">
+                      <form id="formAccountSettings" action="${pageContext.request.contextPath}/admin/couponInsert" method="POST">
                         <div class="row">
-                            <input class="form-control form-control-lg" type="hidden" name="userId" id="userId" value="${memberDTO.userId}" readonly />
+                          <div class="mb-3 col-md-6">
+                            <label for="userNm" class="form-label">쿠폰 넘버</label>
+                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="6자리숫자를 입력하세요"/>
+                          </div>
+                          <button type="button" class="btn btn-primary me-2 " id=couNumbtn > 쿠폰번호 자동생성 </button>
+<!--                           <p id="couNum1"></p> -->
                           <div class="mb-3 col-md-6">
                             <label for="userNm" class="form-label">쿠폰 이름</label>
-                            <input class="form-control form-control-lg" type="text" name="userNm" id="userNm" value="${memberDTO.userNm}"/>
+                            <input class="form-control form-control-lg" type="text" name="couNm" id="couNm" placeholder="쿠폰 이름을 입력하세요"/>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="userAthletic">할인율</label>
-                            <select class="select2 form-control form-control-lg" id="userAthletic " name="userAthletic">
-                           	    <option value="5%" >5%</option>
-							    <option value="10%" >10%</option>
-							    <option value="20%" >20%</option>
-							    <option value="30%" >30%</option>
-							    <option value="40%" >40%</option>
-							    <option value="50%" >50%</option>
+                            <select class="select2 form-control form-control-lg" id="couDc " name="couDc">
+                           	    <option value="0.5" >5%</option>
+							    <option value="0.9" >10%</option>
+							    <option value="0.8" >20%</option>
+							    <option value="0.7" >30%</option>
+							    <option value="0.4" >40%</option>
+							    <option value="0.5" >50%</option>
                             </select>
                           </div>
-                          <div class="mb-3 col-md-3">
-                            <label for="userNicknm" class="form-label d-block">유효 쿠폰 여부</label>
-                          <div class="form-check form-check-inline mt-3">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio1"
-                              value="option1"
-                            />
-                            <label class="form-check-label mr-3" for="inlineRadio1">사용 가능</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="inlineRadioOptions"
-                              id="inlineRadio2"
-                              value="option2"
-                            />
-                            <label class="form-check-label" for="inlineRadio2">사용 불가</label>
-                          </div>
-                          </div>
+<!--                           <div class="mb-3 col-md-3"> -->
+<!--                             <label for="userNicknm" class="form-label d-block">유효 쿠폰 여부</label> -->
+<!--                           <div class="form-check form-check-inline mt-3"> -->
+<!--                             <input -->
+<!--                               class="form-check-input" -->
+<!--                               type="radio" -->
+<!--                               name="inlineRadioOptions" -->
+<!--                               id="inlineRadio1" -->
+<!--                               value="option1" -->
+<!--                             /> -->
+<!--                             <label class="form-check-label mr-3" for="inlineRadio1">사용 가능</label> -->
+<!--                           </div> -->
+<!--                           <div class="form-check form-check-inline"> -->
+<!--                             <input -->
+<!--                               class="form-check-input" -->
+<!--                               type="radio" -->
+<!--                               name="inlineRadioOptions" -->
+<!--                               id="inlineRadio2" -->
+<!--                               value="option2" -->
+<!--                             /> -->
+<!--                             <label class="form-check-label" for="inlineRadio2">사용 불가</label> -->
+<!--                           </div> -->
+<!--                           </div> -->
                           <div class="mb-3 col-md-10">
-                            <label for="userPass" class="form-label">쿠폰 설명</label>
-                            <input class="form-control form-control-lg" type="password" name="userPass" id="userPass" />
+                            <label for="couDet" class="form-label">쿠폰 설명</label>
+                            <input class="form-control form-control-lg" type="text" name="couDet" id="couDet" placeholder="쿠폰 상세설명을 입력하세요"/>
                           </div>
                         <div class="mb-3 col-md-2 mt-3">
                           <button type="submit" class="btn btn-primary me-2 " >+ 추가</button>

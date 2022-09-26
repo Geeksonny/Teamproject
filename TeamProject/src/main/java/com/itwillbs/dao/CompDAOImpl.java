@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.itwillbs.domain.CompDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.OrderListDTO;
 import com.itwillbs.domain.PageDTO;
@@ -153,6 +154,10 @@ public class CompDAOImpl implements CompDAO {
 	@Override
 	public void pointUpdate(OrderListDTO orderListDTO) {
 		sqlSession.update(namespace + ".pointUpdate", orderListDTO);
+	}
+	@Override
+	public void insertCoupon(CouponDTO couponDTO) {
+		sqlSession.insert(namespace + ".insertCoupon", couponDTO);
 	}
 
 

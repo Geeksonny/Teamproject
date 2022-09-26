@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.CompDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.OrderListDTO;
 import com.itwillbs.domain.PageDTO;
@@ -64,4 +65,6 @@ public interface CompService {
 	public void prodquantityUpdate(OrderListDTO orderListDTO);
 	// 포인트 돌려주기
 	public void pointUpdate(OrderListDTO orderListDTO);
+	// admin 쿠폰 등록
+	public void insertCoupon(CouponDTO couponDTO);
 }

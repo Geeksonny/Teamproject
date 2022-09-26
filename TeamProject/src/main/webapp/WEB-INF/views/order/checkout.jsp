@@ -19,20 +19,20 @@
 
 	<script>
  var point2 = '${pointDTO2.pointNow}';
- $(function() { 
-     $('#textUsePoint').change(function() { 
-        if($('#textUsePoint').val() - point2 > 0) { 
-          alert('사용 가능 포인트를 초과하였습니다.') 
-           $('#textUsePoint').val(point2); 
+ $(function() {
+     $('#textUsePoint').change(function() {
+        if($('#textUsePoint').val() - point2 > 0) {
+          alert('사용 가능 포인트를 초과하였습니다.')
+           $('#textUsePoint').val(point2);
           document.getElementById('usePoint2').innerHTML=point2+"원";
-		  document.getElementById('total2').innerHTML=${total}-point2+"원"; 
+		  document.getElementById('total2').innerHTML=${total}-point2+"원";
         }else if($('#textUsePoint').val() < 1000) {
-          alert('최소 사용 가능 포인트는 1000P 입니다.') 
+          alert('최소 사용 가능 포인트는 1000P 입니다.')
           document.getElementById('usePoint2').innerHTML="1000원";
-		  document.getElementById('total2').innerHTML=${total}-1000+"원"; 
-           $('#textUsePoint').val(1000); 
+		  document.getElementById('total2').innerHTML=${total}-1000+"원";
+           $('#textUsePoint').val(1000);
         }
-     }) 
+     })
   });
   </script>
 
@@ -85,17 +85,17 @@ function myCoupon(){
 	$.ajax({
         	url: "myCoupon",
 			type: "post",
-			data : {'couUserNm':sbUser},
+			data : {'couUserId':sbUser},
 			dataType: "json",
 			async: false,
 			success:function( data ) {
 				if(data.code=="S") {
 					$('#myCouponList').append("<option value='0_0'>" + "선택" + "</option>");
-					
+
 					var codeList = data.couponList;
 				      for(var i = 0; i < codeList.length ; i++){
 				    	 if(codeList[i].couYn!='N'){
-				    		 
+
 				        var option = "<option value='" + codeList[i].couNumCouDc + "'>" + codeList[i].couNm + "</option>";
 				        $('#myCouponList').append(option);
 						}
