@@ -111,16 +111,19 @@ public class BoardController {
 	//가상주소 시작점 http://localhost:8080/myweb2/board/fwritePro
 	@RequestMapping(value = "/board/fwritePro", method = RequestMethod.POST)
 	public String fwritePro(HttpServletRequest request,HttpSession session, MultipartFile file) throws Exception {
+		String filename = "";
+		if(file.isEmpty()) {
+			filename=null;
+		}else {
+			UUID uuid=UUID.randomUUID();
+			filename=uuid.toString()+"_"+file.getOriginalFilename();
 
+			//업로드파일 file.getBytes() => upload/랜덤문자_파일이름 복사
+			File uploadFile=new File(uploadPath,filename);
+
+			FileCopyUtils.copy(file.getBytes(), uploadFile);
+		}
 		//파일 이름  => 랜덤문자_파일이름
-		UUID uuid=UUID.randomUUID();
-		String filename=uuid.toString()+"_"+file.getOriginalFilename();
-
-		//업로드파일 file.getBytes() => upload/랜덤문자_파일이름 복사
-		File uploadFile=new File(uploadPath,filename);
-
-		FileCopyUtils.copy(file.getBytes(), uploadFile);
-
 		String notice = request.getParameter("boardNotice");
 
 		BoardDTO boardDTO=new BoardDTO();
@@ -187,17 +190,20 @@ public class BoardController {
 //		pageDTO.setStartPage(startPage);
 //		pageDTO.setEndPage(endPage);
 //		pageDTO.setPageCount(pageCount);
-
+		
+		String userId = (String)session.getAttribute("userId");
 		ViewDTO viewDTO=new ViewDTO();
 		viewDTO.setBoardNum(boardNum);
-		viewDTO.setUserId((String)session.getAttribute("userId"));
+		viewDTO.setUserId(userId);
 
 		ViewDTO viewDTO2=boardService.viewcheck(viewDTO);
-
-		if(viewDTO2 == null) {
-			boardService.viewinsert(viewDTO);
-			boardService.viewup(boardNum);
+		if(userId != null) {
+			if(viewDTO2 == null) {
+				boardService.viewinsert(viewDTO);
+				boardService.viewup(boardNum);
+			}
 		}
+		
 
 
 
@@ -321,52 +327,17 @@ public class BoardController {
 
 
 	}
+	
+//	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
+//	public String topBoard(HttpServletRequest request, HttpSession session,  Model model, BoardDTO boardDTO) {
+//		
+//		List<BoardDTO> boardTOPList=boardService.gettopBoard(boardDTO);
+//		
+//		
+//		model.addAttribute("boardTOPList", boardTOPList);
+//		return "main/main";
+//	}
 
-	@RequestMapping(value = "/board/shopAjax", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> listAjax(HttpServletRequest req, HttpServletResponse res, @ModelAttribute BoardDTO boardDTO) {
-		Map<String, Object> map = new HashMap<>();
-		String category = req.getParameter("category");
-		String srhText = req.getParameter("srhText");
-		String pageNum = req.getParameter("pageNum");
-
-		if(pageNum == null) {
-			pageNum = "1";
-		}
-		int currentPage=Integer.parseInt(pageNum);
-
-		boardDTO.setCurrentPage(currentPage);
-		boardDTO.setPageSize(9);
-		// ---------------- 페이징 처리(Ajax) 시작
-		int pageSize = 9;
-		int count = boardService.getBoardCount(boardDTO);
-		int pageBlock = 3;
-		int startPage = (currentPage-1)/pageBlock*pageBlock+1;
-		int endPage=startPage+pageBlock-1;
-		int pageCount=count / pageSize +(count % pageSize==0?0:1);
-		if(endPage > pageCount){
-			endPage = pageCount;
-		}
-
-		boardDTO.setCurrentPage(currentPage);
-		boardDTO.setPageSize(9);
-		boardDTO.setCount(count);
-		boardDTO.setPageBlock(pageBlock);
-		boardDTO.setStartPage(startPage);
-		boardDTO.setEndPage(endPage);
-		boardDTO.setPageCount(pageCount);
-
-		boardDTO.setCategory(category);
-		boardDTO.setSrhText(srhText);
-
-		// ---------------- 페이징 처리(Ajax) 끝
-
-		List<BoardDTO> boardList = boardService.getBoardList(boardDTO);
-
-		map.put("boardList", boardList);
-		map.put("boardDTO", boardDTO);
-
-		return map;
-	}
 
 
 

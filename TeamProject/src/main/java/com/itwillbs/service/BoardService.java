@@ -42,6 +42,8 @@ public interface BoardService {
 
 	void rCount(int boardNum);
 
+	List<BoardDTO> gettopBoard(BoardDTO boardDTO);
+
 
 
 

@@ -121,6 +121,11 @@ public class BoardServiceImpl implements BoardService{
 		boardDAO.rCount(boardNum);
 	}
 
+	@Override
+	public List<BoardDTO> gettopBoard(BoardDTO boardDTO) {
+		return boardDAO.gettopBoard(boardDTO);
+	}
+
 
 
 

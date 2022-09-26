@@ -46,6 +46,16 @@ public class MypageServiceImpl implements MypageService {
 	public void replyCount(MypageDTO mypageDTO) {
 		mypageDAO.replyCount(mypageDTO);		
 	}
+	
+	@Override
+	public void productLikesub(MypageDTO mypageDTO) {
+		mypageDAO.productLikesub(mypageDTO);
+	}
+
+	@Override
+	public void productLike(MypageDTO mypageDTO) {
+		mypageDAO.productLike(mypageDTO);		
+	}
 
 	@Override
 	public MypageDTO mypageselect(MypageDTO mypageDTO) {
@@ -87,17 +97,17 @@ public class MypageServiceImpl implements MypageService {
 	}
 	
 	@Override
-	public List<ProdDTO> getPordLikeList(PageDTO pageDTO) {
+	public List<ProdDTO> getPordLikeList(ProdDTO prodDTO) {
 		// pageSize  pageNum  currentPage
-				int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
-				int endRow=startRow+pageDTO.getPageSize()-1;
+				int startRow=(prodDTO.getCurrentPage()-1)*prodDTO.getPageSize()+1;
+				int endRow=startRow+prodDTO.getPageSize()-1;
 				
 				// sql => limit #{startRow -1}, #{pageSize}
 				
-				pageDTO.setStartRow(startRow-1);
-				pageDTO.setEndRow(endRow);
+				prodDTO.setStartRow(startRow-1);
+				prodDTO.setEndRow(endRow);
 				
-				return mypageDAO.getPordLikeList(pageDTO);
+				return mypageDAO.getPordLikeList(prodDTO);
 	}
 	// ���������� �ֹ����
 		@Override
@@ -117,6 +127,8 @@ public class MypageServiceImpl implements MypageService {
 		public int getMyOrdListCount(PageDTO pageDTO) {
 			return mypageDAO.getMyOrdListCount(pageDTO);
 		}
+
+		
 
 	
 }

@@ -5,8 +5,18 @@ public class prodLikeDTO {
 	private int prodLikeNum;
 	private String userId;
 	private String prodLCode;
+	private String prodLProdnm;
 	
 	
+	
+	
+	public String getProdLProdnm() {
+		return prodLProdnm;
+	}
+	public void setProdLProdnm(String prodLProdnm) {
+		
+		this.prodLProdnm = prodLProdnm;
+	}
 	public int getProdLikeNum() {
 		return prodLikeNum;
 	}

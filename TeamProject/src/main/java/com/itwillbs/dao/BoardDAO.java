@@ -42,6 +42,8 @@ public interface BoardDAO {
 
 	void rCount(int boardNum);
 
+	List<BoardDTO> gettopBoard(BoardDTO boardDTO);
+
 
 
 
