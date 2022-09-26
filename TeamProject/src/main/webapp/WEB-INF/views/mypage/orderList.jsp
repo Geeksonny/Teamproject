@@ -14,6 +14,7 @@
   <head>
   </head>
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="${pageContext.request.contextPath }/resources/js/date.js"></script>
   <script src="${pageContext.request.contextPath }/resources/jsPro/deleteUser.js"></script>
   <body>
   <!-- 메뉴단 -->
@@ -33,16 +34,12 @@
                 <div class="col-md-12">
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/user">
-                      <i class="bx bx-buildings me-1"></i> 회원 관리</a>
+                      <a class="nav-link active" href="${pageContext.request.contextPath }/mypage/order">
+                      <i class="bx bx-detail me-1"></i> 주문 목록</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" href="${pageContext.request.contextPath }/admin/order">
-                      <i class="bx bx-buildings me-1"></i> 주문 관리</a>
-                    </li>
-                     <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/addr">
-                      <i class="bx bx-buildings me-1"></i> 배송 관리</a>
+                      <a class="nav-link " href="${pageContext.request.contextPath }/mypage/addr">
+                      <i class="bx bx-buildings me-1"></i> 배송지 관리</a>
                     </li>
                   </ul>
 
@@ -52,15 +49,31 @@
                 <div class="card-body">
                 <div class="table-responsive text-nowrap">
                 <div style="padding:1rem;">
-                 <button type="submit" class="btn btn-outline-primary" onclick="deleteValue();">선택 삭제</button>
+                	  <form action="${pageContext.request.contextPath }/mypage/order" method="get" onsubmit="return datecheck()">
+                <div class="col-md-12" style="padding-left:4%">
+                <div class="mb-4 mt-2 row">
+                  <div class="col-md-4 mb-3">
+                    <input class="form-control mr-2" type="date" id="startDate" name="startDate" style="width: 85%; display:inline-block" required /> 부터
+                  </div>
+                  <div class="col-md-4">
+                    <input class="form-control mr-2" type="date" id="endDate" name="endDate" style="width: 85%; display:inline-block" required /> 까지
+                  </div>
+                  <div class="col-md-4">
+						<input type="button" value="1개월" id="searchMonth1" class="btn btn-outline-primary" >
+						<input type="button" value="3개월" id="searchMonth3" class="btn btn-outline-primary" >
+						<input type="button" value="6개월" id="searchMonth6" class="btn btn-outline-primary" >
+						<input type="submit" value="조회" class="btn btn-primary" id="searchOrder">
+                  </div>
+				</div>
+				</div>
+					</form>
                 </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>num</th>
-                        <th>상품정보</th>
-                        <th>할인가</th>
-                        <th>최종 가격</th>
+                        <th colspan="2">상품정보  ${orderListDTO.prodLMainimg}</th>
+                        <th>할인금액</th>
+                        <th>결제금액</th>
                         <th>주문일</th>
                         <th>주문상태</th>
                       </tr>
@@ -68,12 +81,32 @@
                     <tbody class="table-border-bottom-0">
                      <c:forEach var="orderListDTO" items="${ordList}" >
                       <tr>
-                        <td>${orderListDTO.trnum}</td>
-                        <td>${orderListDTO.ordLCode}</td>
-                        <td>${orderListDTO.ordCouponDc}</td>
-                        <td>${orderListDTO.ordFinalPrice}</td>
-                        <td>${fn:substring(orderListDTO.ordLDate,0,16)}</td>
-                        <td>${orderListDTO.ordDeliveryStatus}</td>
+                        <td><img src="${pageContext.request.contextPath }/resources/img/product/${orderListDTO.prodLMainimg}" width="150"/></td>
+                        <td style="vertical-align: middle">${orderListDTO.prodLProdnm}</td>
+                        <td style="vertical-align: middle">${orderListDTO.ordCouponDc}</td>
+                        <td style="vertical-align: middle">${orderListDTO.ordFinalPrice} 원</td>
+                        <td style="vertical-align: middle">${fn:substring(orderListDTO.ordLDate,0,16)}</td>
+                        <td style="vertical-align: middle">
+                        <c:set var="num" value="${orderListDTO.ordDeliveryStatus }" />
+                         		<c:choose>
+						 			<c:when test="${num eq '0'}">
+						  				상품준비중&nbsp;&nbsp;
+                       					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
+                       					<a href="https://tracker.delivery/#/kr.epost/${oderListDTO.ordLDelivNumber }" target="_blank">배송조회</a>
+                       					</button>
+                       					<div></div>
+						 			</c:when>
+						 			<c:when test="${num eq '1'}">
+						  				배송중
+						 			</c:when>
+						 			<c:when test="${num eq '2'}">
+						  				배송완료
+						 			</c:when>
+						 			<c:when test="${num eq '3'}">
+						  				배송취소
+						 			</c:when>
+						 		</c:choose>
+                        </td>
                       </tr>
 					 </c:forEach>
                     </tbody>
@@ -161,5 +194,26 @@
     <!-- Footer Section Begin -->
     <jsp:include page="../inc/footer.jsp"/>
 </body>
-
+<script type="text/javascript">
+function datecheck(){
+	function dateFormat(){
+		var date=new Date();
+		var yyyy=date.getFullYear();
+		var mm=date.getMonth()+1;
+		mm = mm >=10 ? mm : '0'+mm;
+		var dd=date.getDate();
+		dd = dd>=10 ? dd : '0'+dd;
+		return yyyy+'-'+mm+'-'+dd;
+	}
+	var startdate = $('#startDate').val();
+	var enddate = $('#endDate').val();
+	if(startdate > enddate){
+		alert('검색 종료일을 검색 시작일 보다 늦은 날짜로 지정해주세요.');
+		return false;
+	} else if(startdate > dateFormat() || enddate > dateFormat()){
+		alert('오늘 이전의 날짜만 검색이 가능합니다.');
+		return false;
+	}
+}
+</script>
 </html>

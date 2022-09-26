@@ -343,6 +343,36 @@
 											 )
 
 	</insert>
+<!-- 	admin 쿠폰 등록 -->
+	<insert id="insertCoupon">
+		INSERT INTO COUPON_INFO(
+					 NUM
+					,COU_NUM
+					,COU_NM
+					,COU_DET
+					,COU_DC
+					,COU_INFO_DATE
+           		    )
+			 VALUES (
+					(SELECT NUM
+		       		 FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) + 1 AS NUM
+				 	   	       FROM COUPON_INFO) A)
+			       ,#{couNum}
+			       ,#{couNm}
+			       ,#{couDet}
+			       ,#{couDc}
+			       ,#{couInfoDate}
 
-
+			  		)
+	</insert>
+<!-- 	admin 쿠폰리스트갖고오기 -->
+	<select id="getCouponList" resultType="com.itwillbs.domain.CouponDTO">
+		SELECT *
+		  FROM COUPON_INFO
+	</select>
+<!-- 	admin 쿠폰 삭제 -->
+	<delete id="deleteCoupon">
+		DELETE FROM COUPON_INFO
+		 WHERE COU_NUM	=#{couNum}
+	</delete>
 </mapper>

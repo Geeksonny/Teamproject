@@ -106,11 +106,15 @@
 				,l.ORD_L_DATE          
 		        ,l.ORD_L_NUM			
 				,b.ORD_COUPONDC         
-				,b.ORD_FINALPRICE       
+				,b.ORD_FINALPRICE
+				,p.PROD_L_PRODNM
+				,p.PROD_L_MAINIMG        
 		 FROM   ORDER_LIST l join ORDER_BOARD b
-		   ON   (l.ORD_L_NUM=b.NUM)
+		   ON   (l.ORD_L_NUM=b.NUM) JOIN PRODUCT_LIST p
+ 		   ON	(l.ORD_L_CODE=p.PROD_L_CODE)
 		WHERE   (@rownum:=0)=0
 		  AND   l.ORD_L_USER= #{userId}
+		  AND 	date_format(l.ORD_L_DATE, '%Y-%m-%d') BETWEEN #{startDate} AND #{endDate}
 		ORDER BY   l.ORD_L_DATE
    DESC LIMIT    #{startRow}, #{pageSize}
 	

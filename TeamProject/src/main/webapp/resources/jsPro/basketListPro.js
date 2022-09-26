@@ -19,7 +19,7 @@ function myCoupon(){
 	$.ajax({
         	url: "/web/order/myCoupon",
 			type: "post",
-			data : {'couUserNm':sbUser},
+			data : {'couUserId':sbUser},
 			dataType: "json",
 			async: false,
 			success:function( data ) {

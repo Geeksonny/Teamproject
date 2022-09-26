@@ -111,7 +111,7 @@
 
 	<select  id="selectCouponList" resultType="com.itwillbs.domain.CouponDTO" parameterType="com.itwillbs.domain.CouponDTO">
 			SELECT 	  NUM
-					 ,COU_USER_NM
+					 ,COU_USER_ID
 					 ,COU_NUM
 					 ,COU_NM
 					 ,COU_DC
@@ -119,7 +119,7 @@
 					 ,COU_DATE
 					 ,CONCAT(COU_NUM,'_',COU_DC) as couNumCouDc
 			  FROM 	 COUPON
-			 WHERE 	 COU_USER_NM =#{couUserNm}
+			 WHERE 	 COU_USER_ID =#{couUserId}
 		</select>
 
 </mapper>

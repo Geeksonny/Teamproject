@@ -16,7 +16,6 @@ public class ProdDTO extends PageDTO {
 	private int prodLPrice;
 	private Timestamp prodLUploaddate;
 	private String prodLCompnm;
-	private String Compnm;
 	private String prodLMainimg;
 	private String prodLSubimg;
 	private String prodLDetail;

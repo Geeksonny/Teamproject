@@ -233,14 +233,11 @@ function printProdList(data){
 	                  	 	           <li><a href="#">
 	                  	 	           	   <img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a>
 	                  	 	           </li>
-	                  		           <li><a href="${pageContext.request.contextPath }/order/cart">
-	                  		           	   <img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a>
-	                  		           </li>
 	                                </ul>
 	                           	</div>
 	                            <div class="product__item__text">
 	                            	<h6>${prodRelatedList.prodLProdnm}</h6>
-	                            	<a href="${pageContext.request.contextPath }/order/cart" class="add-cart">+ Add To Cart</a>
+	                            	<a href="${pageContext.request.contextPath }/order/cart"></a>
 	                                <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
 	                                <h5> <fmt:formatNumber value="${prodRelatedList.prodLPrice}" pattern="###,###,###원"/></h5>
 	                                <div class="rating">

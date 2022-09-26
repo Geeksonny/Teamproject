@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.CompDAO;
 import com.itwillbs.domain.CompDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.OrderListDTO;
 import com.itwillbs.domain.PageDTO;
 import com.itwillbs.domain.ProdDTO;
@@ -201,6 +202,29 @@ public class CompServiceImpl implements CompService {
 		compDAO.pointUpdate(orderListDTO);
 
 	}
+
+	// admin 쿠폰 등록
+	@Override
+	public void insertCoupon(CouponDTO couponDTO) {
+		couponDTO.setCouDate(new Timestamp(System.currentTimeMillis()));
+
+		compDAO.insertCoupon(couponDTO);
+	}
+
+
+	// admin 쿠폰리스트 갖고오기
+	@Override
+	public List<CouponDTO> getCouponList() {
+		return compDAO.getCouponList();
+	}
+
+	// admin 쿠폰 삭제
+	@Override
+	public void deleteCoupon(CouponDTO couponDTO) {
+		compDAO.deleteCoupon(couponDTO);
+	}
+
+
 
 
 

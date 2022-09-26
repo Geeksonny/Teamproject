@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.CompDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.OrderDTO;
 import com.itwillbs.domain.OrderListDTO;
@@ -316,6 +317,24 @@ public class AdminController {
 	public String coupon() {
 		return "admin/coupon";
 	}
+		@RequestMapping(value = "/admin/coupon", method = RequestMethod.GET)
+		public String ordList(HttpServletRequest request, Model model, HttpSession session,
+				@ModelAttribute CouponDTO couponDTO) {
+
+			List<CouponDTO> couponList = compService.getCouponList();
+			// 데이터 담아서 list.jsp 이동
+			model.addAttribute("couponList", couponList);
+
+			// 주소변경없이 이동
+			// WEB-INF/views/board/list.jsp 이동
+			return "admin/coupon";
+		}
+
+
+
+
+
+
 
 	// 회원 삭제 기능
 	@RequestMapping(value = "/admin/delete")
@@ -329,5 +348,42 @@ public class AdminController {
 		ResponseEntity<String> entity=new ResponseEntity<String>("1" ,HttpStatus.OK);
 		return entity;
 	}
+
+
+	// 쿠폰번호 중복검사
+		@RequestMapping(value = "/admin/couponCheck", method = RequestMethod.POST)
+		public ResponseEntity<String> couponCheck(HttpServletRequest request) {
+			String prodLCode = request.getParameter("prodLCode");
+			ProdDTO prodDTO = compService.getProd(prodLCode);
+			String result = "";
+			if (prodDTO != null) { // 상품코드 중복
+				result = "iddup";
+			} else { // 상품코드 사용가능
+				result = "idok";
+			}
+
+			ResponseEntity<String> entity = new ResponseEntity<String>(result, HttpStatus.OK);
+			return entity;
+		}
+	// 쿠폰 등록
+		@RequestMapping(value = "/admin/couponInsert", method = RequestMethod.POST)
+		public String couponInsert(CouponDTO couponDTO) {
+			// 메서드 호출
+			compService.insertCoupon(couponDTO);
+
+			// 주소변경 이동
+			return "redirect:/admin/coupon";
+		}
+		// 삭제기능 구현
+				@RequestMapping(value = "/admin/delete1")
+				public ResponseEntity<String> deleteCoupon(HttpServletRequest request,CouponDTO couponDTO) {
+					System.out.println("ddddddddddddddddddd");
+					compService.deleteCoupon(couponDTO);
+
+
+				ResponseEntity<String> entity=new ResponseEntity<String>("1" ,HttpStatus.OK);
+				return entity;
+				}
+
 
 }

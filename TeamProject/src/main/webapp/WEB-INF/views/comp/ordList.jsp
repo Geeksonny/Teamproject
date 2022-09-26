@@ -53,31 +53,31 @@
                   <table class="table table-striped" >
                     <thead>
                       <tr>
-                        <th>주문일</th>
-                        <th>주문 번호</th>
-                        <th>주문 상품</th>
-                        <th>주문자</th>
-                        <th>총 금액</th>
-                        <th style="width:30%">배송</th>
-                        <th>주문상태</th>
+                        <th scope="col" style="text-align:center;" >주문일</th>
+                        <th scope="col" style="text-align:center;">주문 번호</th>
+                        <th scope="col" style="text-align:center;">주문 상품</th>
+                        <th scope="col" style="text-align:center;">주문자</th>
+                        <th scope="col" style="text-align:center;">총 금액</th>
+                        <th scope="col" style="text-align:center; width:20% ">배송</th>
+                        <th scope="col" style="text-align:center; width:20%">주문상태</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
 					  <c:forEach var="orderListDTO" items="${ordList }" varStatus="status">
                       <tr onClick="location.href='${pageContext.request.contextPath }/comp/ordListDet?CheckRow=${orderListDTO.ordLCode },${orderListDTO.ordLUser },${orderListDTO.num }'" style="cursor:pointer;">
-                        <td><fmt:formatDate pattern="yy-MM-dd" value="${orderListDTO.ordLDate }"/></td>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${orderListDTO.num }</strong></td>
-                        <td>
+                        <td style="text-align:center; "><fmt:formatDate pattern="yy-MM-dd" value="${orderListDTO.ordLDate }"/></td>
+                        <td style="text-align:center; "> <strong>${orderListDTO.num }</strong></td>
+                        <td style="text-align:center; ">
                         ${orderListDTO.ordLCode }
                         </td>
-                        <td>
+                        <td style="text-align:center; ">
                         ${orderListDTO.ordLUser }
                         </td>
-                        <td>
+                        <td style="text-align:center; ">
                           ${orderListDTO.individualPrice }
                         </td>
 
-                        <td  onclick="event.cancelBubble=true">
+                        <td  onclick="event.cancelBubble=true" style="text-align:center;width:20% ">
 					  		<form action="${pageContext.request.contextPath }/comp/delivNumberInsert" method="post">
                       			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
                       			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
@@ -85,7 +85,7 @@
                      	  		<c:set var="num" value="${orderListDTO.ordDeliveryStatus }" />
                          		<c:choose>
 						 			<c:when test="${num eq '0'}">
-						  				상품준비중&nbsp;&nbsp;
+						  				상품준비중
                        					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
                        					배송준비
                        					</button>
@@ -104,7 +104,7 @@
                 				</div>
                  			</form>
 						</td>
-						<td onclick="event.cancelBubble=true">
+						<td onclick="event.cancelBubble=true" style="text-align:center;width:20% ">
 							<form action="${pageContext.request.contextPath }/comp/refund" method="post">
                       			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
                       			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
@@ -112,13 +112,13 @@
                       			<input type="hidden" value="${orderListDTO.num }" name="num" id="num">
                       			<input type="hidden" value="${orderListDTO.ordTotalPrice }" name="ordTotalPrice" id="ordTotalPrice">
                       			<input type="hidden" value="${orderListDTO.individualPrice }" name="individualPrice" id="individualPrice">
-                      			<div id="delivNumber_${orderListDTO.trnum}">
+                      			<div id="delivNumber_${orderListDTO.trnum}" >
                      	  		<c:set var="ordRefund" value="${orderListDTO.ordRefund }"  />
                      	  		<c:set var="purchasestatus" value="${orderListDTO.ordPurchasestatus }" />
                          		<c:choose>
 						 			<c:when test="${ordRefund eq '10' and purchasestatus eq 'Y'}">
 <!-- 						 			배송완료, 주문완료 -->
-						  				정상주문&nbsp;&nbsp;
+						  				정상주문
 						 			</c:when>
 						 			<c:when test="${ordRefund eq '11' and purchasestatus eq 'N'}">
 <!-- 						 			환불신청 주문취소 -->
@@ -137,6 +137,7 @@
 
 						</td>
                       </tr>
+                      <tr id="aaa" name="aaa"></tr>
                       </c:forEach>
 
                     </tbody>

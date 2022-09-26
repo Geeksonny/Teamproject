@@ -3,6 +3,7 @@ package com.itwillbs.service;
 import java.util.List;
 
 import com.itwillbs.domain.CompDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.OrderDTO;
 import com.itwillbs.domain.OrderListDTO;
@@ -67,6 +68,7 @@ public interface MemberService {
 	// 배송 리스트
 	public List<OrderDTO> getOrderBList(PageDTO pageDTO);
 	public int getOrderBCount();
+
 
 
 
