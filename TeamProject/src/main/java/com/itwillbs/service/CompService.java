@@ -67,4 +67,8 @@ public interface CompService {
 	public void pointUpdate(OrderListDTO orderListDTO);
 	// admin 쿠폰 등록
 	public void insertCoupon(CouponDTO couponDTO);
+	// admin 쿠폰리스트 갖고오기
+	public List<CouponDTO> getCouponList();
+	// 쿠폰삭제
+	public void deleteCoupon(CouponDTO couponDTO);
 }

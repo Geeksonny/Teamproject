@@ -361,9 +361,18 @@
 			       ,#{couNm}
 			       ,#{couDet}
 			       ,#{couDc}
-			       ,#{couDate}
+			       ,#{couInfoDate}
 
 			  		)
 	</insert>
-
+<!-- 	admin 쿠폰리스트갖고오기 -->
+	<select id="getCouponList" resultType="com.itwillbs.domain.CouponDTO">
+		SELECT *
+		  FROM COUPON_INFO
+	</select>
+<!-- 	admin 쿠폰 삭제 -->
+	<delete id="deleteCoupon">
+		DELETE FROM COUPON_INFO
+		 WHERE COU_NUM	=#{couNum}
+	</delete>
 </mapper>

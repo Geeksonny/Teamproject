@@ -10,6 +10,7 @@ public class CouponDTO {
 	private float couDc      ;
 	private String couYn      ;
 	private Timestamp couDate;
+	private Timestamp couInfoDate;
 	private String couNumCouDc;
 	private String couDet;
 
@@ -66,6 +67,12 @@ public class CouponDTO {
 	}
 	public void setCouDet(String couDet) {
 		this.couDet = couDet;
+	}
+	public Timestamp getCouInfoDate() {
+		return couInfoDate;
+	}
+	public void setCouInfoDate(Timestamp couInfoDate) {
+		this.couInfoDate = couInfoDate;
 	}
 
 

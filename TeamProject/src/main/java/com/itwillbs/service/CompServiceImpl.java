@@ -212,6 +212,21 @@ public class CompServiceImpl implements CompService {
 	}
 
 
+	// admin 쿠폰리스트 갖고오기
+	@Override
+	public List<CouponDTO> getCouponList() {
+		return compDAO.getCouponList();
+	}
+
+	// admin 쿠폰 삭제
+	@Override
+	public void deleteCoupon(CouponDTO couponDTO) {
+		compDAO.deleteCoupon(couponDTO);
+	}
+
+
+
+
 
 
 }

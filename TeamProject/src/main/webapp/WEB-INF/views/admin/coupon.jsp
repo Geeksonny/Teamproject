@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -98,57 +98,30 @@
 
               <h5 class="pb-1 mt-5 mb-3">쿠폰 리스트</h5>
               <div class="row mb-5">
+              <c:forEach var="couponDTO" items="${couponList }" >
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
-                    <img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px">
-                    <div class="card-header">쿠폰 코드 &nbsp;
+                    <a onclick="couponDelete();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px"></a>
+                    <div class="card-header">쿠폰 코드&nbsp; :&nbsp; ${couponDTO.couNum }&nbsp;
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">쿠폰 이름 <span class="text-warning">30% 할인</span> </h5>
+                      <h5 class="card-title">쿠폰이름 : <span class="text-warning">${couponDTO.couNm }</span> </h5>
                       <p class="card-text">
-                        쿠폰 설명
+                        쿠폰 내용&nbsp; :&nbsp; ${couponDTO.couDet }
                       </p>
-                      <p class="h5">
-                      	<span class="badge bg-success">사용 가능</span>
-                      	<span class="badge bg-danger">사용 불가</span>
+                      <p> 쿠폰 할인률 &nbsp;:&nbsp; ${couponDTO.couInfoDate }
                       </p>
+                      <p> 쿠폰 등록 날짜 &nbsp;:&nbsp; ${couponDTO.couInfoDate }
+                      </p>
+<!--                       <p class="h5"> -->
+<!--                       	<span class="badge bg-success">사용 가능</span> -->
+<!--                       	<span class="badge bg-danger">사용 불가</span> -->
+<!--                       </p> -->
                     </div>
+                    <input type="hidden" name="sbCount" value="${couponDTO.couNum}" id="delCouNum">
                   </div>
                 </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                  <div class="card">
-                    <img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px">
-                    <div class="card-header">쿠폰 코드 &nbsp;
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">쿠폰 이름 <span class="text-warning">30% 할인</span> </h5>
-                      <p class="card-text">
-                        쿠폰 설명
-                      </p>
-                      <p class="h5">
-                      	<span class="badge bg-success">사용 가능</span>
-                      	<span class="badge bg-danger">사용 불가</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                 <div class="col-md-6 col-lg-4 mb-3">
-                  <div class="card">
-                    <div class="card-header">쿠폰 코드 &nbsp;
-                    <img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px">
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">쿠폰 이름 <span class="text-warning">30% 할인</span> </h5>
-                      <p class="card-text">
-                        쿠폰 설명
-                      </p>
-                      <p class="h5">
-                      	<span class="badge bg-success">사용 가능</span>
-                      	<span class="badge bg-danger">사용 불가</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              </c:forEach>
               </div>
               <!--/ Content types -->
               </div>

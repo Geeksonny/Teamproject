@@ -155,9 +155,20 @@ public class CompDAOImpl implements CompDAO {
 	public void pointUpdate(OrderListDTO orderListDTO) {
 		sqlSession.update(namespace + ".pointUpdate", orderListDTO);
 	}
+	// admin 쿠폰 등록
 	@Override
 	public void insertCoupon(CouponDTO couponDTO) {
 		sqlSession.insert(namespace + ".insertCoupon", couponDTO);
+	}
+	// admin 쿠폰 리스트
+	@Override
+	public List<CouponDTO> getCouponList() {
+		return sqlSession.selectList(namespace + ".getCouponList");
+	}
+	// admin 쿠폰 삭제
+	@Override
+	public void deleteCoupon(CouponDTO couponDTO) {
+		sqlSession.delete(namespace+".deleteCoupon", couponDTO);
 	}
 
 

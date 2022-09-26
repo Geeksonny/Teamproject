@@ -229,11 +229,59 @@ public class AdminController {
 		return "admin/productList";
 	}
 
-	// 쿠폰 페이지
-	@RequestMapping(value = "/admin/coupon", method = RequestMethod.GET)
-	public String coupon() {
-		return "admin/coupon";
-	}
+		@RequestMapping(value = "/admin/coupon", method = RequestMethod.GET)
+		public String ordList(HttpServletRequest request, Model model, HttpSession session,
+				@ModelAttribute CouponDTO couponDTO) {
+
+//			// 한화면에 보여줄 글개수
+//			int pageSize = 10;
+//			// 현페이지 번호
+//			String pageNum = request.getParameter("pageNum");
+//			String compId = (String) session.getAttribute("compId");
+//
+//			if (pageNum == null) {
+//				pageNum = "1";
+//			}
+//
+//			// 현페이지 번호를 정수형으로 변경
+//			int currentPage = Integer.parseInt(pageNum);
+//			// PageDTO 객체생성
+//			PageDTO pageDTO = new PageDTO();
+//			pageDTO.setPageSize(pageSize);
+//			pageDTO.setPageNum(pageNum);
+//			pageDTO.setCurrentPage(currentPage);
+//			pageDTO.setCompId(compId);
+			List<CouponDTO> couponList = compService.getCouponList(); // 주문 물건 리스트 갖고오기
+//			int count = compService.getOrdCount(pageDTO); // 업체 전체 물건 리스트 갯수
+//			// 페이징
+//			int pageBlock = 10;
+//			int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+//			int endPage = startPage + pageBlock - 1;
+//			int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+//			if (endPage > pageCount) {
+//				endPage = pageCount;
+//			}
+//
+//			pageDTO.setCount(count);
+//			pageDTO.setPageBlock(pageBlock);
+//			pageDTO.setStartPage(startPage);
+//			pageDTO.setEndPage(endPage);
+//			pageDTO.setPageCount(pageCount);
+
+			// 데이터 담아서 list.jsp 이동
+			model.addAttribute("couponList", couponList);
+//			model.addAttribute("pageDTO", pageDTO);
+
+			// 주소변경없이 이동
+			// WEB-INF/views/board/list.jsp 이동
+			return "admin/coupon";
+		}
+
+
+
+
+
+
 
 	// 회원 삭제 기능
 	@RequestMapping(value = "/admin/delete")
@@ -273,6 +321,16 @@ public class AdminController {
 			// 주소변경 이동
 			return "redirect:/admin/coupon";
 		}
+		// 삭제기능 구현
+				@RequestMapping(value = "/admin/delete1")
+				public ResponseEntity<String> deleteCoupon(HttpServletRequest request,CouponDTO couponDTO) {
+					System.out.println("ddddddddddddddddddd");
+					compService.deleteCoupon(couponDTO);
+
+
+				ResponseEntity<String> entity=new ResponseEntity<String>("1" ,HttpStatus.OK);
+				return entity;
+				}
 
 
 }
