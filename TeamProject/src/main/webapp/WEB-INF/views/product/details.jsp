@@ -85,10 +85,17 @@ function printProdList(data){
     <!-- Shop Details Section Begin -->
 
   <!--================Single Product Area =================-->
-  <div class="product_image_area section_padding">
+  <div class="product_image_area section_padding" style="margin-top:5%">
     <div class="container">
+          <h4>상품</h4>
+          <div class="breadcrumb__links mt-1">
+              <a href="${pageContext.request.contextPath }/main/main">홈</a>
+              <a href="${pageContext.request.contextPath }/product/shop">스토어</a>
+              <span>상품 정보</span>
+          </div>
+      <hr style="border: #495057 solid 2px !important; overflow: block">
       <div class="row s_product_inner justify-content-between">
-        <div class="col-lg-7 col-xl-7">
+        <div class="col-lg-6 col-xl-7">
           <div class="product_slider_img">
             <div id="vertical">
               <div data-thumb="${pageContext.request.contextPath }/resources/img/product/${details.prodLMainimg}">
@@ -97,7 +104,7 @@ function printProdList(data){
             </div>
           </div>
         </div>
-        <div class="col-lg-5 col-xl-4">
+        <div class="col-lg-6 col-xl-4">
           <div class="product__details__text">
             <!-- <h3>Faded SkyBlu Denim Jeans</h3> -->
             <br><br><br>
@@ -139,13 +146,13 @@ function printProdList(data){
 
   <!--================Product Description Area =================-->
   <section class="product_description_area">
-    <div class="container">
+    <div class="container mt-5">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+          <a class="nav-link active" style="width:300px" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
             aria-selected="false">상품 정보</a>
         <li class="nav-item">
-          <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+          <a class="nav-link" id="review-tab" style="width:300px" data-toggle="tab" href="#review" role="tab" aria-controls="review"
             aria-selected="false">상품 후기</a>
         </li>
       </ul>
