@@ -130,22 +130,25 @@
 	</select>
 
 	<select id="selectProdDetail" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
-		SELECT PROD_L_NUM
-              ,PROD_L_CODE
-              ,PROD_L_OPTION1
-              ,PROD_L_OPTION2
-              ,PROD_L_OPTION3
-              ,PROD_L_OPTION4
-              ,PROD_L_OPTION5
-              ,PROD_L_PRODNM
-              ,PROD_L_PRICE
-              ,PROD_L_UPLOADDATE
-              ,PROD_L_COMPNM
-              ,PROD_L_MAINIMG
-              ,PROD_L_SUBIMG
-              ,PROD_L_DETAIL
-              ,PROD_L_QUANTITY
-		  FROM projectdb.PRODUCT_LIST
+		SELECT P.PROD_L_NUM
+              ,P.PROD_L_CODE
+              ,P.PROD_L_OPTION1
+              ,P.PROD_L_OPTION2
+              ,P.PROD_L_OPTION3
+              ,P.PROD_L_OPTION4
+              ,P.PROD_L_OPTION5
+              ,P.PROD_L_PRODNM
+              ,P.PROD_L_PRICE
+              ,P.PROD_L_UPLOADDATE
+              ,P.PROD_L_COMPNM
+              ,P.PROD_L_MAINIMG
+              ,P.PROD_L_SUBIMG
+              ,P.PROD_L_DETAIL
+              ,P.PROD_L_QUANTITY
+              ,C.COMP_NM
+		  FROM projectdb.PRODUCT_LIST AS P
+          JOIN projectdb.COMPANY_INFO AS C
+            ON P.PROD_L_COMPNM=C.COMP_ID
 		 WHERE PROD_L_NUM = #{prodLNum}
 	</select>
 

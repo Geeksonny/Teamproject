@@ -109,6 +109,7 @@ function printProdList(data){
             <!-- <h3>Faded SkyBlu Denim Jeans</h3> -->
             <br><br><br>
             <h3>${details.prodLProdnm}</h3>
+            <h1>${details.compNm}</h1>
             <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
              <h4><fmt:formatNumber value="${details.prodLPrice}" pattern="###,###,###원"/></h4>
             <div class="rating">
