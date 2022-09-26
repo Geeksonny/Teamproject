@@ -89,7 +89,6 @@ function printProdList(data){
     		+ 		'</a>'
     		+ 			'<ul class="product__hover">'
     		+ 			   '<li><a href="#"><img src="/web/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>'
-    		+ 			   '<li><a href="/web/order/cart"><img src="/web/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>'
     		+ 		   '</ul>'
     		+ 		'</div>'
     		+ 		'<div class="product__item__text">'
@@ -432,7 +431,6 @@ $(document).ready(function(){
 								</a>
                                 <ul class="product__hover">
                	 	           		<li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
-               		            	<li><a href="${pageContext.request.contextPath }/order/cart"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt=""><span>장바구니 담기</span></a></li>
                                 </ul>
                                 </div>
                                 <div class="product__item__text">
