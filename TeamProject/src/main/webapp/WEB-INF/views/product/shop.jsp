@@ -255,7 +255,7 @@ $(document).ready(function(){
                 <div class="col-lg-3">
                     <div class="shop__sidebar">
                         <div class="shop__sidebar__search">
-	                        <input type="text" id="srhText" name="srhText">
+	                        <input type="text" id="srhText" name="srhText" placeholder="검색어를 입력하세요.">
 	                        <button type="submit" id="submit" class="search">
 	                        <span class="icon_search"></span></button>
                         </div>
@@ -430,7 +430,8 @@ $(document).ready(function(){
 									<img src="${pageContext.request.contextPath }/resources/img/product/${prodList.prodLMainimg}" alt="위의 이미지를 누르면 연결됩니다."/>
 								</a>
                                 <ul class="product__hover">
-               	 	           		<li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+                                <li><a href="${pageContext.request.contextPath }/product/likeinsert?prodLCode=${prodList.prodLCode}">
+                                	<img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
                                 </ul>
                                 </div>
                                 <div class="product__item__text">
@@ -442,7 +443,6 @@ $(document).ready(function(){
                                     	<c:forEach var="i" begin="1" end="${prodList.avgRating}">
 							           	<i class="fa fa-star" style="color:orange"></i>
 							            </c:forEach>
-								        (${prodList.avgRating})
 <%-- 								        </c:if> --%>
                                     </div>
                                 </div>
