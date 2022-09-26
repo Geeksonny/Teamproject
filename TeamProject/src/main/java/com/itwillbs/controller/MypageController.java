@@ -145,7 +145,13 @@ public class MypageController {
 				if (pageNum == null) {
 					pageNum = "1";
 				}
-
+				String startDate=request.getParameter("startDate");
+				String endDate=request.getParameter("endDate");
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				if(startDate ==null && endDate ==null) {
+					startDate=simpleDateFormat.format(new Date().getYear());
+					endDate=simpleDateFormat.format(new Date());
+				}
 				// �쁽�럹�씠吏� 踰덊샇瑜� �젙�닔�삎�쑝濡� 蹂�寃�
 				int currentPage = Integer.parseInt(pageNum);
 				// PageDTO 媛앹껜�깮�꽦
@@ -154,6 +160,8 @@ public class MypageController {
 				pageDTO.setPageNum(pageNum);
 				pageDTO.setCurrentPage(currentPage);
 				pageDTO.setUserId(userId);
+				pageDTO.setStartDate(startDate);
+				pageDTO.setEndDate(endDate);
 				List<OrderListDTO> ordList = mypageService.getOrdList(pageDTO); // 二쇰Ц 臾쇨굔 由ъ뒪�듃 媛뽮퀬�삤湲�
 				int count = mypageService.getMyOrdListCount(pageDTO); // �뾽泥� �쟾泥� 臾쇨굔 由ъ뒪�듃 媛��닔
 				// �럹�씠吏�
@@ -171,7 +179,7 @@ public class MypageController {
 				pageDTO.setEndPage(endPage);
 				pageDTO.setPageCount(pageCount);
 				// �뜲�씠�꽣 �떞�븘�꽌 list.jsp �씠�룞
-				System.out.println(ordList.toString());
+//				System.out.println(ordList.toString());
 
 				model.addAttribute("ordList", ordList);
 				model.addAttribute("pageDTO", pageDTO);

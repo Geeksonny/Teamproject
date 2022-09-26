@@ -4,6 +4,11 @@ import java.sql.Timestamp;
 
 public class OrderListDTO extends OrderDTO{
 	private OrderDTO orderDTO;
+	private ProdDTO prodDTO;
+	
+	private String prodLProdnm;
+	private String prodLMainimg;
+	
 	private int trnum;
 	private int ordNum;
 	private String ordLCode; 			// 상품코드
@@ -185,9 +190,28 @@ public class OrderListDTO extends OrderDTO{
 	public void setOrderDTO(OrderDTO orderDTO) {
 		this.orderDTO = orderDTO;
 	}
+	public ProdDTO getProdDTO() {
+		return prodDTO;
+	}
+	public void setProdDTO(ProdDTO prodDTO) {
+		this.prodDTO = prodDTO;
+	}
+	public String getProdLProdnm() {
+		return prodLProdnm;
+	}
+	public void setProdLProdnm(String prodLProdnm) {
+		this.prodLProdnm = prodLProdnm;
+	}
+	public String getProdLMainimg() {
+		return prodLMainimg;
+	}
+	public void setProdLMainimg(String prodLMainimg) {
+		this.prodLMainimg = prodLMainimg;
+	}
 	@Override
 	public String toString() {
-		return "OrderListDTO [orderDTO=" + orderDTO + ", trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode="
+		return "OrderListDTO [orderDTO=" + orderDTO + ", prodDTO=" + prodDTO + ", prodLProdnm=" + prodLProdnm
+				+ ", prodLMainimg=" + prodLMainimg + ", trnum=" + trnum + ", ordNum=" + ordNum + ", ordLCode="
 				+ ordLCode + ", ordLProdnm=" + ordLProdnm + ", ordLUser=" + ordLUser + ", ordLUserNm=" + ordLUserNm
 				+ ", compNm=" + compNm + ", ordLNum=" + ordLNum + ", ordLQuantity=" + ordLQuantity + ", ordLPrice="
 				+ ordLPrice + ", ordLDate=" + ordLDate + ", compId=" + compId + ", ordDeliveryStatus="
@@ -196,6 +220,8 @@ public class OrderListDTO extends OrderDTO{
 				+ ", ne50Count=" + ne50Count + ", eq50Couunt=" + eq50Couunt + ", ordLCouponnum=" + ordLCouponnum
 				+ ", ordRefund=" + ordRefund + "]";
 	}
+
+	
 	
 
 
