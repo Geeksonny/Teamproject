@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -58,29 +59,6 @@
 							    <option value="0.5" >50%</option>
                             </select>
                           </div>
-<!--                           <div class="mb-3 col-md-3"> -->
-<!--                             <label for="userNicknm" class="form-label d-block">유효 쿠폰 여부</label> -->
-<!--                           <div class="form-check form-check-inline mt-3"> -->
-<!--                             <input -->
-<!--                               class="form-check-input" -->
-<!--                               type="radio" -->
-<!--                               name="inlineRadioOptions" -->
-<!--                               id="inlineRadio1" -->
-<!--                               value="option1" -->
-<!--                             /> -->
-<!--                             <label class="form-check-label mr-3" for="inlineRadio1">사용 가능</label> -->
-<!--                           </div> -->
-<!--                           <div class="form-check form-check-inline"> -->
-<!--                             <input -->
-<!--                               class="form-check-input" -->
-<!--                               type="radio" -->
-<!--                               name="inlineRadioOptions" -->
-<!--                               id="inlineRadio2" -->
-<!--                               value="option2" -->
-<!--                             /> -->
-<!--                             <label class="form-check-label" for="inlineRadio2">사용 불가</label> -->
-<!--                           </div> -->
-<!--                           </div> -->
                           <div class="mb-3 col-md-10">
                             <label for="couDet" class="form-label">쿠폰 설명</label>
                             <input class="form-control form-control-lg" type="text" name="couDet" id="couDet" placeholder="쿠폰 상세설명을 입력하세요"/>
@@ -109,14 +87,10 @@
                       <p class="card-text">
                         쿠폰 내용&nbsp; :&nbsp; ${couponDTO.couDet }
                       </p>
-                      <p> 쿠폰 할인률 &nbsp;:&nbsp; ${couponDTO.couInfoDate }
+                      <p> 쿠폰 할인률 &nbsp;:&nbsp; ${couponDTO.couDc }&nbsp;%
                       </p>
-                      <p> 쿠폰 등록 날짜 &nbsp;:&nbsp; ${couponDTO.couInfoDate }
+                      <p> 쿠폰 등록 날짜 &nbsp;:&nbsp; <fmt:formatDate pattern="yy-MM-dd" value="${couponDTO.couInfoDate }"/>
                       </p>
-<!--                       <p class="h5"> -->
-<!--                       	<span class="badge bg-success">사용 가능</span> -->
-<!--                       	<span class="badge bg-danger">사용 불가</span> -->
-<!--                       </p> -->
                     </div>
                     <input type="hidden" name="sbCount" value="${couponDTO.couNum}" id="delCouNum">
                   </div>
