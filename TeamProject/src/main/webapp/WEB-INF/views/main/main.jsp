@@ -55,7 +55,6 @@
             </div>
         </div>
     </section>
-
     <!-- 상품란 -->
     <section class="product spad">
         <div class="container">
@@ -67,9 +66,7 @@
                     </ul>
                 </div>
             </div>
-
             <div class="row product__filter">
-
             <!-- 신상품 -->
 				<c:forEach var="newProdList" items="${newProdList}">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
@@ -96,7 +93,6 @@
                     </div>
                 </div>
                 </c:forEach>
-
                 <!-- 많이 팔린 상품 -->
 				<c:forEach var="bsProdList" items="${bsProdList}">
                 <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix hot-sales" style="display: none;">
