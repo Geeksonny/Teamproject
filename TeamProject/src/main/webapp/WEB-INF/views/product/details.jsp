@@ -57,13 +57,19 @@ function printProdList(data){
 }
 </script>
 
+<style>
+.site-btn {width:47%; height:55px; cursor:pointer; text-align:center;}
+#sp {color:#fff; font-size:1.2em;}
+.nav-tabs .nav-link{border: 0px;}
+.nav-link:hover{color:#696CFF}
+
+</style>
 
     <meta charset="UTF-8">
     <meta name="description" content="Male_Fashion Template">
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>운동운동</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
@@ -85,60 +91,57 @@ function printProdList(data){
     <!-- Shop Details Section Begin -->
 
   <!--================Single Product Area =================-->
-  <div class="product_image_area section_padding" style="margin-top:5%">
-    <div class="container">
+  <div class="product_image_area section_padding" >
+     <hr style="border:#eee solid 0.05rem !important; margin-top:0; overflow: block">
+
+    <div class="container mt-5">
           <h4>상품</h4>
-          <div class="breadcrumb__links mt-1">
+          <div class="breadcrumb__links mt-1 mb-3">
               <a href="${pageContext.request.contextPath }/main/main">홈</a>
               <a href="${pageContext.request.contextPath }/product/shop">스토어</a>
-              <span>상품 정보</span>
+              <span>상품</span>
           </div>
-      <hr style="border: #495057 solid 2px !important; overflow: block">
       <div class="row s_product_inner justify-content-between">
-        <div class="col-lg-6 col-xl-7">
-          <div class="product_slider_img">
+        <div class="col-lg-6 col-xl-6">
             <div id="vertical">
               <div data-thumb="${pageContext.request.contextPath }/resources/img/product/${details.prodLMainimg}">
-                <img src="${pageContext.request.contextPath }/resources/img/product/${details.prodLMainimg}"  width="500" height="500"/>
+                <img src="${pageContext.request.contextPath }/resources/img/product/${details.prodLMainimg}"  width="100%"/>
               </div>
             </div>
-          </div>
         </div>
-        <div class="col-lg-6 col-xl-4">
+        <div class="col-lg-6 col-xl-6">
+        <div style="padding:30px">
+            <h5 class="mt-3">${details.compNm}</h5>
+            <hr style="margin-bottom:12%">
           <div class="product__details__text">
-            <!-- <h3>Faded SkyBlu Denim Jeans</h3> -->
-            <br><br><br>
             <h3>${details.prodLProdnm}</h3>
-            <h1>${details.compNm}</h1>
-            <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
-             <h4><fmt:formatNumber value="${details.prodLPrice}" pattern="###,###,###원"/></h4>
             <div class="rating">
-            <h4> 별점 평균 :
-	           	<c:forEach var="i" begin="1" end="${details.rating}">
-	           	<i class="fa fa-star"></i>
+            <c:forEach var="i" begin="1" end="${details.rating}">
+	           	<i class="fa fa-star" ></i>
 	            </c:forEach>
-		        (${prodDTO.avgRating}점 / 5점)
-		    </h4>
-		    <br><br>
+		        <span style="color:#999;">(${prodDTO.avgRating}점 / 5점)</span>
+		        <span><strong>${prodDTO.countRating}</strong>개 상품평</span><br>
 	      	</div>
-            <ul class="list">
-              <li>
-                <span>남은 수량</span> : <b>${details.prodLQuantity}</b>
-              </li>
-              <li>
+            <!-- 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함 -->
+            <div class="mt-4 mb-5">
+             	<h2 style="color:#495057; font-weight:990;"><fmt:formatNumber value="${details.prodLPrice}" pattern="###,###,###"/>
+             	<span style="color:#495057; font-weight:500; text-decoration:none; margin-left:0;">원</span></h2>
+            </div>
+            <br><br>
+   		        <span style="color:#495057;"> 남은 수량 <strong>${details.prodLQuantity}</strong>개</span>
+            <hr class="md-4"><br>
               <!-- 내가 찜한 목록들 리스트 볼수있게 이동? -->
-                <span>찜하기</span> : <a class="btn btn-light btn-sm" id="prodLike">클릭</a>
-              </li>
-	            <li>
-	              장바구니에 넣기 : <a class="btn btn-light btn-sm" id="insertBasket">클릭</a>
+              <div class="center" style="display:block">
+                  <a class="site-btn mr-2" id="prodLike"><span id="sp">찜하기</span></a>
+	              <a class="site-btn" id="insertBasket"><span id="sp">장바구니에 담기</span></a>
 <!-- 	              장바구니에 가져갈 히든 값. 제품 코드와 가격, 수량 1개 -->
 				  <input type="hidden" name="prodLcount" type="text" id="prodLcount" value="1">
 	              <input type="hidden" name="prodLCode" value="${details.prodLCode}" id="prodLCode">
               	  <input type="hidden" name="prodLPrice" value="${details.prodLPrice}" id="prodLPrice">
              	 <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
-              	</li>
-              </ul>
+              </div>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -147,21 +150,21 @@ function printProdList(data){
 
   <!--================Product Description Area =================-->
   <section class="product_description_area">
-    <div class="container mt-5">
+    <div class="container" style="margin-top:60px;">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" style="width:300px" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false">상품 정보</a>
+          <a class="nav-link active" style="width:220px; height:50px;" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+            aria-selected="false"><strong>상품 정보</strong></a>
         <li class="nav-item">
-          <a class="nav-link" id="review-tab" style="width:300px" data-toggle="tab" href="#review" role="tab" aria-controls="review"
-            aria-selected="false">상품 후기</a>
+          <a class="nav-link" style="width:220px; height:50px;" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+            aria-selected="false"><strong>상품 후기</strong></a>
         </li>
       </ul>
       <!-- 상품 정보 뿌려주는 부분 시작 -->
-      <div class="tab-content" id="myTabContent">
+      <div class="tab-content " id="myTabContent">
         <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
           <div class="table-responsive">
-			<div style="text-align: center;">
+			<div style="text-align: center;"><br><br><br>
             	<img src="${pageContext.request.contextPath }/resources/img/product/${details.prodLSubimg}"/>
             </div>
           </div>
@@ -169,31 +172,30 @@ function printProdList(data){
         <!-- 상품 정보 뿌려주는 부분 끝 -->
          <!-- 상품 후기 부분 시작 -->
         <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-<!--           <div class="row"> -->
-            <div class="col-lg-6">
+          <div class="row" >
+
             <!-- 리뷰 쓰기 시작 -->
-            <div class="col-lg-6">
+            <div class="col-lg-12 related-title" style="padding:30px">
               <div class="review_box">
                 <div class="reply_subject">
-					<br><h2>리뷰</h2>
+					<br><h3 class="mb-2" style="font-weight:550">상품 리뷰</h3>
 				</div>
-					<div class="reply_button_wrap">
-						<br><button type="submit" class="primary-btn" value="submit">리뷰 쓰기</button>
-					</div>
               </div>
-            </div>
             <!-- 상품 후기 부분 끝 -->
-              <div class="row total_rate">
-                <div class="col-6">
+              <div class="total_rate related-title">
                   <div class="box_total"><br>
-                    <h5>별점 평균</h5>
                     <c:forEach var="i" begin="1" end="${details.rating}">
-		           		<i class="fa fa-star" style="color:orange"></i>
-		            </c:forEach> (${prodDTO.avgRating}점 / 5점)
-                    <h6>(${prodDTO.countRating} Reviews)</h6><br>
+		           		<i class="fa fa-star fa-4x" style="color:orange"></i>
+		            </c:forEach>
+		            <br><br>
+                    <h6><strong>평균 ${prodDTO.avgRating}점 </strong>(${prodDTO.countRating}개 상품평)</h6><br>
+					<div class="reply_button_wrap">
+					<button type="submit" class="site-btn" value="submit">리뷰 쓰기</button>
+<!-- 						<br><button type="submit" class="primary-btn" value="submit">리뷰 쓰기</button> -->
+					</div>
+					<br>
                     <hr>
                   </div>
-                </div>
               </div>
 			  <c:forEach var="prodReply"  items="${prodReply}" >
 	              <div class="review_list">
@@ -203,22 +205,23 @@ function printProdList(data){
 	                      <img src="${pageContext.request.contextPath }/resources/img/product/single-product/review-1.png" alt="" />
 	                    </div>
 	                    <div class="media-body">
-	                      <h4>${prodReply.userId}</h4>
+	                      <span style="font-size: 24px; margin-right:2px">${prodReply.userId}</span>
 	                      <c:forEach var="i" begin="1" end="${prodReply.rating}">
 	                      	<i class="fa fa-star" style="color:orange"></i>
 	                      </c:forEach>
 							(${prodReply.rating}점)
 	                    </div>
 	                  </div>
-	                  ${prodReply.replyDate}
+	                    <span>${prodReply.replyDate}</span>
 	                  <p>
 	                    ${prodReply.content}
 	                  </p>
 	                </div>
 	              </div>
+	              <br>
 				</c:forEach>
             </div>
-<!--           </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -229,7 +232,7 @@ function printProdList(data){
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="related-title">Related Product</h3>
+                    <h3 class="related-title">관련 상품</h3>
                 </div>
             </div>
             <div class="row">

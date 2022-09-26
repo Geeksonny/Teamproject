@@ -1639,10 +1639,10 @@ ol {
 }
 
 .product__details__text .rating i {
-	font-size: 15px;
+	font-size: 22px;
 	color: #f7941d;
 	display: inline-block;
-	margin-right: -5px;
+	margin-right: -1px;
 }
 
 .product__details__text .rating span {
