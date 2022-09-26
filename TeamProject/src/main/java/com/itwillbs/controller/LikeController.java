@@ -37,11 +37,11 @@ public class LikeController {
 	
 	@RequestMapping(value = "/board/likeinset", method = RequestMethod.GET)
 	public String likeinset(HttpServletRequest request, HttpSession session, Model model) {
-		
+		String userId = (String)session.getAttribute("userId");
 		int boardNum=Integer.parseInt(request.getParameter("boardNum"));
 		LikeDTO likeDTO=new LikeDTO();
 		likeDTO.setBoardNum(boardNum);
-		likeDTO.setUserId((String)session.getAttribute("userId"));
+		likeDTO.setUserId(userId);
 		BoardDTO boardDTO=new BoardDTO();
 		boardDTO.setBoardNum(boardNum);
 		
@@ -49,14 +49,19 @@ public class LikeController {
 		LikeDTO likeDTO2=likeService.likeCheck(likeDTO);
 		
 		
-		
-		if(likeDTO2 != null) {
-			likeService.deleteLike(likeDTO);
-			likeService.updateLikeCancel(boardDTO);
-		}else{
-			likeService.insertLike(likeDTO);
-			likeService.updateLike(boardDTO);
+		if(userId == null) {
+			if(likeDTO2 != null) {
+				likeService.deleteLike(likeDTO);
+				likeService.updateLikeCancel(boardDTO);
+			}else{
+				likeService.insertLike(likeDTO);
+				likeService.updateLike(boardDTO);
+			}
+			
+		}else {
+			return "board/msg4";
 		}
+		
 		
 		
 		model.addAttribute("likeList",likeList);

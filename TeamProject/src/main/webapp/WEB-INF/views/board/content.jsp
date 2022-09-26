@@ -31,10 +31,20 @@
 	%>
 	<!-- 메뉴단 -->
 <jsp:include page="../inc/menu.jsp"/>
-    <form action="${pageContext.request.contextPath }/board/fwrite">
-    <input type="hidden" name="userId" value="${sessionScope.userId}" >
-    </form>
-
+	 <section class="breadcrumb-option">
+        <div class="container">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>커뮤니티</h4>
+                        <div class="breadcrumb__links">
+                            <a href="./index.html">메인</a>
+                            <span>커뮤니티</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- 사이드 메뉴(inc로 빼도 됨) -->
     <section class="shop spad">
 		<div class="container">
@@ -69,8 +79,8 @@
                                 </td>
                             </tr>
                             <tr>
-                            		<td width="10%">파일</td>
-                                	<td width="60%">${boardDTO.boardFile }</td>
+                            		<td width="10%"></td>
+                                	<td width="60%"><img src="${pageContext.request.contextPath }/resources/upload/${boardDTO.boardFile}" style="max-width: 30%; height: auto;" ></td>
                             </tr>
                         </tbody>
                     </table>

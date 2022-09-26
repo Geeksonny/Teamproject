@@ -71,7 +71,8 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th colspan="2">상품정보  ${orderListDTO.prodLMainimg}</th>
+                        <th colspan="2">상품정보</th>
+                        <th> 수량 </th>
                         <th>할인금액</th>
                         <th>결제금액</th>
                         <th>주문일</th>
@@ -83,7 +84,8 @@
                       <tr>
                         <td><img src="${pageContext.request.contextPath }/resources/img/product/${orderListDTO.prodLMainimg}" width="150"/></td>
                         <td style="vertical-align: middle">${orderListDTO.prodLProdnm}</td>
-                        <td style="vertical-align: middle">${orderListDTO.ordCouponDc}</td>
+                        <td style="vertical-align: middle">${orderListDTO.ordLQuantity}개</td>
+                        <td style="vertical-align: middle">${orderListDTO.ordCouponDc}원</td>
                         <td style="vertical-align: middle">${orderListDTO.ordFinalPrice} 원</td>
                         <td style="vertical-align: middle">${fn:substring(orderListDTO.ordLDate,0,16)}</td>
                         <td style="vertical-align: middle">
@@ -91,16 +93,21 @@
                          		<c:choose>
 						 			<c:when test="${num eq '0'}">
 						  				상품준비중&nbsp;&nbsp;
-                       					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
-                       					<a href="https://tracker.delivery/#/kr.epost/${oderListDTO.ordLDelivNumber }" target="_blank">배송조회</a>
-                       					</button>
                        					<div></div>
 						 			</c:when>
 						 			<c:when test="${num eq '1'}">
-						  				배송중
+						  				배송중&nbsp;&nbsp;
+                       					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
+                       					<a href="https://tracker.delivery/#/kr.cjlogistics/${orderListDTO.ordLDelivNumber }" target="_blank">배송조회</a>
+                       					</button>
+                       					<div></div>
 						 			</c:when>
 						 			<c:when test="${num eq '2'}">
-						  				배송완료
+						  				배송완료&nbsp;&nbsp;
+						  				<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
+                       					<a href="https://tracker.delivery/#/kr.cjlogistics/${orderListDTO.ordLDelivNumber }" target="_blank">배송조회</a>
+                       					</button>
+                       					<div></div>
 						 			</c:when>
 						 			<c:when test="${num eq '3'}">
 						  				배송취소

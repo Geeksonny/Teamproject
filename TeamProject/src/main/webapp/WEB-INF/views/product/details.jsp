@@ -186,8 +186,11 @@ function printProdList(data){
                 <div class="col-6">
                   <div class="box_total"><br>
                     <h5>별점 평균</h5>
-                    <h4>${prodDTO.avgRating}</h4>
+                    <c:forEach var="i" begin="1" end="${details.rating}">
+		           		<i class="fa fa-star" style="color:orange"></i>
+		            </c:forEach> (${prodDTO.avgRating}점 / 5점)
                     <h6>(${prodDTO.countRating} Reviews)</h6><br>
+                    <hr>
                   </div>
                 </div>
               </div>
@@ -201,10 +204,12 @@ function printProdList(data){
 	                    <div class="media-body">
 	                      <h4>${prodReply.userId}</h4>
 	                      <c:forEach var="i" begin="1" end="${prodReply.rating}">
-	                      	<i class="fa fa-star"></i>
+	                      	<i class="fa fa-star" style="color:orange"></i>
 	                      </c:forEach>
+							(${prodReply.rating}점)
 	                    </div>
 	                  </div>
+	                  ${prodReply.replyDate}
 	                  <p>
 	                    ${prodReply.content}
 	                  </p>

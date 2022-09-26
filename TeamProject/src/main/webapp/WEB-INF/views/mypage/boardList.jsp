@@ -37,12 +37,10 @@
                 <div class="card-body">
                 <div class="table-responsive text-nowrap">
                 <div style="padding:1rem;">
-                 <button type="submit" class="btn btn-outline-primary" onclick="deleteValue();">선택 삭제</button>
                 </div>
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                      	<th>&nbsp;&nbsp;<input class="form-check-input" type="checkbox" id="allCheck" name="allCheck" />&nbsp;&nbsp;&nbsp;전체선택 </th>
                         <th>글번호</th>
                         <th>글쓴이</th>
                         <th>글제목</th>
@@ -55,7 +53,6 @@
                     
                      <c:forEach var="boardDTO" items="${boardList}" end="10" >
                       <tr>
-                      	<td onclick="event.cancelBubble=true">&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" type="checkbox" value="${boardDTO.boardNum }" name="CheckRow" id="defaultCheck1" />
                       	<label class="form-check-label" for="defaultCheck1"></label></td>
                         <td>${boardDTO.boardNum }</td>
                         <td>${boardDTO.userNicknm }</td>

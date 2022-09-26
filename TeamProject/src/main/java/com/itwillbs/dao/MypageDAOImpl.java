@@ -46,6 +46,16 @@ public class MypageDAOImpl implements MypageDAO {
 	public void replyCount(MypageDTO mypageDTO) {
 		sqlSession.update(namespace+".replyCount", mypageDTO);		
 	}
+	
+	@Override
+	public void productLikesub(MypageDTO mypageDTO) {
+		sqlSession.update(namespace+".productLikesub", mypageDTO);				
+	}
+
+	@Override
+	public void productLike(MypageDTO mypageDTO) {
+		sqlSession.update(namespace+".productLike", mypageDTO);				
+	}
 
 	@Override
 	public MypageDTO mypageselect(MypageDTO mypageDTO) {
@@ -70,8 +80,8 @@ public class MypageDAOImpl implements MypageDAO {
 	}
 	
 	@Override
-	public List<ProdDTO> getPordLikeList(PageDTO pageDTO) {
-		return sqlSession.selectList(namespace+".getPordLikeList",pageDTO);
+	public List<ProdDTO> getPordLikeList(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace+".getPordLikeList",prodDTO);
 	}
 	
 	@Override
@@ -83,6 +93,8 @@ public class MypageDAOImpl implements MypageDAO {
 	public int getMyOrdListCount(PageDTO pageDTO) {
 		return sqlSession.selectOne(namespace+".getMyOrdListCount", pageDTO);
 	}
+
+	
 
 	
 

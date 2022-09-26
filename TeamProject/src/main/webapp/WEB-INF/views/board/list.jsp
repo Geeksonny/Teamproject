@@ -39,8 +39,8 @@ if(yn.value=='1'){
                     <div class="breadcrumb__text">
                         <h4>커뮤니티</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">Home</a>
-                            <span>Community</span>
+                            <a href="./index.html">메인</a>
+                            <span>커뮤니티</span>
                         </div>
                     </div>
                 </div>

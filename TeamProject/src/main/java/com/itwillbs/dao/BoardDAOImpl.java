@@ -105,6 +105,11 @@ public class BoardDAOImpl implements BoardDAO{
 		sqlSession.update(namespace+".rCount", boardNum);
 	}
 
+	@Override
+	public List<BoardDTO> gettopBoard(BoardDTO boardDTO) {
+		return sqlSession.selectList(namespace+".gettopBoard",boardDTO);
+	}
+
 
 
 

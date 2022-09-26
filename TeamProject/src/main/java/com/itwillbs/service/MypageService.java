@@ -19,6 +19,11 @@ public interface MypageService {
 	void replysub(MypageDTO mypageDTO);
 
 	void replyCount(MypageDTO mypageDTO);
+	
+	void productLikesub(MypageDTO mypageDTO);
+
+	void productLike(MypageDTO mypageDTO);
+
 
 	MypageDTO mypageselect(MypageDTO mypageDTO);
 
@@ -28,11 +33,14 @@ public interface MypageService {
 
 	List<BoardDTO> getBoardLikeList(BoardDTO boardDTO);
 	
-	List<ProdDTO> getPordLikeList(PageDTO pageDTO);
+	List<ProdDTO> getPordLikeList(ProdDTO prodDTO);
 	// ���������� �ֹ����
 		List<OrderListDTO> getOrdList(PageDTO pageDTO);
 		// ���������� �ֹ���� ����
 		int getMyOrdListCount(PageDTO pageDTO);
+
+		
+		
 
 
 }
