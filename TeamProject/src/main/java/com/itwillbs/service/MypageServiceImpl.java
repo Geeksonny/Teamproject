@@ -132,6 +132,10 @@ public class MypageServiceImpl implements MypageService {
 		// 마이페이지 쿠폰 리스트
 		@Override
 		public List<CouponDTO> getMyCouponList(CouponDTO couponDTO) {
+			int startRow=(couponDTO.getCurrentPage()-1)*couponDTO.getPageSize()+1;
+			int endRow=startRow+couponDTO.getPageSize()-1;
+			couponDTO.setStartRow(startRow-1);
+			couponDTO.setEndRow(endRow);
 			return mypageDAO.getMyCouponList(couponDTO);
 		}
 		// 마이페이지 쿠폰 등록
@@ -139,6 +143,11 @@ public class MypageServiceImpl implements MypageService {
 		public void insertMyCoupon(CouponDTO couponDTO) {
 			couponDTO.setCouDate(new Timestamp(System.currentTimeMillis()));
 			mypageDAO.insertMyCoupon(couponDTO);
+		}
+		// 마이페이지 페이징처리
+		@Override
+		public int getMyCouponListCount(CouponDTO couponDTO) {
+			return mypageDAO.getMyCouponListCount(couponDTO);
 		}
 
 
