@@ -173,6 +173,18 @@
 				  WHERE ci.COU_NUM=cp.COU_NUM) as couDet
 		  FROM   COUPON cp
 		  WHERE  COU_USER_ID=#{couUserId}
+			AND  COU_YN="Y"
+	   ORDER BY  COU_NUM
+	     LIMIT   #{startRow}
+                   ,#{pageSize}
+	</select>
+
+	<select id="getMyCouponListCount" resultType="java.lang.Integer">
+		 SELECT
+				count(COU_USER_ID)
+		  FROM   COUPON
+		  WHERE  COU_USER_ID=#{couUserId}
+		   AND   COU_YN="Y"
 	</select>
 
 </mapper>
