@@ -61,12 +61,12 @@
 							    <option value="0.5" >50%</option>
                             </select>
                           </div>
-                          <div class="mb-3 col-md-10">
+                          <div class="mb-3 col-md-9">
                             <label for="couDet" class="form-label">쿠폰 설명</label>
                             <input class="form-control form-control-lg" type="text" name="couDet" id="couDet" placeholder="상세 설명을 적어주세요"/>
                           </div>
-                        <div class="mb-3 col-md-2">
-                          <button type="submit" class="btn btn-primary me-2" style="margin-top: 1.8rem; height:60%"" >+ 추가</button>
+                        <div class="mb-3 col-md-3">
+                          <button type="submit" class="btn btn-primary me-2" style="margin-top: 1.8rem; height:60%" >+ 추가</button>
                           <button type="reset" class="btn btn-outline-secondary" style="margin-top: 1.8rem; height:60%">취소</button>
                         </div>
                       </form>

@@ -36,7 +36,7 @@
                       <i class="bx bx-buildings me-1"></i> 업체 관리</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/addr">
+                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/product">
                       <i class="bx bx-buildings me-1"></i> 상품 관리</a>
                     </li>
                   </ul>

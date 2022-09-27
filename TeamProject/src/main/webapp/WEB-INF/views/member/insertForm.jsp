@@ -38,7 +38,7 @@ function uidCheck(){
 		data:{'userId':$('#userId').val()},
 		type: 'POST',
 		success:function(rdata){
-			if(rdata=='iddup'){
+			if(rdata=='iddup'){	// 아이디가 중복이거나 글자 수 넘억
 				$('#userId').addClass("is-invalid");
 				$('#userId').removeClass("is-valid");
 			}else{

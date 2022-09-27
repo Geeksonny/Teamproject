@@ -27,7 +27,10 @@
 
 					)
 			VALUES(
-				    #{userInfoNum}
+	              (SELECT USER_INFO_NUM
+	                 FROM (
+	                 		SELECT IFNULL(MAX(CAST(USER_INFO_NUM AS UNSIGNED)), 0) + 1 AS USER_INFO_NUM
+	                          FROM USER_INFO) A)
 			  	   ,#{userId}
 				   ,#{userPass}
 				   ,#{userNm}
@@ -147,29 +150,33 @@
 
 <!-- 회원가입(업체) -->
 	<insert id="insertComp">
-	INSERT INTO  COMPANY_INFO(
-				 COMPANY_INFO_NUM
-				,COMP_ID
-				,COMP_NM
-	            ,COMP_PASS
-	            ,COMP_EMAIL
-	            ,COMP_REG_NUM
-	            ,USER_TYPE
-	            ,COMP_PHONE
-	            ,COMP_DATE
-				)
-		VALUES(
-		  		#{companyInfoNum}
-			   ,#{compId}
-			   ,#{compNm}
-			   ,#{compPass}
-			   ,#{compEmail}
-			   ,#{compRegNum}
-			   ,#{userType}
-			   ,#{compPhone}
-			   ,#{compDate}
-		  		)
-	</insert>
+   INSERT INTO COMPANY_INFO
+   			   (
+	           COMPANY_INFO_NUM
+	           ,COMP_ID
+	           ,COMP_NM
+               ,COMP_PASS
+               ,COMP_EMAIL
+               ,COMP_REG_NUM
+               ,USER_TYPE
+               ,COMP_PHONE
+               ,COMP_DATE
+	            )
+	      VALUES(
+	              (SELECT COMPANY_INFO_NUM
+	                 FROM (
+	                 		SELECT IFNULL(MAX(CAST(COMPANY_INFO_NUM AS UNSIGNED)), 0) + 1 AS COMPANY_INFO_NUM
+	                          FROM COMPANY_INFO) A)
+	            ,#{compId}
+	            ,#{compNm}
+	            ,#{compPass}
+	            ,#{compEmail}
+	            ,#{compRegNum}
+	            ,#{userType}
+	            ,#{compPhone}
+	            ,#{compDate}
+	            )
+	   </insert>
 
 <!-- 로그인(업체) -->
 	<select id="compCheck" resultType="com.itwillbs.domain.CompDTO">

@@ -47,29 +47,29 @@
     </section>
     <!-- 사이드 메뉴(inc로 빼도 됨) -->
     <section class="shop spad">
-		<div class="container">
+		<<div class="container" style="padding-left:5%; padding-right:5%">
             <div class="row">
                     <table class="table table-condensed">
                         <thead>
                             <tr align="center">
                                 <th width="10%">${boardDTO.boardNum }</th>
-                                <th width="60%"><h5>${boardDTO.boardSubject }</h5></th>
+                                <th width="60%"><h5><strong>${boardDTO.boardSubject }</strong></h5></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>작성일
+                                <td style="color:#88939f;">작성일
                                 </td>
-                                <td>
-                               ${boardDTO.boardDate }<span style='float:right'>조회 : ${boardDTO.boardReadcount }</span>
+                                <td style="color:#88939f;">
+                               		${boardDTO.boardDate }<span style='float:right'>조회 <span style="color:#495057;"><strong>${boardDTO.boardReadcount }</strong></span></span>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="color:#88939f;">
                                 작성자
                                 </td>
-                                <td>
-                                ${boardDTO.userNicknm} <span style='float:right'>좋아요 : ${boardDTO.boardLikecount}</span>
+                                <td style="color:#88939f;">
+                                	${boardDTO.userNicknm} <span style='float:right'>좋아요 <span style="color:#495057;"><strong> ${boardDTO.boardLikecount}</strong></span></span>
                                 </td>
                             </tr>
                             <tr>
@@ -87,19 +87,12 @@
                     <form action="${pageContext.request.contextPath }/board/likeinset">
                     <input type="hidden" name="boardNum" value="${boardDTO.boardNum}"></input>
 	                   			<input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/heart.png" value="추천">
-	                  
-
         			<%-- <c:if test="${userId == lId}">
-
                     </c:if>
 
                     <c:if test="${userId != lId}">
-
                     </c:if> --%>
                     </form>
-
-
-
                     <table class="table table-striped" >
                <c:forEach items="${replyList}" var="replyDTO">
 				<!-- 댓글 테이블 -->
@@ -123,12 +116,12 @@
                     <table class="table table-condensed">
                         <tr>
                             <td>
-                                <span class="form-inline" role="form">
-                                		<h3>댓글</h3>
+                                <span class="form-inline mt-2" role="form">
+                                		<h5>댓글</h5></span>
+
                                 		<input type="hidden" name="boardNum" value="${boardDTO.boardNum}">
                                         <textarea id="commentParentText" name="rContent" class="form-control col-lg-12 mt-3" style="width:100%" rows="4" cols="180"></textarea><br>
-                                        <button type="submit" class="btn btn-light">등록</button>
-                                </span>
+                                        <button type="submit" class="site-btn">댓글 등록</button>
                             </td>
                         </tr>
                     </table>
@@ -147,7 +140,6 @@
                         </thead>
                     </table>
             </div>
-            <hr/>
         </div>
 
     </section>

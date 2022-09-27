@@ -77,7 +77,7 @@ public class AdminController {
 			int productTCount = commonService.getCount(commonDTO);
 			mv.addObject("productTCount", productTCount);
 			// 상품 리뷰 수
-			commonDTO.setTableNm("REVIEW_BOARD"); 	// 기준 컬럼
+			commonDTO.setTableNm("PRODUCT_REPLY"); 	// 기준 컬럼
 			int prodRCount = commonService.getCount(commonDTO);
 			mv.addObject("prodRCount", prodRCount);
 			// 상품 찜 수

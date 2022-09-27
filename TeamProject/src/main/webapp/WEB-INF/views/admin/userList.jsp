@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html
   lang="en"
@@ -36,11 +37,11 @@
                       <i class="bx bx-buildings me-1"></i> 회원 관리</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/addr">
+                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/order">
                       <i class="bx bx-buildings me-1"></i> 주문 관리</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/passMod">
+                      <a class="nav-link" href="${pageContext.request.contextPath }/admin/orderb">
                       <i class="bx bx-detail me-1"></i> 배송 관리</a>
                     </li>
                   </ul>
@@ -56,7 +57,7 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                      	<th>&nbsp;&nbsp;<input class="form-check-input" type="checkbox" id="allCheck" name="allCheck" />&nbsp;&nbsp;&nbsp;전체선택 </th>
+                      	<th>&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" type="checkbox" id="allCheck" name="allCheck" /> </th>
                         <th>번호</th>
                         <th>아이디</th>
                         <th>이름</th>
@@ -70,14 +71,16 @@
                      <c:forEach var="memberDTO" items="${userList}" >
                       <tr>
                       	<td onclick="event.cancelBubble=true">&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" type="checkbox" value="${memberDTO.userInfoNum }" name="CheckRow" id="defaultCheck1" />
-                      	<label class="form-check-label" for="defaultCheck1"></label></td>
-
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> ${memberDTO.userInfoNum }</td>
+                      		<label class="form-check-label" for="defaultCheck1"></label>
+                      	</td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                        	${memberDTO.userInfoNum }
+                        </td>
                         <td>${memberDTO.userId}</td>
                         <td>${memberDTO.userNm}</td>
                         <td>${memberDTO.userNicknm}</td>
                         <td>${memberDTO.userEmail}</td>
-                        <td>${memberDTO.userDate}</td>
+                        <td><fmt:formatDate pattern="YYYY-MM-dd HH:MM" value="${memberDTO.userDate}"/></td>
                         <td>
                         <c:if test="${memberDTO.userStatus eq 0}">
                         	<span class="badge bg-label-primary me-1">정상</span>
