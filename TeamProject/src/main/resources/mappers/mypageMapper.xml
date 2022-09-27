@@ -106,6 +106,7 @@
 				,l.ORD_L_DATE
 		        ,l.ORD_L_NUM
 		        ,l.ORD_NUM
+		        ,l.ORD_REFUND
 				,b.ORD_COUPONDC
 				,b.ORD_FINALPRICE
 				,p.PROD_L_PRODNM

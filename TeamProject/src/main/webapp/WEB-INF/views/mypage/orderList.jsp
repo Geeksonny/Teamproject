@@ -97,7 +97,7 @@
                        					<div></div>
 						 			</c:when>
 						 			<c:when test="${num eq '1'}">
-						  				배송중&nbsp;&nbsp;${orderListDTO.ordRefund}
+						  				배송중&nbsp;&nbsp;
                        					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
                        					<a href="https://tracker.delivery/#/kr.cjlogistics/${orderListDTO.ordLDelivNumber }" target="_blank">배송조회</a>
                        					</button>
