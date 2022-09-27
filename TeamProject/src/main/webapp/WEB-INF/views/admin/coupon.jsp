@@ -29,7 +29,7 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">포인트 /</span> 쿠폰</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">쿠폰 /</span> 쿠폰 관리</h4>
 
                   <div class="card mb-4">
                     <h5 class="card-header">쿠폰 등록</h5>
@@ -39,14 +39,16 @@
                       <form id="formAccountSettings" action="${pageContext.request.contextPath}/admin/couponInsert" method="POST">
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="userNm" class="form-label">쿠폰 넘버</label>
-                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="6자리숫자를 입력하세요"/>
+                            <label for="userNm" class="form-label">쿠폰 코드</label>
+                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="16자리 숫자를 입력하세요"/>
                           </div>
-                          <button type="button" class="btn btn-primary me-2 " id=couNumbtn > 쿠폰번호 자동생성 </button>
-<!--                           <p id="couNum1"></p> -->
                           <div class="mb-3 col-md-6">
-                            <label for="userNm" class="form-label">쿠폰 이름</label>
-                            <input class="form-control form-control-lg" type="text" name="couNm" id="couNm" placeholder="쿠폰 이름을 입력하세요"/>
+	                          <button type="button" class="btn btn-outline-primary me-2" style="margin-top: 1.8rem; height:60%;" id=couNumbtn > 쿠폰 코드 생성 </button>
+                          </div>
+                          <p id="couNum1"></p>
+                          <div class="mb-3 col-md-6">
+                            <label for="userNm" class="form-label">쿠폰명</label>
+                            <input class="form-control form-control-lg" type="text" name="couNm" id="couNm" placeholder="쿠폰명을 적어주세요"/>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="userAthletic">할인율</label>
@@ -61,11 +63,11 @@
                           </div>
                           <div class="mb-3 col-md-10">
                             <label for="couDet" class="form-label">쿠폰 설명</label>
-                            <input class="form-control form-control-lg" type="text" name="couDet" id="couDet" placeholder="쿠폰 상세설명을 입력하세요"/>
+                            <input class="form-control form-control-lg" type="text" name="couDet" id="couDet" placeholder="상세 설명을 적어주세요"/>
                           </div>
-                        <div class="mb-3 col-md-2 mt-3">
-                          <button type="submit" class="btn btn-primary me-2 " >+ 추가</button>
-                          <button type="reset" class="btn btn-outline-secondary">취소</button>
+                        <div class="mb-3 col-md-2">
+                          <button type="submit" class="btn btn-primary me-2" style="margin-top: 1.8rem; height:60%"" >+ 추가</button>
+                          <button type="reset" class="btn btn-outline-secondary" style="margin-top: 1.8rem; height:60%">취소</button>
                         </div>
                       </form>
                         </div>
@@ -79,17 +81,20 @@
               <c:forEach var="couponDTO" items="${couponList }" >
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
-                    <a onclick="couponDelete();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px"></a>
-                    <div class="card-header">쿠폰 코드&nbsp; :&nbsp; ${couponDTO.couNum }&nbsp;
+                    <a onclick="couponDelete();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px" style="cursor:pointer;"></a>
+                    <div class="card-header"><h2 style="color:#6c757d; font-weight:990 !important">
+                    	<strong>${couponDTO.couNum }</strong></h2>
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">쿠폰이름 : <span class="text-warning">${couponDTO.couNm }</span> </h5>
+                      <h5 class="card-title"><strong>${couponDTO.couNm }
+                      	<span class="badge bg-primary">
+                      		<fmt:formatNumber type="number" maxFractionDigits="0" value="${couponDTO.couDc }"/>%
+                      	</span></strong></h5>
                       <p class="card-text">
-                        쿠폰 내용&nbsp; :&nbsp; ${couponDTO.couDet }
+                       ${couponDTO.couDet }
                       </p>
-                      <p> 쿠폰 할인률 &nbsp;:&nbsp; ${couponDTO.couDc }&nbsp;%
-                      </p>
-                      <p> 쿠폰 등록 날짜 &nbsp;:&nbsp; <fmt:formatDate pattern="yy-MM-dd" value="${couponDTO.couInfoDate }"/>
+                      <hr>
+                      <p style="color:#999;"> 발행일 &nbsp;&nbsp; <fmt:formatDate pattern="yy-MM-dd" value="${couponDTO.couInfoDate }"/>
                       </p>
                     </div>
                     <input type="hidden" name="sbCount" value="${couponDTO.couNum}" id="delCouNum">
