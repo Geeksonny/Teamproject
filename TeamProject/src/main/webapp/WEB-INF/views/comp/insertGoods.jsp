@@ -96,12 +96,12 @@
 
 													<div class="mb-3 col-4">
 														<label class="form-label" for="basic-default-fullname">업체명</label>
-														<input type="text" class="form-control form-control-lg" id="basic-default-fullname" name="prodLCompNm" value="${sessionScope.compId }" readonly />
+														<input type="text" class="form-control form-control-lg" id="basic-default-fullname" name="prodLCompNm" value="${compDTO2.compNm }" readonly />
 													</div>
 
 													<div class="mb-3 col-4">
-														<label class="form-label" for="basic-default-fullname">제품코드</label>
-														<input type="text" class="form-control form-control-lg" id="basic-default-fullname" name="prodLCode" placeholder="제품코드 입력" />
+														<label class="form-label" for="basic-default-fullname">상품코드</label>
+														<input type="text" class="form-control form-control-lg" id="basic-default-fullname" name="prodLCode" value="${prodDTO.prodLCode}" readonly />
 													</div>
 
 													<div class="mb-3 col-4">
