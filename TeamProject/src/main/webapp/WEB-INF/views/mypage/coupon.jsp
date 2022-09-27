@@ -51,11 +51,7 @@
                     <div class="card-body">
                       <form id="formAccountSettings" action="${pageContext.request.contextPath}/mypage/couponInsert" method="POST">
                          <div class="row  mt-3 mb-3">
-<<<<<<< HEAD
-                          <div class="mb-3 col-md-8" style="padding-left:20%">
-=======
                           <div class="mb-3 col-md-8" style="padding-left:15%">
->>>>>>> refs/remotes/main/main
                             <label for="userNm" class="form-label">쿠폰 코드</label>
                             <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="18자리 숫자를 적어주세요"/>
                           </div>
@@ -75,21 +71,13 @@
               <c:forEach var="couponDTO" items="${couponList }" >
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
-<<<<<<< HEAD
-                    <a onclick="couponDelete();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px" style="cursor:pointer;"></a>
-=======
->>>>>>> refs/remotes/main/main
                     <div class="card-header"><h2 style="color:#6c757d; font-weight:990 !important">
                     	<strong>${couponDTO.couNum }</strong></h2>
                     </div>
                     <div class="card-body">
                       <h5 class="card-title"><strong>${couponDTO.couNm }
                       	<span class="badge bg-primary">
-<<<<<<< HEAD
-                      		<fmt:formatNumber type="number" maxFractionDigits="0" value="${couponDTO.couDc }"/>m
-=======
                       		<fmt:formatNumber type="number" maxFractionDigits="0" value="${couponDTO.couDc }"/>%
->>>>>>> refs/remotes/main/main
                       	</span></strong></h5>
                       <p class="card-text">
                       <hr>
@@ -100,9 +88,6 @@
                 </div>
               </c:forEach>
               </div>
-<<<<<<< HEAD
-=======
-
 
                 <div class="bd-example-snippet bd-code-snippet mt-5 mb-3"><div class="bd-example " >
 			        <nav aria-label="Standard pagination example">
@@ -133,9 +118,6 @@
 			        </div></div>
 
 
-
-
->>>>>>> refs/remotes/main/main
               </div>
               </div>
               <!--/ Content types -->
