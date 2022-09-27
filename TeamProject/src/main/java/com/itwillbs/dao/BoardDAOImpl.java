@@ -106,8 +106,8 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public List<BoardDTO> gettopBoard(BoardDTO boardDTO) {
-		return sqlSession.selectList(namespace+".gettopBoard",boardDTO);
+	public List<BoardDTO> getBoardTopList(BoardDTO boardDTO) {
+		return sqlSession.selectList(namespace+".getBoardTopList",boardDTO);
 	}
 
 

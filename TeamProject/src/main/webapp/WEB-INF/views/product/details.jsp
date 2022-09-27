@@ -132,9 +132,10 @@ function printProdList(data){
             <hr class="md-4"><br>
               <!-- 내가 찜한 목록들 리스트 볼수있게 이동? -->
               <div class="center" style="display:block">
-                  <a class="site-btn mr-2" id="prodLike"><span id="sp">찜하기</span></a>
+                  <a class="site-btn mr-2" id="prodLike" href="${pageContext.request.contextPath }/product/detailsLike?prodLCode=${details.prodLCode}&prodLNum=${details.prodLNum}"><span id="sp">찜하기</span></a>
 	              <a class="site-btn" id="insertBasket"><span id="sp">장바구니에 담기</span></a>
 <!-- 	              장바구니에 가져갈 히든 값. 제품 코드와 가격, 수량 1개 -->
+					<input type="hidden" name="prodLNum" value="${details.prodLNum}" id="prodLNum">
 				  <input type="hidden" name="prodLcount" type="text" id="prodLcount" value="1">
 	              <input type="hidden" name="prodLCode" value="${details.prodLCode}" id="prodLCode">
               	  <input type="hidden" name="prodLPrice" value="${details.prodLPrice}" id="prodLPrice">

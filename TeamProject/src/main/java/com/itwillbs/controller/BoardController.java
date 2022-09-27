@@ -113,7 +113,7 @@ public class BoardController {
 	public String fwritePro(HttpServletRequest request,HttpSession session, MultipartFile file) throws Exception {
 		String filename = "";
 		if(file.isEmpty()) {
-			filename=null;
+			filename="logo.png";
 		}else {
 			UUID uuid=UUID.randomUUID();
 			filename=uuid.toString()+"_"+file.getOriginalFilename();
@@ -327,6 +327,9 @@ public class BoardController {
 
 
 	}
+	
+	
+	
 	
 //	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
 //	public String topBoard(HttpServletRequest request, HttpSession session,  Model model, BoardDTO boardDTO) {

@@ -15,9 +15,26 @@
   border-spacing: 0 10px;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	//id="idbtn"
+	$('#pic').click(function(){
+		$.ajax({
+			url:'${pageContext.request.contextPath}/board/likeinset',
+			data:{'boardNum' : $('#boardNum').val()},
+			success:function(rdata){
+				var result = "${pageContext.request.contextPath }/resources/img/icon/";
+				
+				if(rdata == 'likeno')	result += "heart.png";
+				else 					result += "redhart.png";
+				
+				$("#pic").attr("src", result);
+				
+			}
+		});
+	});
+});
 
 </script>
 </head>
@@ -84,10 +101,12 @@
                             </tr>
                         </tbody>
                     </table>
-                    <form action="${pageContext.request.contextPath }/board/likeinset">
-                    <input type="hidden" name="boardNum" value="${boardDTO.boardNum}"></input>
-	                   			<input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/heart.png" value="추천">
-	                  
+                   
+					<c:set var="userId" scope="session" value="${sessionScope.userId}"/>                     
+					<c:if test="${userId != null}">
+                    <input type="hidden" id="boardNum" name="boardNum" value="${boardDTO.boardNum}"></input>
+	                <input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/heart.png" value="추천">
+	                </c:if>  
 
         			<%-- <c:if test="${userId == lId}">
 
@@ -96,12 +115,11 @@
                     <c:if test="${userId != lId}">
 
                     </c:if> --%>
-                    </form>
 
 
 
-                    <table class="table table-striped" >
-               <c:forEach items="${replyList}" var="replyDTO">
+                    	<table class="table table-striped" >
+               			<c:forEach items="${replyList}" var="replyDTO">
 				<!-- 댓글 테이블 -->
                    		 <tr>
                    		 		<input type="hidden" name="rNum" value="${replyDTO.rNum}">
@@ -119,7 +137,8 @@
                     </table>
 			<!-- 댓글 작성 -->
 				<form name="comment-form" action="${pageContext.request.contextPath }/board/isnertPro" method="post" autocomplete="off">
-
+					<c:set var="userId" scope="session" value="${sessionScope.userId}"/>                     
+					<c:if test="${userId != null}">
                     <table class="table table-condensed">
                         <tr>
                             <td>
@@ -132,6 +151,7 @@
                             </td>
                         </tr>
                     </table>
+                    </c:if>
                     </form>
                     <table class="table table-condensed">
                         <thead>
@@ -139,8 +159,11 @@
                                 <td>
                                     <span style='float:right'>
                                         <a href="${pageContext.request.contextPath }/board/list"><button type="button" id="list" class="btn btn-secondary">목록</button></a>
+                                        <c:set var="userId" scope="session" value="${sessionScope.userId}"/>                     
+										<c:if test="${userId != null}">
                                         <button type="button" id="modify" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/update?boardNum=${boardDTO.boardNum }'">수정</button>
                                         <button type="button" id="delete" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/delete?boardNum=${boardDTO.boardNum }'">삭제</button>
+                                   		</c:if>
                                     </span>
                                 </td>
                             </tr>

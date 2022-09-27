@@ -28,6 +28,7 @@ import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.PageDTO;
+import com.itwillbs.service.BoardService;
 import com.itwillbs.service.CommonService;
 import com.itwillbs.service.MemberService;
 import com.itwillbs.service.ProdService;
@@ -40,6 +41,9 @@ public class ProdController {
 	private ProdService prodService;
 	@Inject
 	private CommonService commonService;
+	@Inject
+	private BoardService boardService;
+	
 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
@@ -250,12 +254,14 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO,BoardDTO boardDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
+			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
 			// 데이터 담기
+			mv.addObject("boardTopList", boardTopList);
 			mv.addObject("newProdList", newProdList);
 			mv.addObject("bsProdList", bsProdList);
 			mv.addObject("prodDTO", prodDTO);

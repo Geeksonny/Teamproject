@@ -92,7 +92,6 @@ if(yn.value=='1'){
           <tbody>
             <c:forEach var="boardDTO"  items="${boardList}" >
 				<tr id="boardTr" style="cursor:pointer;" onClick="location.href='${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}'">
-
 					<td style="text-align:center; width:10%">${boardDTO.boardNum }<input type="text" id="boardNotice" value="${boardDTO.boardNotice }" name="boardNotice" hidden></td>
 					<td style="width:55%; padding-left:3%"><strong>${boardDTO.boardSubject } </strong><span style="color:#85888d; font-size: 0.8rem;">(${boardDTO.boardRcount})</span></td>
 					<td style="text-align:center; ">${boardDTO.userNicknm}</td>

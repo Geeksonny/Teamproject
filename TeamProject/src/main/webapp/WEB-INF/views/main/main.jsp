@@ -77,7 +77,8 @@
 							</a>
                             <span class="label">New</span>
                             <ul class="product__hover">
-               	 	           <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+               	 	           <li><a href="${pageContext.request.contextPath }/main/likeinsert2?prodLCode=${newProdList.prodLCode}">
+               	 	           <img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -103,7 +104,8 @@
 							</a>
 							<span class="label">Hot</span>
                             <ul class="product__hover">
-                                <li><a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+                                <li><a href="${pageContext.request.contextPath }/main/likeinsert2?prodLCode=${prodList.prodLCode}">
+                                <img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
                            </ul>
                         </div>
                         <div class="product__item__text">
@@ -160,38 +162,50 @@
                 </div>
             </div>
             <div class="row">
+           <c:set var="file" value="${boardDTO.boardFile}"/>
+           <c:forEach var="boardDTO"  items="${boardTopList}" end="2">
+           <c:choose>
+           	<c:when test="${file != null}">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-1.jpg"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/upload/${file}"></div>
                         <div class="blog__item__text">
-                            <span>작성자</span>
-                            <h5>제목</h5>
-                            <a href="#">보러가기</a>
+                            <span>${boardDTO.userNicknm}</span>
+                            <h5>${boardDTO.boardSubject}</h5>
+                            <a href="${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}">보러가기</a>
                         </div>
                     </div>
                 </div>
+                </c:when>
+                <c:when test="${file == null}">
                 <div class="col-lg-4 col-md-6 col-sm-6">
-                	<div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-2.jpg"></div>
+                	<div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-1.jpg"></div>
                     <div class="blog__item">
                         <div class="blog__item__text">
-                            <span>날짜</span>
-                            <h5>제목</h5>
-                            <a href="#">보러가기</a>
+                           <span>${boardDTO.userNicknm}</span>
+                            <h5>${boardDTO.boardSubject}</h5>
+                            <a href="${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}">보러가기</a>
                         </div>
                     </div>
                 </div>
+                </c:when>
+                 <c:when test="${file == logo.png}">
                 <div class="col-lg-4 col-md-6 col-sm-6">
+                	<div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-1.jpg"></div>
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/blog/blog-3.jpg"></div>
                         <div class="blog__item__text">
-                            <span>날짜</span>
-                            <h5>제목</h5>
-                            <a href="#">보러가기</a>
+                           <span>${boardDTO.userNicknm}</span>
+                            <h5>${boardDTO.boardSubject}</h5>
+                            <a href="${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}">보러가기</a>
                         </div>
                     </div>
                 </div>
+                </c:when>
+                </c:choose>
+                </c:forEach>
             </div>
         </div>
+        
     </section>
     <!-- Footer Section Begin -->
     <jsp:include page="../inc/footer.jsp"/>

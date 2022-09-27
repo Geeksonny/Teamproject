@@ -122,8 +122,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardDTO> gettopBoard(BoardDTO boardDTO) {
-		return boardDAO.gettopBoard(boardDTO);
+	public List<BoardDTO> getBoardTopList(BoardDTO boardDTO) {
+		return boardDAO.getBoardTopList(boardDTO);
 	}
 
 
