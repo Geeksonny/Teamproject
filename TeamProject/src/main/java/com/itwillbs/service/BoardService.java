@@ -18,7 +18,7 @@ public interface BoardService {
 
 	int getBoardCount(BoardDTO boardDTO);
 
-	BoardDTO getBoard(int boardNum);
+	BoardDTO getBoard(BoardDTO boardDTO);
 
 //	BoardDTO boardDTO2=boardService.numCheck(boardDTO);
 	BoardDTO numCheck(BoardDTO boardDTO);

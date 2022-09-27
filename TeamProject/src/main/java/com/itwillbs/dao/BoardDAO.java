@@ -20,7 +20,7 @@ public interface BoardDAO {
 
 	int getBoardCount(BoardDTO boardDTO);
 
-	BoardDTO getBoard(int boardNum);
+	BoardDTO getBoard(BoardDTO boardDTO);
 
 	BoardDTO numCheck(BoardDTO boardDTO);
 

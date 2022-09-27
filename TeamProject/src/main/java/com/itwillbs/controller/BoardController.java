@@ -151,14 +151,23 @@ public class BoardController {
 	@RequestMapping(value = "/board/content", method = RequestMethod.GET)
 	public String content(HttpServletRequest request, HttpSession session, Model model) {
 		//파라미터 가져오기
+		
+		
 		int boardNum=Integer.parseInt(request.getParameter("boardNum"));
+		String userId = (String)session.getAttribute("userId");
+		BoardDTO boardDTO = new BoardDTO();
+		boardDTO.setBoardNum(boardNum);
+		boardDTO.setUserId(userId);
+		
 		// 디비에서 조회
-		BoardDTO boardDTO=boardService.getBoard(boardNum);
+		BoardDTO boardDTO2=boardService.getBoard(boardDTO);
 
 		// model에 데이터 저장
-		model.addAttribute("boardDTO", boardDTO);
-
+		model.addAttribute("boardDTO2", boardDTO2);
 		//댓글란
+		
+		
+		
 		int pageSize=10;
 		//현페이지 번호
 		String pageNum=request.getParameter("pageNum");
@@ -191,7 +200,6 @@ public class BoardController {
 //		pageDTO.setEndPage(endPage);
 //		pageDTO.setPageCount(pageCount);
 		
-		String userId = (String)session.getAttribute("userId");
 		ViewDTO viewDTO=new ViewDTO();
 		viewDTO.setBoardNum(boardNum);
 		viewDTO.setUserId(userId);
@@ -219,14 +227,18 @@ public class BoardController {
 
 	//	가상주소 시작점 http://localhost:8080/myweb2/board/update?num=2
 	@RequestMapping(value = "/board/update", method = RequestMethod.GET)
-	public String update(HttpServletRequest request, Model model) {
+	public String update(HttpServletRequest request, HttpSession session, Model model) {
 		//파라미터 가져오기
 		int boardNum=Integer.parseInt(request.getParameter("boardNum"));
+		String userId = (String)session.getAttribute("userId");
+		BoardDTO boardDTO = new BoardDTO();
+		boardDTO.setBoardNum(boardNum);
+		boardDTO.setUserId(userId);
 		// 디비에서 조회
-		BoardDTO boardDTO=boardService.getBoard(boardNum);
+		BoardDTO boardDTO2=boardService.getBoard(boardDTO);
 
 		// model에 데이터 저장
-		model.addAttribute("boardDTO", boardDTO);
+		model.addAttribute("boardDTO2", boardDTO2);
 
 		// 주소변경없이 이동
 		// WEB-INF/views/board/updateForm.jsp 이동

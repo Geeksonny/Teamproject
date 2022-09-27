@@ -64,7 +64,14 @@
 	</select>
 
 	<select id="getBoard" resultType="com.itwillbs.domain.BoardDTO">
-		select * from BOARD where BOARD_NUM=#{boardNum}
+		select *
+			 , CASE WHEN (select COUNT(*) 
+						    from BOARD_LIKE 
+						   where BOARD_NUM = b.BOARD_NUM
+							 and USER_ID = #{userId}) = 1 THEN 'redhart.png'
+													  	  ELSE 'heart.png'    END AS heart
+		  from BOARD b
+		 where BOARD_NUM=#{boardNum}
 	</select>
 
 	<select id="PassCheck" resultType="com.itwillbs.domain.BoardDTO">

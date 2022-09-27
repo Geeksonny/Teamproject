@@ -69,8 +69,8 @@ $(document).ready(function(){
                     <table class="table table-condensed">
                         <thead>
                             <tr align="center">
-                                <th width="10%">${boardDTO.boardNum }</th>
-                                <th width="60%"><h5><strong>${boardDTO.boardSubject }</strong></h5></th>
+                                <th width="10%">${boardDTO2.boardNum }</th>
+                                <th width="60%"><h5><strong>${boardDTO2.boardSubject }</strong></h5></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,7 +78,7 @@ $(document).ready(function(){
                                 <td style="color:#88939f;">작성일
                                 </td>
                                 <td style="color:#88939f;">
-                               		${boardDTO.boardDate }<span style='float:right'>조회 <span style="color:#495057;"><strong>${boardDTO.boardReadcount }</strong></span></span>
+                               		${boardDTO2.boardDate }<span style='float:right'>조회 <span style="color:#495057;"><strong>${boardDTO2.boardReadcount }</strong></span></span>
                                 </td>
                             </tr>
                             <tr>
@@ -86,50 +86,32 @@ $(document).ready(function(){
                                 작성자
                                 </td>
                                 <td style="color:#88939f;">
-                                	${boardDTO.userNicknm} <span style='float:right'>좋아요 <span style="color:#495057;"><strong> ${boardDTO.boardLikecount}</strong></span></span>
+                                	${boardDTO2.userNicknm} <span style='float:right'>좋아요 <span style="color:#495057;"><strong> ${boardDTO2.boardLikecount}</strong></span></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <p class="mb-4 mt-3">${boardDTO.boardContent }</p>
+                                    <p class="mb-4 mt-3">${boardDTO2.boardContent }</p>
 
                                 </td>
                             </tr>
                             <tr>
                             		<td width="10%"></td>
-                                	<td width="60%"><img src="${pageContext.request.contextPath }/resources/upload/${boardDTO.boardFile}" style="max-width: 30%; height: auto;" ></td>
+                                	<td width="60%"><img src="${pageContext.request.contextPath }/resources/upload/${boardDTO2.boardFile}" style="max-width: 30%; height: auto;" ></td>
                             </tr>
                         </tbody>
                     </table>
-<<<<<<< HEAD
                     <form action="${pageContext.request.contextPath }/board/likeinset">
-                    <input type="hidden" name="boardNum" value="${boardDTO.boardNum}"></input>
-	                   			<input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/heart.png" value="추천">
-=======
-                   
-					<c:set var="userId" scope="session" value="${sessionScope.userId}"/>                     
-					<c:if test="${userId != null}">
-                    <input type="hidden" id="boardNum" name="boardNum" value="${boardDTO.boardNum}"></input>
-	                <input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/heart.png" value="추천">
-	                </c:if>  
-
->>>>>>> refs/remotes/main/main
+                    <input type="hidden" name="boardNum" value="${boardDTO2.boardNum}"></input>
+	                   			<input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/${boardDTO2.heart}" value="추천">
         			<%-- <c:if test="${userId == lId}">
                     </c:if>
 
                     <c:if test="${userId != lId}">
                     </c:if> --%>
-<<<<<<< HEAD
                     </form>
                     <table class="table table-striped" >
                <c:forEach items="${replyList}" var="replyDTO">
-=======
-
-
-
-                    	<table class="table table-striped" >
-               			<c:forEach items="${replyList}" var="replyDTO">
->>>>>>> refs/remotes/main/main
 				<!-- 댓글 테이블 -->
                    		 <tr>
                    		 		<input type="hidden" name="rNum" value="${replyDTO.rNum}">
@@ -147,8 +129,7 @@ $(document).ready(function(){
                     </table>
 			<!-- 댓글 작성 -->
 				<form name="comment-form" action="${pageContext.request.contextPath }/board/isnertPro" method="post" autocomplete="off">
-					<c:set var="userId" scope="session" value="${sessionScope.userId}"/>                     
-					<c:if test="${userId != null}">
+
                     <table class="table table-condensed">
                         <tr>
                             <td>
@@ -161,7 +142,6 @@ $(document).ready(function(){
                             </td>
                         </tr>
                     </table>
-                    </c:if>
                     </form>
                     <table class="table table-condensed">
                         <thead>
@@ -169,11 +149,8 @@ $(document).ready(function(){
                                 <td>
                                     <span style='float:right'>
                                         <a href="${pageContext.request.contextPath }/board/list"><button type="button" id="list" class="btn btn-secondary">목록</button></a>
-                                        <c:set var="userId" scope="session" value="${sessionScope.userId}"/>                     
-										<c:if test="${userId != null}">
                                         <button type="button" id="modify" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/update?boardNum=${boardDTO.boardNum }'">수정</button>
                                         <button type="button" id="delete" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/delete?boardNum=${boardDTO.boardNum }'">삭제</button>
-                                   		</c:if>
                                     </span>
                                 </td>
                             </tr>

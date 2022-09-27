@@ -15,9 +15,16 @@ public class BoardDTO extends PageDTO {
 	private Timestamp boardDate;
 	private String boardFile;
 	private String boardNotice;
+	private String heart;
+	
 
 
-
+	public String getHeart() {
+		return heart;
+	}
+	public void setHeart(String heart) {
+		this.heart = heart;
+	}
 	private String srhText;
 	private String category;
 
@@ -108,9 +115,10 @@ public class BoardDTO extends PageDTO {
 		return "BoardDTO [boardNum=" + boardNum + ", userNicknm=" + userNicknm + ", boardPass=" + boardPass
 				+ ", boardSubject=" + boardSubject + ", boardContent=" + boardContent + ", boardLikecount="
 				+ boardLikecount + ", boardReadcount=" + boardReadcount + ", boardRcount=" + boardRcount
-				+ ", boardDate=" + boardDate + ", boardFile=" + boardFile + ", boardNotice=" + boardNotice
-				+ ", srhText=" + srhText + ", category=" + category + "]";
+				+ ", boardDate=" + boardDate + ", boardFile=" + boardFile + ", boardNotice=" + boardNotice + ", heart="
+				+ heart + ", srhText=" + srhText + ", category=" + category + "]";
 	}
+	
 
 
 
