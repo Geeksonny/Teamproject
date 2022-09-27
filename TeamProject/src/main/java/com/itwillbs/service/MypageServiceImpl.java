@@ -1,5 +1,6 @@
 package com.itwillbs.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.MypageDAO;
 import com.itwillbs.domain.BoardDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MypageDTO;
 import com.itwillbs.domain.OrderListDTO;
 import com.itwillbs.domain.PageDTO;
@@ -15,38 +17,38 @@ import com.itwillbs.domain.ProdDTO;
 
 @Service
 public class MypageServiceImpl implements MypageService {
-	
+
 	@Inject
 	private MypageDAO mypageDAO;
-	
+
 	@Override
 	public void insertMypage(MypageDTO userId) {
 		mypageDAO.insertMypage(userId);
-		
+
 	}
 
 	@Override
 	public void boardCount(MypageDTO mypageDTO) {
 		mypageDAO.boardCount(mypageDTO);
-		
+
 	}
 
 	@Override
 	public void boardsub(MypageDTO mypageDTO) {
 		mypageDAO.boardsub(mypageDTO);
-		
+
 	}
 
 	@Override
 	public void replysub(MypageDTO mypageDTO) {
-		mypageDAO.replysub(mypageDTO);		
+		mypageDAO.replysub(mypageDTO);
 	}
 
 	@Override
 	public void replyCount(MypageDTO mypageDTO) {
-		mypageDAO.replyCount(mypageDTO);		
+		mypageDAO.replyCount(mypageDTO);
 	}
-	
+
 	@Override
 	public void productLikesub(MypageDTO mypageDTO) {
 		mypageDAO.productLikesub(mypageDTO);
@@ -54,13 +56,13 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public void productLike(MypageDTO mypageDTO) {
-		mypageDAO.productLike(mypageDTO);		
+		mypageDAO.productLike(mypageDTO);
 	}
 
 	@Override
 	public MypageDTO mypageselect(MypageDTO mypageDTO) {
-		return mypageDAO.mypageselect(mypageDTO);	
-		
+		return mypageDAO.mypageselect(mypageDTO);
+
 	}
 
 	@Override
@@ -68,12 +70,12 @@ public class MypageServiceImpl implements MypageService {
 		// pageSize  pageNum  currentPage
 				int startRow=(boardDTO.getCurrentPage()-1)*boardDTO.getPageSize()+1;
 				int endRow=startRow+boardDTO.getPageSize()-1;
-				
+
 				// sql => limit #{startRow -1}, #{pageSize}
-				
+
 				boardDTO.setStartRow(startRow-1);
 				boardDTO.setEndRow(endRow);
-				
+
 				return mypageDAO.getBoardList(boardDTO);
 	}
 
@@ -87,26 +89,26 @@ public class MypageServiceImpl implements MypageService {
 		// pageSize  pageNum  currentPage
 		int startRow=(boardDTO.getCurrentPage()-1)*boardDTO.getPageSize()+1;
 		int endRow=startRow+boardDTO.getPageSize()-1;
-		
+
 		// sql => limit #{startRow -1}, #{pageSize}
-		
+
 		boardDTO.setStartRow(startRow-1);
 		boardDTO.setEndRow(endRow);
-		
+
 		return mypageDAO.getBoardLikeList(boardDTO);
 	}
-	
+
 	@Override
 	public List<ProdDTO> getPordLikeList(ProdDTO prodDTO) {
 		// pageSize  pageNum  currentPage
 				int startRow=(prodDTO.getCurrentPage()-1)*prodDTO.getPageSize()+1;
 				int endRow=startRow+prodDTO.getPageSize()-1;
-				
+
 				// sql => limit #{startRow -1}, #{pageSize}
-				
+
 				prodDTO.setStartRow(startRow-1);
 				prodDTO.setEndRow(endRow);
-				
+
 				return mypageDAO.getPordLikeList(prodDTO);
 	}
 	// ���������� �ֹ����
@@ -127,8 +129,19 @@ public class MypageServiceImpl implements MypageService {
 		public int getMyOrdListCount(PageDTO pageDTO) {
 			return mypageDAO.getMyOrdListCount(pageDTO);
 		}
+		// 마이페이지 쿠폰 리스트
+		@Override
+		public List<CouponDTO> getMyCouponList(CouponDTO couponDTO) {
+			return mypageDAO.getMyCouponList(couponDTO);
+		}
+		// 마이페이지 쿠폰 등록
+		@Override
+		public void insertMyCoupon(CouponDTO couponDTO) {
+			couponDTO.setCouDate(new Timestamp(System.currentTimeMillis()));
+			mypageDAO.insertMyCoupon(couponDTO);
+		}
 
-		
 
-	
+
+
 }

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.itwillbs.domain.AddressDTO;
 import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.CompDTO;
+import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MemberDTO;
 import com.itwillbs.domain.MypageDTO;
 import com.itwillbs.domain.OrderListDTO;
@@ -273,7 +274,7 @@ public class MypageController {
 
 		return "mypage/boardList";
 	}
-	
+
 	@RequestMapping(value = "/mypage/likeList", method = RequestMethod.GET)
 	public String likeList(HttpServletRequest request, Model model, HttpSession session, BoardDTO boardDTO) {
 		// 한 화면에 보여줄 글개수
@@ -311,7 +312,7 @@ public class MypageController {
 
 		return "mypage/likeList";
 	}
-	
+
 	@RequestMapping(value = "/mypage/prodLikeList", method = RequestMethod.GET)
 	public String prodLikeList(HttpServletRequest request, Model model, HttpSession session, ProdDTO prodDTO) {
 		// 한 화면에 보여줄 글개수
@@ -349,6 +350,35 @@ public class MypageController {
 
 		return "mypage/prodLikeList";
 	}
+
+	// 쿠폰 페이지
+
+	@RequestMapping(value = "/mypage/coupon", method = RequestMethod.GET)
+	public String ordList(HttpServletRequest request, Model model, HttpSession session,
+			@ModelAttribute CouponDTO couponDTO) {
+		String couUserId = (String) session.getAttribute("userId");
+		couponDTO.setCouUserId(couUserId);
+		List<CouponDTO> couponList = mypageService.getMyCouponList(couponDTO);
+		// 데이터 담아서 list.jsp 이동
+		model.addAttribute("couponList", couponList);
+
+		// 주소변경없이 이동
+		// WEB-INF/views/board/list.jsp 이동
+		return "mypage/coupon";
+	}
+
+
+	// 쿠폰 등록
+			@RequestMapping(value = "/mypage/couponInsert", method = RequestMethod.POST)
+			public String couponInsert(CouponDTO couponDTO,HttpSession session) {
+				String couUserId = (String) session.getAttribute("userId");
+				couponDTO.setCouUserId(couUserId);
+				// 메서드 호출
+				mypageService.insertMyCoupon(couponDTO);
+
+				// 주소변경 이동
+				return "redirect:/mypage/coupon";
+			}
 
 
 
