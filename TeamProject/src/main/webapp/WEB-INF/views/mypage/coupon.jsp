@@ -22,7 +22,7 @@
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
-		<jsp:include page="../inc/admin-menu.jsp"/>
+		<jsp:include page="../inc/mypage-menu.jsp"/>
 
            <!-- Content wrapper -->
           <div class="content-wrapper">
