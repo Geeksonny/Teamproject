@@ -206,7 +206,7 @@ public class CompServiceImpl implements CompService {
 	// admin 쿠폰 등록
 	@Override
 	public void insertCoupon(CouponDTO couponDTO) {
-		couponDTO.setCouDate(new Timestamp(System.currentTimeMillis()));
+		couponDTO.setCouInfoDate(new Timestamp(System.currentTimeMillis()));
 
 		compDAO.insertCoupon(couponDTO);
 	}
