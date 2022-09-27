@@ -168,6 +168,7 @@
 				,OL.ORD_DELIVERY_STATUS                     as ordDeliveryStatus
 				,(OL.ORD_L_QUANTITY * OL.ORD_L_PRICE)      as individualPrice
 				,OL.ORD_REFUND									as ordRefund
+				,OL.ORD_L_NUM									as ordLNum
 		  FROM	ORDER_LIST as OL JOIN ORDER_BOARD as OB
 			ON  (OL.ORD_L_USER = OB.USER_ID)
 		 WHERE   (@rownum:=0)=0
@@ -198,6 +199,7 @@
 		 WHERE ORD_L_USER	=#{ordLUser}
 		   AND ORD_L_CODE	=#{ordLCode}
 		   AND ORD_DELIVERY_STATUS ="0"
+		   AND ORD_L_NUM=#{ordLNum}
 	</update>
 	<!-- 	배송 상태 변경 -->
 	<update id="delivNumberUpdate">
@@ -205,7 +207,7 @@
 		   SET ORD_DELIVERY_STATUS	=#{ordDeliveryStatus}
 		 WHERE ORD_L_USER	=#{ordLUser}
 		   AND ORD_L_CODE	=#{ordLCode}
-		   AND ORD_PURCHASESTATUS ="Y"
+		   AND ORD_L_NUM=#{ordLNum}
 	</update>
 <!-- 	미배송, 배송완료 수 검색 -->
 	<select id="getOrdCountMain" resultType="java.lang.Integer">

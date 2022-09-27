@@ -358,8 +358,45 @@ public class MypageController {
 			@ModelAttribute CouponDTO couponDTO) {
 		String couUserId = (String) session.getAttribute("userId");
 		couponDTO.setCouUserId(couUserId);
-		List<CouponDTO> couponList = mypageService.getMyCouponList(couponDTO);
-		// 데이터 담아서 list.jsp 이동
+
+		// 한화면에 보여줄 글개수
+				int pageSize = 6;
+				// 현페이지 번호
+				String pageNum = request.getParameter("pageNum");
+
+				if (pageNum == null) {
+					pageNum = "1";
+				}
+				// 현페이지 번호를 정수형으로 변경
+				int currentPage = Integer.parseInt(pageNum);
+				// PageDTO 객체생성
+//				PageDTO pageDTO = new PageDTO();
+				couponDTO.setPageSize(pageSize);
+				couponDTO.setPageNum(pageNum);
+				couponDTO.setCurrentPage(currentPage);
+				couponDTO.setUserId(couUserId);
+																															// 컬럼
+				List<CouponDTO> couponList = mypageService.getMyCouponList(couponDTO); // 물건 리스트 갖고오기
+
+				int count = mypageService.getMyCouponListCount(couponDTO); // 업체 전체 물건 리스트 갯수
+				// 페이징
+				int pageBlock = 6;
+				int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
+				int endPage = startPage + pageBlock - 1;
+				int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+				if (endPage > pageCount) {
+					endPage = pageCount;
+				}
+
+				couponDTO.setCount(count);
+				couponDTO.setPageBlock(pageBlock);
+				couponDTO.setStartPage(startPage);
+				couponDTO.setEndPage(endPage);
+				couponDTO.setPageCount(pageCount);
+
+				// 데이터 담아서 list.jsp 이동
+				model.addAttribute("couponDTO", couponDTO);
+
 		model.addAttribute("couponList", couponList);
 
 		// 주소변경없이 이동
@@ -380,6 +417,18 @@ public class MypageController {
 				return "redirect:/mypage/coupon";
 			}
 
-
+		@RequestMapping(value = "/mypage/orderRefund", method = RequestMethod.GET)
+		public String orderRefund(HttpServletRequest request, Model model, HttpSession session, OrderListDTO orderListDTO) {
+			String ordLUser = (String) session.getAttribute("userId");
+			int ordNum = Integer.parseInt(request.getParameter("ordNum")); 
+			String ordPurchasestatus = "N";
+			String ordRefund="11";
+			orderListDTO.setOrdUser(ordLUser);
+			orderListDTO.setOrdNum(ordNum);
+			orderListDTO.setOrdPurchasestatus(ordPurchasestatus);
+			orderListDTO.setOrdRefund(ordRefund);
+			mypageService.updateOrderStatus(orderListDTO);
+			return "mypage/orderList";
+		}
 
 }

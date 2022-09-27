@@ -73,7 +73,7 @@
                         <td style="text-align:center; ">
                         ${orderListDTO.ordLUser }
                         </td>
-                        <td style="text-align:center; ">
+                        <td style="text-align:center; "onclick="event.cancelBubble=true">
                           ${orderListDTO.individualPrice }
                         </td>
 
@@ -81,6 +81,7 @@
 					  		<form action="${pageContext.request.contextPath }/comp/delivNumberInsert" method="post">
                       			<input type="hidden" value="${orderListDTO.ordLCode }" name="ordLCode" id="ordLCode">
                       			<input type="hidden" value="${orderListDTO.ordLUser }" name="ordLUser" id="ordLUser">
+                      			<input type="hidden" value="${orderListDTO.ordLNum }" name="ordLNum" id="ordLNum">
                       			<div id="delivNumber_${orderListDTO.trnum}">
                      	  		<c:set var="num" value="${orderListDTO.ordDeliveryStatus }" />
                          		<c:choose>

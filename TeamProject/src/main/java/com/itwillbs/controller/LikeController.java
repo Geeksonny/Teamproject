@@ -35,8 +35,11 @@ public class LikeController {
 	@Inject
 	private MypageService mypageService;
 	
+	
+	@ResponseBody
 	@RequestMapping(value = "/board/likeinset", method = RequestMethod.GET)
 	public String likeinset(HttpServletRequest request, HttpSession session, Model model) {
+		String result="";
 		String userId = (String)session.getAttribute("userId");
 		int boardNum=Integer.parseInt(request.getParameter("boardNum"));
 		LikeDTO likeDTO=new LikeDTO();
@@ -49,23 +52,18 @@ public class LikeController {
 		LikeDTO likeDTO2=likeService.likeCheck(likeDTO);
 		
 		
-		if(userId == null) {
-			if(likeDTO2 != null) {
-				likeService.deleteLike(likeDTO);
-				likeService.updateLikeCancel(boardDTO);
-			}else{
-				likeService.insertLike(likeDTO);
-				likeService.updateLike(boardDTO);
-			}
-			
-		}else {
-			return "board/msg4";
+		if(likeDTO2 != null) {
+			likeService.deleteLike(likeDTO);
+			likeService.updateLikeCancel(boardDTO);
+			result = "likeno";
+		}else{
+			likeService.insertLike(likeDTO);
+			likeService.updateLike(boardDTO);
+			result = "likeok";
 		}
-		
-		
-		
+			
 		model.addAttribute("likeList",likeList);
-		return "redirect:/board/content?boardNum="+boardNum;
+		return result;
 	}
 	
 	

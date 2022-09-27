@@ -28,6 +28,12 @@
 	<select id="getMaxNum" resultType="java.lang.Integer">
 		SELECT MAX(BOARD_NUM) FROM BOARD
 	</select>
+	
+	<select id="getBoardTopList" resultType="com.itwillbs.domain.BoardDTO">
+		SELECT *
+		  FROM BOARD 
+		  ORDER BY BOARD_READCOUNT desc
+	</select>
 
 	<select id="getBoardList" resultType="com.itwillbs.domain.BoardDTO">
 		SELECT *
@@ -93,27 +99,7 @@
 		where BOARD_NUM=#{boardNum}
 	</update>
 
-	<!-- 검색기능  -->
-	<sql id="criteria">
-		<trim prefix="where (" suffix=")" prefixOverrides="OR">
-			<foreach collection="typeArr" item="type">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'S'.toString()">
-							BOARD_SUBJECT like concat('%',#{keyword},'%')
-						</when>
-						<when test="type == 'C'.toString()">
-							BOARD_CONTENT like concat('%',#{keyword},'%')
-						</when>
-						<when test="type == 'N'.toString()">
-							USER_NICKNM like concat('%',#{keyword},'%' )
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-	</sql>
-
+	
 
 
 	<!-- view -->

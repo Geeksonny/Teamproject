@@ -65,15 +65,33 @@ public class CompController {
 	}
 	// 물건 등록페이지 이동
 	@RequestMapping(value = "/comp/insertGoods", method = RequestMethod.GET)
-	public String compInsertProd(HttpSession session,CompDTO compDTO ) {
+	public ModelAndView compInsertProd(HttpSession session,CompDTO compDTO ) {
 		String compId = (String) session.getAttribute("compId");
 		compDTO.setCompId(compId);
 		CompDTO compDTO2 = compService.getComp(compDTO);
 
+		ModelAndView mv = new ModelAndView();
 		if (compDTO2 != null) {
-		return "comp/insertGoods";
+
+
+			ProdDTO prodDTO = new ProdDTO();
+			CommonDTO commonDTO = new CommonDTO();
+			commonDTO.setComCd("PF"); // 코드 정의
+			commonDTO.setColumnNm("PROD_L_CODE"); // 기준 컬럼
+			commonDTO.setTableNm("PRODUCT_LIST"); // 테이블 정의
+			CommonDTO cd = commonService.selectCodeSearch(commonDTO);
+			// cd = PF220906001 로 생성됨
+			// 조회해온 코드값을 원하는 DTO에 Set 처리
+			prodDTO.setProdLCode(cd.getPkCd());
+
+			mv.addObject("prodDTO", prodDTO);
+			mv.addObject("compDTO2", compDTO2);
+			mv.setViewName("comp/insertGoods");
+
+		return mv;
 		} else {
-			return "/member/login";
+			mv.setViewName("/member/login");
+			return mv;
 		}
 	}
 
@@ -98,20 +116,8 @@ public class CompController {
 			MultipartFile prodLSubimg, @ModelAttribute CompDTO compDTO) throws Exception {
 
 		ProdDTO prodDTO = new ProdDTO();
-		String prodLCode = request.getParameter("prodLCode");
-		if (prodLCode.equals(null) || prodLCode.equals("")) {
-			CommonDTO commonDTO = new CommonDTO();
-			commonDTO.setComCd("PF"); // 코드 정의
-			commonDTO.setColumnNm("PROD_L_CODE"); // 기준 컬럼
-			commonDTO.setTableNm("PRODUCT_LIST"); // 테이블 정의
-			CommonDTO cd = commonService.selectCodeSearch(commonDTO);
-			// cd = PF220906001 로 생성됨
-			// 조회해온 코드값을 원하는 DTO에 Set 처리
-			prodDTO.setProdLCode(cd.getPkCd());
 
-		} else {
-			prodDTO.setProdLCode(prodLCode);
-		}
+
 
 
 		// 로그인후 세션값, 업체 아이디 갖고옴

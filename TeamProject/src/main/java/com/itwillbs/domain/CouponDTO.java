@@ -2,7 +2,7 @@ package com.itwillbs.domain;
 
 import java.sql.Timestamp;
 
-public class CouponDTO {
+public class CouponDTO extends PageDTO {
 	private int num        ;
 	private String couUserId  ;
 	private String couNum     ;
@@ -74,6 +74,7 @@ public class CouponDTO {
 	public void setCouInfoDate(Timestamp couInfoDate) {
 		this.couInfoDate = couInfoDate;
 	}
+
 
 
 
