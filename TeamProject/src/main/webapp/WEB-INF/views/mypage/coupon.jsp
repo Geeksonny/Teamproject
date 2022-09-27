@@ -29,7 +29,20 @@
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">포인트 /</span> 쿠폰</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">포인트 · 쿠폰 /</span> 쿠폰</h4>
+
+                 <div class="row">
+	              	<div class="col-md-12">
+	                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
+	                   <li class="nav-item">
+	                     <a class="nav-link" href="${pageContext.request.contextPath }/mypage/point">
+	                     <i class="bx bx-buildings me-1"></i> 포인트</a>
+	                   </li>
+	                   <li class="nav-item">
+	                     <a class="nav-link active" href="${pageContext.request.contextPath }/mypage/coupon">
+	                     <i class="bx bx-buildings me-1"></i> 쿠폰</a>
+	                   </li>
+	                 </ul>
 
                   <div class="card mb-4">
                     <h5 class="card-header">쿠폰 등록</h5>
@@ -37,15 +50,14 @@
                     <hr class="my-0" />
                     <div class="card-body">
                       <form id="formAccountSettings" action="${pageContext.request.contextPath}/mypage/couponInsert" method="POST">
-                        <div class="row">
-                          <div class="mb-3 col-md-6">
-                            <label for="userNm" class="form-label">쿠폰 넘버</label>
-                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="18자리숫자를 입력하세요"/>
+                         <div class="row  mt-3 mb-3">
+                          <div class="mb-3 col-md-8" style="padding-left:15%">
+                            <label for="userNm" class="form-label">쿠폰 코드</label>
+                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="18자리 숫자를 적어주세요"/>
                           </div>
-                        <div class="mb-3 col-md-2 mt-3">
-                          <button type="submit" class="btn btn-primary me-2 " >+ 추가</button>
-                          <button type="reset" class="btn btn-outline-secondary">취소</button>
-                        </div>
+                        <div class="mb-3 col-md-4">
+                          <button type="submit" class="btn btn-primary me-2" style="margin-top: 1.8rem; height:60%">+ 추가</button>
+                          <button type="reset" class="btn btn-outline-secondary" style="margin-top: 1.8rem; height:60%">취소</button>
                         </div>
                       </form>
                         </div>
@@ -59,22 +71,57 @@
               <c:forEach var="couponDTO" items="${couponList }" >
                 <div class="col-md-6 col-lg-4 mb-3">
                   <div class="card">
-                    <a onclick="couponDelete();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px"></a>
-                    <div class="card-header">쿠폰 코드&nbsp; :&nbsp; ${couponDTO.couNum }&nbsp;
+                    <div class="card-header"><h2 style="color:#6c757d; font-weight:990 !important">
+                    	<strong>${couponDTO.couNum }</strong></h2>
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">쿠폰이름 : <span class="text-warning">${couponDTO.couNm }</span> </h5>
+                      <h5 class="card-title"><strong>${couponDTO.couNm }
+                      	<span class="badge bg-primary">
+                      		<fmt:formatNumber type="number" maxFractionDigits="0" value="${couponDTO.couDc }"/>%
+                      	</span></strong></h5>
                       <p class="card-text">
-                        쿠폰 내용&nbsp; :&nbsp; ${couponDTO.couDet }
-                      </p>
-                      <p> 쿠폰 할인률 &nbsp;:&nbsp; ${couponDTO.couDc }&nbsp;%
-                      </p>
-
+                      <hr>
+                       ${couponDTO.couDet }
                     </div>
                     <input type="hidden" name="sbCount" value="${couponDTO.couNum}" id="delCouNum">
                   </div>
                 </div>
               </c:forEach>
+              </div>
+
+
+                <div class="bd-example-snippet bd-code-snippet mt-5 mb-3"><div class="bd-example " >
+			        <nav aria-label="Standard pagination example">
+			          <ul class="pagination" style="margin-left: 45%; margin-right: 55%;">
+			            <li class="page-item">
+			              <c:if test="${couponDTO.startPage > couponDTO.pageBlock }">
+			              <a class="page-link" href="${pageContext.request.contextPath }
+							/mypage/coupon?pageNum=${couponDTO.startPage - couponDTO.pageBlock}" aria-label="Previous">
+			                <span aria-hidden="true">&laquo;</span>
+			              </a>
+			              </c:if>
+			            </li>
+
+			            <c:forEach var="i" begin="${couponDTO.startPage }" end="${couponDTO.endPage }" step="1">
+			            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/mypage/coupon?pageNum=${i}">${i}</a></li>
+			            </c:forEach>
+
+			            <li class="page-item">
+			              <c:if test="${couponDTO.endPage < couponDTO.pageCount }">
+			              <a class="page-link" href="${pageContext.request.contextPath }
+						 /mypage/coupon?pageNum=${couponDTO.startPage + couponDTO.pageBlock}" aria-label="Next">
+			                <span aria-hidden="true">&raquo;</span>
+			              </a>
+			              </c:if>
+			            </li>
+			          </ul>
+			        </nav>
+			        </div></div>
+
+
+
+
+              </div>
               </div>
               <!--/ Content types -->
               </div>
@@ -127,3 +174,9 @@
 </body>
 
 </html>
+
+
+
+
+
+
