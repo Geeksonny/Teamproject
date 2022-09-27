@@ -22,7 +22,7 @@ public interface OrderService {
 
 	List<ProdDTO> getQuantityList(ProdDTO proDTO);
 
-	public void isertOrderList(Map<String, Object> sMap);
+	public void insertOrderList(Map<String, Object> sMap);
 
 	public void insertUsePoint(Map<String, Object> sMap);
 

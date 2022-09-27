@@ -19,7 +19,7 @@ public interface OrderDAO {
 
 	public void insertUsePoint(Map<String, Object> sMap);
 
-	public void isertOrderList(Map<String, Object> sMap);
+	public void insertOrderList(Map<String, Object> sMap);
 
 	List<ProdDTO> getQuantityList(ProdDTO proDTO);
 

@@ -64,9 +64,9 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 
 	@Override
-	public void isertOrderList(Map<String, Object> sMap) {
+	public void insertOrderList(Map<String, Object> sMap) {
 		System.out.println("inserOrderListDAO");
-		sqlSession.delete(namespace + ".isertOrderList", sMap);
+		sqlSession.delete(namespace + ".insertOrderList", sMap);
 
 	}
 
@@ -75,19 +75,4 @@ public class OrderDAOImpl implements OrderDAO {
 		System.out.println("updateCouponDAOImpl!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		sqlSession.update(namespace + ".updateCoupon", sMap);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

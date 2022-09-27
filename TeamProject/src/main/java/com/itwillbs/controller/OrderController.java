@@ -35,22 +35,16 @@ import com.siot.IamportRestClient.IamportClient;
 
 @Controller
 public class OrderController {
-
    @Inject
    private AddressService addressService;
-
    @Inject
    private MemberService memberService;
-
    @Inject
    private BasketService basketService;
-
    @Inject
    private PointService pointService;
-
    @Inject
    private OrderService orderService;
-
 
    private IamportClient api;
 
@@ -58,8 +52,8 @@ public class OrderController {
          // REST API 키와 REST API secret 입력
          this.api = new IamportClient("6077548071335284", "dCktE2HC7a2YUwzkDWeeqfuZvZdDen3Sm66vMQja5xQTpoAsMz9YUPZ42kuSyxReMbEXbvtEvOjllVjQ");
    }
-
-
+   
+   // 결제페이지
    @RequestMapping(value = "/order/checkout", method = RequestMethod.GET)
    public String orderCheckout(HttpSession session, Model model, @ModelAttribute BasketDTO basketDTO, @ModelAttribute ProdDTO prodDTO, @ModelAttribute PointDTO pointDTO,
                         @ModelAttribute OrderDTO orderDTO, @ModelAttribute OrderListDTO orderListDTO, @ModelAttribute ProdDTO prodDTO2, @ModelAttribute CouponDTO couponDTO ) {
@@ -71,15 +65,11 @@ public class OrderController {
       List<BasketDTO> basketList=basketService.getBasketList(basketDTO);
       PointDTO pointDTO2 = pointService.getMember(userId);
       List<ProdDTO> quantityList = orderService.getQuantityList(prodDTO2);
-
-
       // 상품 가격 총합
       int total = 0;
       for(BasketDTO dto : basketList) {
          total+=dto.getSbProdPrice() * dto.getSbCount();
       }
-
-
       model.addAttribute("addressDTO", addressDTO);
       model.addAttribute("memberDTO", memberDTO);
       model.addAttribute("basketList", basketList);
@@ -87,7 +77,6 @@ public class OrderController {
       model.addAttribute("pointDTO2", pointDTO2);
       model.addAttribute("quantityList", quantityList);
       model.addAttribute("couponDTO", couponDTO);
-
       return "order/checkout";
    }
 
@@ -114,14 +103,12 @@ public class OrderController {
          List<BasketDTO> basketList=basketService.getBasketList(basketDTO);
          for(int i=0; i<basketList.size(); i++) {
             basketDTO = basketList.get(i);
-
             sMap.put("ordLUser", basketDTO.getSbUser());
             sMap.put("ordLCode", basketDTO.getSbProdCode());
             sMap.put("ordLQuantity", basketDTO.getSbCount());
             sMap.put("ordLPrice", basketDTO.getSbProdPrice());
             sMap.put("prodLCode", basketDTO.getSbProdCode());
-
-            orderService.isertOrderList(sMap);
+            orderService.insertOrderList(sMap);
             orderService.updateQuantity(sMap);
          }
              orderService.insertUsePoint(sMap);
@@ -139,5 +126,4 @@ public class OrderController {
          addressService.insertAddress(addressDTO);
          return "redirect:/mypage/order";
       }
-
 }

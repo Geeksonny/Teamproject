@@ -66,9 +66,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void isertOrderList(Map<String, Object> sMap) {
+	public void insertOrderList(Map<String, Object> sMap) {
 		System.out.println("insertOrderListImpl()");
-		orderDAO.isertOrderList(sMap);
+		orderDAO.insertOrderList(sMap);
 
 	}
 
