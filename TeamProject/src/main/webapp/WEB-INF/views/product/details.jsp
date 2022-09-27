@@ -12,7 +12,7 @@
 
 // 리뷰쓰기
 $(document).ready(function(){
-	$(".primary-btn").on("click", function(e){
+	$("#detailReply").on("click", function(e){
 		debugger;
 		e.preventDefault();
 
@@ -190,10 +190,8 @@ function printProdList(data){
 		            <br><br>
                     <h6><strong>평균 ${prodDTO.avgRating}점 </strong>(${prodDTO.countRating}개 상품평)</h6><br>
 					<div class="reply_button_wrap">
-					<button type="submit" class="site-btn" value="submit">리뷰 쓰기</button>
-<!-- 						<br><button type="submit" class="primary-btn" value="submit">리뷰 쓰기</button> -->
-					</div>
-					<br>
+						<button type="submit" class="site-btn" value="submit" id="detailReply">리뷰 쓰기</button>
+					</div><br>
                     <hr>
                   </div>
               </div>

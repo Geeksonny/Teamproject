@@ -67,12 +67,14 @@ function searchProd(comp){
 			printProdList(data.prodList);
 			// 페이징 처리
 			printPaging(data.prodDTO);
+			// 전체 상품 개수
+			var count = '전체 상품 개수 : ' + data.prodDTO.count + ' 개';
+			$("#allCount").text(count);
 		}
 	});
 }
 
-// 상품 뿌려주기
-
+/* ----- 상품 뿌려주기 ----- */
 function printProdList(data){
 	$('#prodContainer').empty();
 	data.forEach((e, i) => {
@@ -110,7 +112,7 @@ function printProdList(data){
 	});
 }
 
-// 페이징 처리
+/* ----- 페이징 처리 ----- */
 function printPaging(dto){
 
 	$('#product__pagination').empty();
@@ -352,12 +354,11 @@ $(document).ready(function(){
                                 </div>
                                 <!-- 식품 카테고리 끝 -->
 
-
                                 <!-- 옵션 카테고리 시작 -->
-                                <div class="card">
-                                    <div class="card-heading">
-                                        <a data-toggle="collapse" data-target="#collapseFour">Option</a>
-                                    </div>
+                               		<div class="card">
+	                                	<div class="card-heading">
+	                                        <a data-toggle="collapse" data-target="#collapseThree">Option</a>
+	                                    </div>
                                     <div id="collapseThree" class="collapse show" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <div class="shop__sidebar__categories">
@@ -412,7 +413,7 @@ $(document).ready(function(){
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="shop__product__option__left">
-                                    <p>전체 상품 개수 : ${prodDTO.count} 개</p>
+                                    <p id="allCount">전체 상품 개수 : ${prodDTO.count} 개</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6">
