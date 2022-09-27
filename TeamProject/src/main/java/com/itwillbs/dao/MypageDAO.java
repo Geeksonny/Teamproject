@@ -43,6 +43,8 @@ public interface MypageDAO {
 		List<CouponDTO> getMyCouponList(CouponDTO couponDTO);
 		// 마이페이지 쿠폰 등록
 		void insertMyCoupon(CouponDTO couponDTO);
+		// 마이페이지 페이징 처리
+		int getMyCouponListCount(CouponDTO couponDTO);
 
 
 
