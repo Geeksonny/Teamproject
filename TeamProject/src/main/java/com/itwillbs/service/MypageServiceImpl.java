@@ -150,6 +150,10 @@ public class MypageServiceImpl implements MypageService {
 			return mypageDAO.getMyCouponListCount(couponDTO);
 		}
 
+		@Override
+		public void updateOrderStatus(OrderListDTO orderListDTO) {
+			mypageDAO.updateOrderStatus(orderListDTO);
+		}
 
 
 

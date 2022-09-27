@@ -110,8 +110,11 @@ public class MypageDAOImpl implements MypageDAO {
 		return sqlSession.selectOne(namespace+".getMyCouponListCount",couponDTO);
 	}
 
-
-
+	// 주문취소 시 상태변경
+	@Override
+	public void updateOrderStatus(OrderListDTO orderListDTO) {
+		sqlSession.update(namespace + ".updateOrderStatus", orderListDTO);
+	}
 
 
 

@@ -46,8 +46,8 @@ public interface MypageDAO {
 		// 마이페이지 페이징 처리
 		int getMyCouponListCount(CouponDTO couponDTO);
 
-
-
+		// 주문취소 시 상태변경
+		void updateOrderStatus(OrderListDTO orderListDTO);
 
 
 }

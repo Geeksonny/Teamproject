@@ -45,7 +45,7 @@ public interface MypageService {
 		void insertMyCoupon(CouponDTO couponDTO);
 
 
-
+		void updateOrderStatus(OrderListDTO orderListDTO);
 
 
 

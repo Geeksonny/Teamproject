@@ -71,12 +71,13 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th colspan="2">상품정보</th>
+                        <th colspan="2" style="vertical-align: middle">상품정보</th>
                         <th> 수량 </th>
                         <th>할인금액</th>
                         <th>결제금액</th>
                         <th>주문일</th>
                         <th>주문상태</th>
+                        <th>주문취소 </th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -96,7 +97,7 @@
                        					<div></div>
 						 			</c:when>
 						 			<c:when test="${num eq '1'}">
-						  				배송중&nbsp;&nbsp;
+						  				배송중&nbsp;&nbsp;${orderListDTO.ordRefund}
                        					<button class="btn btn-outline-primary" id="delivNumberAdd_btn_${orderListDTO.trnum}" type="button">
                        					<a href="https://tracker.delivery/#/kr.cjlogistics/${orderListDTO.ordLDelivNumber }" target="_blank">배송조회</a>
                        					</button>
@@ -111,6 +112,24 @@
 						 			</c:when>
 						 			<c:when test="${num eq '3'}">
 						  				배송취소
+						 			</c:when>
+						 		</c:choose>
+                        </td>
+                        <td style="vertical-align: middle">
+                         		<c:choose>
+						 			<c:when test="${orderListDTO.ordRefund eq '10'}">
+						  				<button class="btn btn-outline-primary">
+						  				<a href="${pageContext.request.contextPath }/mypage/orderRefund" >주문취소</a>
+						  				</button>
+                       					<div></div>
+						 			</c:when>
+						 			<c:when test="${orderListDTO.ordRefund eq '11'}">
+						  				취소요청&nbsp;&nbsp;
+                       					<div></div>
+						 			</c:when>
+						 			<c:when test="${orderListDTO.ordRefund eq '12'}">
+						  				주문취소&nbsp;&nbsp;
+                       					<div></div>
 						 			</c:when>
 						 		</c:choose>
                         </td>

@@ -417,6 +417,18 @@ public class MypageController {
 				return "redirect:/mypage/coupon";
 			}
 
-
+		@RequestMapping(value = "/mypage/orderRefund", method = RequestMethod.GET)
+		public String orderRefund(HttpServletRequest request, Model model, HttpSession session, OrderListDTO orderListDTO) {
+			String ordLUser = (String) session.getAttribute("userId");
+			int ordNum = Integer.parseInt(request.getParameter("ordNum")); 
+			String ordPurchasestatus = "N";
+			String ordRefund="11";
+			orderListDTO.setOrdUser(ordLUser);
+			orderListDTO.setOrdNum(ordNum);
+			orderListDTO.setOrdPurchasestatus(ordPurchasestatus);
+			orderListDTO.setOrdRefund(ordRefund);
+			mypageService.updateOrderStatus(orderListDTO);
+			return "mypage/orderList";
+		}
 
 }
