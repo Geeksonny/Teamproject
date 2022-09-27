@@ -11,6 +11,125 @@
 src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 
+	var checkIdResult = false;			// 아이디 중복확인 여부
+	var checkPassResult = false;		// 패스워드 검사
+	var checkRetypePassResult = false;	// 패스워드 확인 결과
+	var checkNameResult = false;
+	var checkEmailResult = false;
+
+	function checkPass(password){
+			// 패스워드 검사를 위한 정규표현식 패턴 작성 및 검사 결과에 따른 변수값 변경
+		var spanElem = document.getElementById("checkPassResult");
+			
+		// 정규표현식 패턴 정의
+		var lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/; // 길이 및 사용 가능 문자 규칙
+		var engLowerRegex = /[a-z]/;	// 소문자
+		var numRegex = /[0-9]/;		// 숫자 규칙
+		var specRegex = /[!@#$%]/;	// 특수문자 규칙
+		
+		var count = 0;	// 각 규칙별 검사 결과를 카운팅 할 변수
+		
+		if(lengthRegex.exec(password)){	// 패스워드 길이 및 사용 가능 문자 규칙 통과 시
+			spanElem.innerHTML = "사용 가능한 패스워드";
+			spanElem.style.color = "GREEN";
+				
+			// 각 규칙별 검사 후 해당 항목이 포함되어 있을 경우 카운트 증가
+			if(engLowerRegex.exec(password)) count++;
+			if(numRegex.exec(password)) count++;
+			if(specRegex.exec(password)) count++;
+			
+			switch(count){
+			case 3: // 특수문자, 대문자, 소문자, 숫자 중 3개를 만족
+				spanElem.innerHTML = '"보안 강도 : 안전"';
+				spanElem.style.color = "GREEN";
+				checkPassResult = true;
+				break;
+			case 2: // 특수문자, 대문자, 소문자, 숫자 중 2개를 만족
+				spanElem.innerHTML = '"보안 강도 : 보통"';
+				spanElem.style.color = "ORANGE";
+				checkPassResult = true;
+				break;
+			default: 
+				spanElem.innerHTML = '"영문자, 숫자, 특수문자 중 2가지 이상 조합 필수!"';
+				spanElem.style.color = "RED";
+				checkPassResult = false;
+			}			
+		} else {
+				//spanElem.innerHTML = "사용 불가능한 패스워드";
+			spanElem.innerHTML = '"영문자, 숫자, 특수문자 조합 8 ~ 16자리 필수!"';
+			spanElem.style.color = "RED";
+			checkPassResult = false;
+		}
+			
+	}
+	
+	function checkRetypePass(userPass2){
+		var pass = document.userForm.userPass.value;
+		var spanElem = document.getElementById("checkRetypePassResult");
+		if(pass == userPass2){	// 패스워드 일치
+			spanElem.innerHTML = "패스워드 일치";
+			spanElem.style.color = "GREEN";
+			checkRetypePassResult = true;
+		} else {	// 패스워드 불일치
+			spanElem.innerHTML = "패스워드 불일치";
+			spanElem.style.color = "RED"
+			checkRetypePassResult = false;
+		}
+		
+	}
+	
+	function checkName(userNm) {
+		var spanElem = document.getElementById("checkNameResult");
+		
+		var lengthRegex = /^[가-힣]{2,5}$/;
+		
+		if(lengthRegex.exec(userNm)){
+			spanElem.innerHTML = "이름 형식 일치";
+			spanElem.style.color = "GREEN";
+			checkNameResult = true;
+		} else {
+			spanElem.innerHTML = "이름 형식 불일치";
+			spanElem.style.color = "RED";
+			checkNameResult = false;
+		}
+		
+	}
+	
+	function checkSubmit(){
+		
+		if(!checkIdResult){
+			alert("아이디 중복확인 필수!");
+			document.userForm.id.focus();
+			return false;
+		} else if (document.userForm.userId.value == "") {
+			alert("아이디를 입력해 주세요!");
+			document.userForm.id.focus();
+			return checkIdResult = false;
+		} else if(!checkPassResult){
+			alert("올바른 패스워드 입력 필수!");
+			document.userForm.userPass.focus();
+			return false; 
+		} else if(!checkRetypePassResult){
+			alert("패스워드 확인 필수!");
+			document.userForm.userPass2.focus();
+			return false;
+		} else if (!checkNameResult) {
+			alert("이름 입력 필수!");
+			document.userForm.name.focus();
+			return false;
+		}else if (!checkEmailResult) {
+			alert("이메일 입력 필수!");
+			document.userForm.email.focus();
+			return false;
+		} else if (document.userForm.emailnet.value == "") {
+			alert("도메인을 선택해 주세요");
+			return false;
+		}
+		
+		
+//		return true;
+	}	
+	
 // 회원 타입 선택
 $(document).ready(function(){
 	 $("form[name=compForm]").hide();
@@ -111,7 +230,7 @@ $(document).ready(function () {
 		</div>
 
 <!-- 일반 회원 가입 -->
-        <form class=form-signin action="${pageContext.request.contextPath }/member/joinMemPro" name=userForm method="post">
+        <form class=form-signin action="${pageContext.request.contextPath }/member/joinMemPro" name=userForm method="post" onsubmit="return checkSubmit()">
       <div>
         <div class="bd-example">
           <div class="form-floating mb-3">
@@ -119,11 +238,12 @@ $(document).ready(function () {
             <label for="userId">ID</label>
           </div>
            <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="userNm" id="userNm" placeholder="홍길동">
+            <input type="text" class="form-control" name="userNm" id="userNm" placeholder="홍길동" onkeyup="checkName(this.value)">
+            <span id="checkNameResult"><!-- 이름 형식 일치 여부 표시  --></span>
             <label for="userNm">이름</label>
           </div>
            <div class="form-floating mb-3">
-            <input type="text" class="form-control" name="userNicknm" id="userNicknm" placeholder="홍길동">
+            <input type="text" class="form-control" name="userNicknm" id="userNicknm" placeholder="홍길동" >
             <label for="userNicknm">닉네임</label>
           </div>
           <div class="form-floating mb-3">
@@ -131,11 +251,13 @@ $(document).ready(function () {
             <label for="userEmail">이메일 주소</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name="userPass" id="userPass" placeholder="Password">
+            <input type="password" class="form-control" name="userPass" id="userPass" placeholder="Password" onkeyup="checkPass(this.value)">
+            <span id="checkPassResult"><!-- 패스워드 규칙 판별 결과 표시  --></span>
             <label for="userPass">비밀번호</label>
           </div>
           <div class="form-floating mb-3">
-            <input type="password" class="form-control" name=userPass2 id="userPass2" placeholder="Password">
+            <input type="password" class="form-control" name=userPass2 id="userPass2" placeholder="Password" onkeyup="checkRetypePass(this.value)">
+			<span id="checkRetypePassResult"><!-- 패스워드 일치 여부 표시  --></span>
             <label for="userPass2">비밀번호 확인</label>
           </div>
         </div>
