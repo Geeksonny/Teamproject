@@ -72,7 +72,9 @@ public interface CompDAO {
 	// admin 쿠폰 등록
 	public void insertCoupon(CouponDTO couponDTO);
 	// 쿠폰 리스트 갖고오기
-	public List<CouponDTO> getCouponList();
+	public List<CouponDTO> getCouponList(CouponDTO couponDTO);
 	// admin 쿠폰 삭제
 	public void deleteCoupon(CouponDTO couponDTO);
+	// admin 쿠폰리스트 갯수
+	public int getCouponListCount(CouponDTO couponDTO);
 }

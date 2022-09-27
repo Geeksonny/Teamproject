@@ -20,7 +20,8 @@ import com.itwillbs.domain.ProdStockDTO;
 public class CompServiceImpl implements CompService {
 	@Inject
 	private CompDAO compDAO;
-	//상품등록
+
+	// 상품등록
 	@Override
 	public void insertProd(ProdDTO prodDTO) {
 		prodDTO.setProdLUploaddate(new Timestamp(System.currentTimeMillis()));
@@ -28,44 +29,44 @@ public class CompServiceImpl implements CompService {
 		compDAO.insertProd(prodDTO);
 	}
 
-
-    // 상품게시판list
+	// 상품게시판list
 	@Override
 	public List<ProdDTO> getProdList(PageDTO pageDTO) {
-		// pageSize  pageNum  currentPage
-		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
-		int endRow=startRow+pageDTO.getPageSize()-1;
+		// pageSize pageNum currentPage
+		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+		int endRow = startRow + pageDTO.getPageSize() - 1;
 
 		// sql => limit #{startRow -1}, #{pageSize}
 
-		pageDTO.setStartRow(startRow-1);
+		pageDTO.setStartRow(startRow - 1);
 		pageDTO.setEndRow(endRow);
 
 		return compDAO.getProdList(pageDTO);
 	}
+
 	// 상품 수량
 	@Override
 	public int getProdCount(PageDTO pageDTO) {
 		return compDAO.getProdCount(pageDTO);
 	}
+
 	// 개별 상품 정보
 	@Override
 	public ProdDTO getProd(String prodLCode) {
 		return compDAO.getProd(prodLCode);
 	}
 
-
 	// 상품삭제
 	@Override
 	public void deleteProd(String prodLCode) {
 		compDAO.deleteProd(prodLCode);
 	}
+
 	// 상품 수정
 	@Override
 	public void updateProd(ProdDTO prodDTO) {
 		compDAO.updateProd(prodDTO);
 	}
-
 
 	// 업체 정보 갖고 오기
 	@Override
@@ -91,20 +92,18 @@ public class CompServiceImpl implements CompService {
 		compDAO.delComp(compDTO);
 	}
 
-
 	@Override
 	public List<OrderListDTO> getOrdList(PageDTO pageDTO) {
-		// pageSize  pageNum  currentPage
-				int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
-				int endRow=startRow+pageDTO.getPageSize()-1;
+		// pageSize pageNum currentPage
+		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+		int endRow = startRow + pageDTO.getPageSize() - 1;
 
-				// sql => limit #{startRow -1}, #{pageSize}
+		// sql => limit #{startRow -1}, #{pageSize}
 
-				pageDTO.setStartRow(startRow-1);
-				pageDTO.setEndRow(endRow);
+		pageDTO.setStartRow(startRow - 1);
+		pageDTO.setEndRow(endRow);
 		return compDAO.getOrdList(pageDTO);
 	}
-
 
 	@Override
 	public int getOrdCount(PageDTO pageDTO) {
@@ -132,16 +131,9 @@ public class CompServiceImpl implements CompService {
 
 	// 총매출
 	@Override
-	public int getTotalsum (OrderListDTO orderListDTO) {
+	public int getTotalsum(OrderListDTO orderListDTO) {
 		return compDAO.getTotalsum(orderListDTO);
 	}
-
-
-	//	품절,품절임박, 양호 상품 갯수
-//	@Override
-//	public List<OrderListDTO> getProdAmount(OrderListDTO orderListDTO) {
-//		return compDAO.getProdAmount(orderListDTO);
-//	}
 
 	@Override
 	public OrderListDTO getProdAmount(OrderListDTO orderListDTO) {
@@ -151,16 +143,17 @@ public class CompServiceImpl implements CompService {
 	// 업체 리스트
 	@Override
 	public List<CompDTO> getCompList(PageDTO pageDTO) {
-		// pageSize  pageNum  currentPage
-		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
-		int endRow=startRow+pageDTO.getPageSize()-1;
+		// pageSize pageNum currentPage
+		int startRow = (pageDTO.getCurrentPage() - 1) * pageDTO.getPageSize() + 1;
+		int endRow = startRow + pageDTO.getPageSize() - 1;
 
 		// sql => limit #{startRow -1}, #{pageSize}
 
-		pageDTO.setStartRow(startRow-1);
+		pageDTO.setStartRow(startRow - 1);
 		pageDTO.setEndRow(endRow);
 		return compDAO.getCompList(pageDTO);
 	}
+
 	@Override
 	public int getCompCount() {
 		return compDAO.getCompCount();
@@ -187,8 +180,6 @@ public class CompServiceImpl implements CompService {
 
 	}
 
-
-
 	// 물품수량 되돌리기
 	@Override
 	public void prodquantityUpdate(OrderListDTO orderListDTO) {
@@ -211,11 +202,14 @@ public class CompServiceImpl implements CompService {
 		compDAO.insertCoupon(couponDTO);
 	}
 
-
 	// admin 쿠폰리스트 갖고오기
 	@Override
-	public List<CouponDTO> getCouponList() {
-		return compDAO.getCouponList();
+	public List<CouponDTO> getCouponList(CouponDTO couponDTO) {
+		int startRow = (couponDTO.getCurrentPage() - 1) * couponDTO.getPageSize() + 1;
+		int endRow = startRow + couponDTO.getPageSize() - 1;
+		couponDTO.setStartRow(startRow - 1);
+		couponDTO.setEndRow(endRow);
+		return compDAO.getCouponList(couponDTO);
 	}
 
 	// admin 쿠폰 삭제
@@ -224,10 +218,10 @@ public class CompServiceImpl implements CompService {
 		compDAO.deleteCoupon(couponDTO);
 	}
 
-
-
-
-
+	// admin 쿠폰리스스 갯수
+	@Override
+	public int getCouponListCount(CouponDTO couponDTO) {
+		return compDAO.getCouponListCount(couponDTO);
+	}
 
 }
-

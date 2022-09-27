@@ -103,6 +103,42 @@
               </c:forEach>
               </div>
               <!--/ Content types -->
+
+               <div class="bd-example-snippet bd-code-snippet mt-5 mb-3"><div class="bd-example " >
+			        <nav aria-label="Standard pagination example">
+			          <ul class="pagination" style="margin-left: 45%; margin-right: 55%;">
+			            <li class="page-item">
+			              <c:if test="${couponDTO.startPage > couponDTO.pageBlock }">
+			              <a class="page-link" href="${pageContext.request.contextPath }
+							/admin/coupon?pageNum=${couponDTO.startPage - couponDTO.pageBlock}" aria-label="Previous">
+			                <span aria-hidden="true">&laquo;</span>
+			              </a>
+			              </c:if>
+			            </li>
+
+			            <c:forEach var="i" begin="${couponDTO.startPage }" end="${couponDTO.endPage }" step="1">
+			            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath }/admin/coupon?pageNum=${i}">${i}</a></li>
+			            </c:forEach>
+
+			            <li class="page-item">
+			              <c:if test="${couponDTO.endPage < couponDTO.pageCount }">
+			              <a class="page-link" href="${pageContext.request.contextPath }
+						 /admin/coupon?pageNum=${couponDTO.startPage + couponDTO.pageBlock}" aria-label="Next">
+			                <span aria-hidden="true">&raquo;</span>
+			              </a>
+			              </c:if>
+			            </li>
+			          </ul>
+			        </nav>
+			        </div></div>
+
+
+
+
+
+
+
+
               </div>
 
             <!-- Footer -->

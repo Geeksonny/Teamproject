@@ -319,6 +319,7 @@ public class CompController {
 		if (compDTO2 != null) {
 		// 세션값 가져오기
 		// id에 대한 정보를 디비에 가져오기
+
 		compDTO = compService.getComp(compDTO);
 		// 가져온 정보를 담아 info.jsp 이동
 
@@ -334,9 +335,12 @@ public class CompController {
 	public String modifyPro(CompDTO compDTO, HttpSession session) {
 		// 패스워드 아이디 일치 메서드 호출
 		CompDTO compDTO2 = compService.getComp(compDTO);
+		System.out.println(compDTO2);
 		if (compDTO2 != null) {
 			// 아이디 비밀번호 일치
 			// 수정작업
+			String compId = (String) session.getAttribute("compId");
+			compDTO.setCompId(compId);
 			compService.modComp(compDTO);
 			// 주소변경 이동
 			return "redirect:/comp/modify";
