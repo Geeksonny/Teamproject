@@ -12,11 +12,11 @@
 		#{userId}
 		)
 	</insert>
-	
+
 	<select id="getBoardList" resultType="com.itwillbs.domain.BoardDTO">
 		SELECT * FROM BOARD where USER_NICKNM=#{userNicknm} ORDER BY BOARD_NUM DESC LIMIT #{startRow}, #{pageSize}
 	</select>
-	
+
 	<select id="getBoardLikeList" resultType="com.itwillbs.domain.BoardDTO">
 		SELECT	  b.BOARD_NUM
 				, b.USER_NICKNM
@@ -28,11 +28,11 @@
 				, l.USER_ID
 		FROM BOARD b JOIN BOARD_LIKE l
 		on b.BOARD_NUM = l.BOARD_NUM
-		where USER_ID=#{userId} 
-		ORDER BY BOARD_NUM DESC 
+		where USER_ID=#{userId}
+		ORDER BY BOARD_NUM DESC
 		LIMIT #{startRow}, #{pageSize}
 	</select>
-	
+
 	<select id="getPordLikeList" resultType="com.itwillbs.domain.ProdDTO">
 		SELECT	  p.PROD_L_CODE
 				, p.PROD_L_PRODNM
@@ -41,16 +41,16 @@
 				, l.USER_ID
 		FROM PRODUCT_LIST p JOIN PRODUCT_LIKE l
 		on p.PROD_L_CODE = l.PROD_L_CODE
-		where USER_ID=#{userId} 
-		ORDER BY PROD_L_NUM DESC 
+		where USER_ID=#{userId}
+		ORDER BY PROD_L_NUM DESC
 		LIMIT #{startRow}, #{pageSize}
 	</select>
-	
+
 
 	<select id="getBoardCount" resultType="java.lang.Integer">
 		select count(*) from BOARD
 	</select>
-	
+
 	<select id="mypageselect" resultType="com.itwillbs.domain.MypageDTO">
 		SELECT * FROM USER_MYPAGE WHERE USER_ID=#{userId}
 	</select>
@@ -90,26 +90,26 @@
 		PRODUCT_LIKE = PRODUCT_LIKE - 1
 		where USER_ID=#{userId}
 	</update>
-	
-	
+
+
 
 <!-- 	유저가 주문목록 같고오기 -->
 	<select id="getOrdList" resultType="com.itwillbs.domain.OrderListDTO" parameterType="com.itwillbs.domain.OrderListDTO" >
 		SELECT   @rownum:=@rownum+1 as trnum
-				,l.ORD_L_CODE			 
-				,l.ORD_L_QUANTITY       
-				,l.ORD_L_PRICE          
-				,l.ORD_L_COUPONNUM      
-				,l.ORD_DELIVERY_STATUS  
-				,l.ORD_L_DELIV_NUMBER   
-				,l.ORD_PURCHASESTATUS   
-				,l.ORD_L_DATE          
+				,l.ORD_L_CODE
+				,l.ORD_L_QUANTITY
+				,l.ORD_L_PRICE
+				,l.ORD_L_COUPONNUM
+				,l.ORD_DELIVERY_STATUS
+				,l.ORD_L_DELIV_NUMBER
+				,l.ORD_PURCHASESTATUS
+				,l.ORD_L_DATE
 		        ,l.ORD_L_NUM
-		        ,l.ORD_NUM			
-				,b.ORD_COUPONDC         
+		        ,l.ORD_NUM
+				,b.ORD_COUPONDC
 				,b.ORD_FINALPRICE
 				,p.PROD_L_PRODNM
-				,p.PROD_L_MAINIMG        
+				,p.PROD_L_MAINIMG
 		 FROM   ORDER_LIST l join ORDER_BOARD b
 		   ON   (l.ORD_L_NUM=b.NUM) JOIN PRODUCT_LIST p
  		   ON	(l.ORD_L_CODE=p.PROD_L_CODE)
@@ -118,10 +118,10 @@
 		  AND 	date_format(l.ORD_L_DATE, '%Y-%m-%d') BETWEEN #{startDate} AND #{endDate}
 		ORDER BY   l.ORD_L_DATE
    DESC LIMIT    #{startRow}, #{pageSize}
-	
+
 	</select>
-	
-	
+
+
 	<select id="getMyOrdListCount" resultType="java.lang.Integer">
 
 		SELECT  count(ORD_L_USER)
@@ -129,6 +129,50 @@
 		WHERE   ORD_L_USER=#{userId}
 
 	</select>
+	<!-- 	마이페이지 쿠폰 등록 -->
+	<insert id="insertMyCoupon">
+		INSERT INTO COUPON(
+					  NUM
+					 ,COU_USER_ID
+					 ,COU_NUM
+					 ,COU_NM
+					 ,COU_DC
+					 ,COU_YN
+					 ,COU_DATE
+           		    )
+			 SELECT
+					(SELECT NUM
+		       		 FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) + 1 AS NUM
+				 	   	       FROM COUPON) A)
+				   ,#{couUserId}
+			       ,#{couNum}
+			       ,(SELECT COU_NM
+			       	   FROM COUPON_INFO
+			       	  WHERE COU_NUM=#{couNum})
+			       ,(SELECT COU_DC
+			       	   FROM COUPON_INFO
+			       	  WHERE COU_NUM=#{couNum})
+			       ,"Y"
+			       ,#{couDate}
+			  FROM COUPON_INFO
+			  WHERE COU_NUM = #{couNum}
 
+	</insert>
+<!-- 	마이페이지 쿠폰리스트갖고오기 -->
+	<select id="getMyCouponList" resultType="com.itwillbs.domain.CouponDTO">
+		SELECT
+				 NUM
+				,COU_USER_ID
+				,COU_NUM
+				,COU_NM
+				,round((1 - COU_DC)*100,0) as couDc
+				,COU_YN
+				,COU_DATE
+				,(SELECT COU_DET
+				  FROM COUPON_INFO ci
+				  WHERE ci.COU_NUM=cp.COU_NUM) as couDet
+		  FROM   COUPON cp
+		  WHERE  COU_USER_ID=#{couUserId}
+	</select>
 
 </mapper>

@@ -50,14 +50,31 @@ public class CompController {
 	@Resource(name = "compUploadPath")
 	private String compUploadPath;
 
+	// 물건정보 수정페이지 이동
 	@RequestMapping(value = "/comp/updateProd", method = RequestMethod.GET)
-	public String compUpdateProd() {
-		return "comp/updateProd";
-	}
+	public String compUpdateProd(HttpSession session,CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+		if (compDTO2 != null) {
 
+		return "comp/updateProd";
+		} else {
+			return "/member/login";
+		}
+	}
+	// 물건 등록페이지 이동
 	@RequestMapping(value = "/comp/insertGoods", method = RequestMethod.GET)
-	public String compInsertProd() {
+	public String compInsertProd(HttpSession session,CompDTO compDTO ) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
 		return "comp/insertGoods";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	// 제품코드 중복검사
@@ -75,7 +92,7 @@ public class CompController {
 		ResponseEntity<String> entity = new ResponseEntity<String>(result, HttpStatus.OK);
 		return entity;
 	}
-
+	// 물건 등록
 	@RequestMapping(value = "/comp/insertGoodsPro", method = RequestMethod.POST)
 	public String insertPro(HttpServletRequest request, HttpSession session, MultipartFile prodLMainimg,
 			MultipartFile prodLSubimg, @ModelAttribute CompDTO compDTO) throws Exception {
@@ -136,7 +153,13 @@ public class CompController {
 
 	// 물품목록페이지
 	@RequestMapping(value = "/comp/deleteProd", method = RequestMethod.GET)
-	public String list(HttpServletRequest request, Model model, HttpSession session, @ModelAttribute ProdDTO prodDTO) {
+	public String list(HttpServletRequest request, Model model, HttpSession session, @ModelAttribute ProdDTO prodDTO,CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
+
 		// 한화면에 보여줄 글개수
 		int pageSize = 10;
 		// 현페이지 번호
@@ -184,6 +207,9 @@ public class CompController {
 		// 주소변경없이 이동
 		// WEB-INF/views/board/list.jsp 이동
 		return "/comp/deleteProd";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	// 삭제기능 구현
@@ -201,7 +227,12 @@ public class CompController {
 
 	// 수정
 	@RequestMapping(value = "/comp/update", method = RequestMethod.GET)
-	public String update(HttpServletRequest request, Model model) {
+	public String update(HttpServletRequest request, Model model,HttpSession session, CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
 		// 파라미터 가져오기
 		String prodLCode = request.getParameter("CheckRow");
 		// 디비에서 조회
@@ -213,6 +244,9 @@ public class CompController {
 		// 주소변경없이 이동
 		// WEB-INF/views/board/updateForm.jsp 이동
 		return "/comp/updateProd";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	@RequestMapping(value = "/comp/updatePro", method = RequestMethod.POST)
@@ -268,17 +302,16 @@ public class CompController {
 		}
 	}
 
-	@RequestMapping(value = "/comp/prodRefund", method = RequestMethod.GET)
-	public String compProdRefund() {
-		return "comp/prodRefund";
-	}
 
 	// 업체 정보 수정
 	@RequestMapping(value = "/comp/modify", method = RequestMethod.GET)
 	public String compModify(HttpSession session, Model model, CompDTO compDTO) {
-		// 세션값 가져오기
 		String compId = (String) session.getAttribute("compId");
 		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
+		// 세션값 가져오기
 		// id에 대한 정보를 디비에 가져오기
 		compDTO = compService.getComp(compDTO);
 		// 가져온 정보를 담아 info.jsp 이동
@@ -286,6 +319,9 @@ public class CompController {
 		model.addAttribute("compDTO", compDTO);
 
 		return "comp/compModify";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	@RequestMapping(value = "/comp/modifyPro", method = RequestMethod.POST)
@@ -306,13 +342,29 @@ public class CompController {
 
 	// 업체페이지 - 비밀번호 변경 페이지
 	@RequestMapping(value = "/comp/passMod", method = RequestMethod.GET)
-	public String passModify() {
+	public String passModify(HttpSession session,CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
 		return "comp/passModify";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	@RequestMapping(value = "/comp/prodList", method = RequestMethod.GET)
-	public String compProdList() {
+	public String compProdList(HttpSession session,CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
 		return "comp/prodList";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	// 회원 탈퇴
@@ -365,13 +417,17 @@ public class CompController {
 	// 주문 목록 페이지
 	@RequestMapping(value = "/comp/ordList", method = RequestMethod.GET)
 	public String ordList(HttpServletRequest request, Model model, HttpSession session,
-			@ModelAttribute OrderListDTO orderListDTO) {
+			@ModelAttribute OrderListDTO orderListDTO,CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+
+		if (compDTO2 != null) {
 
 		// 한화면에 보여줄 글개수
 		int pageSize = 10;
 		// 현페이지 번호
 		String pageNum = request.getParameter("pageNum");
-		String compId = (String) session.getAttribute("compId");
 
 		if (pageNum == null) {
 			pageNum = "1";
@@ -409,6 +465,9 @@ public class CompController {
 		// 주소변경없이 이동
 		// WEB-INF/views/board/list.jsp 이동
 		return "/comp/ordList";
+		} else {
+			return "/member/login";
+		}
 	}
 
 	// 송장번호 입력과 배송중으로 바꿈
@@ -490,13 +549,17 @@ public class CompController {
 
 		} else {
 			ModelAndView mv = new ModelAndView();
-			mv.setViewName("member/msg");
+			mv.setViewName("member/login");
 			return mv;
 		}
 	}
 	// 주문 목록 클릭시 주문 상세 페이지
 	@RequestMapping(value = "/comp/ordListDet", method = RequestMethod.GET)
-	public String ordListDet(HttpServletRequest request, Model model) {
+	public String ordListDet(HttpSession session,HttpServletRequest request, Model model,CompDTO compDTO) {
+		String compId = (String) session.getAttribute("compId");
+		compDTO.setCompId(compId);
+		CompDTO compDTO2 = compService.getComp(compDTO);
+		if (compDTO2 != null) {
 		// 파라미터 가져오기
 		String prodLCodeUser = request.getParameter("CheckRow");
 		 String prodLCode = prodLCodeUser.split(",")[0];
@@ -516,6 +579,9 @@ public class CompController {
 		// 주소변경없이 이동
 		// WEB-INF/views/board/updateForm.jsp 이동
 		return "/comp/ordListDet";
+		} else {
+			return "/member/login";
+		}
 	}
 
 
