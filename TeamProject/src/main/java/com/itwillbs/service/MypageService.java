@@ -39,13 +39,19 @@ public interface MypageService {
 		List<OrderListDTO> getOrdList(PageDTO pageDTO);
 		// ���������� �ֹ���� ����
 		// 마이페이지 쿠폰 리스트
-		List<CouponDTO> getMyCouponList(CouponDTO couponDTO);
-		// 마이페이지 쿠폰 등록
-		void insertMyCoupon(CouponDTO couponDTO);
+		// ���������� �ֹ���� ����
+	int getMyOrdListCount(PageDTO pageDTO);
+	// 마이페이지 쿠폰 리스트
+	List<CouponDTO> getMyCouponList(CouponDTO couponDTO);
+	// 마이페이지 쿠폰 등록
+	void insertMyCoupon(CouponDTO couponDTO);
 
-		int getMyCouponListCount(CouponDTO couponDTO);
+	void updateOrderStatus(OrderListDTO orderListDTO);
 
-		int getMyOrdListCount(PageDTO pageDTO);
+	// 마이페이지 쿠폰 등록
+
+	int getMyCouponListCount(CouponDTO couponDTO);
+
 
 
 
