@@ -105,6 +105,11 @@ public class MypageDAOImpl implements MypageDAO {
 		sqlSession.insert(namespace + ".insertMyCoupon", couponDTO);
 	}
 
+	@Override
+	public int getMyCouponListCount(CouponDTO couponDTO) {
+		return sqlSession.selectOne(namespace+".getMyCouponListCount",couponDTO);
+	}
+
 
 
 
