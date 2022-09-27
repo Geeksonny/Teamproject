@@ -162,13 +162,18 @@ public class CompDAOImpl implements CompDAO {
 	}
 	// admin 쿠폰 리스트
 	@Override
-	public List<CouponDTO> getCouponList() {
-		return sqlSession.selectList(namespace + ".getCouponList");
+	public List<CouponDTO> getCouponList(CouponDTO couponDTO) {
+		return sqlSession.selectList(namespace + ".getCouponList",couponDTO);
 	}
 	// admin 쿠폰 삭제
 	@Override
 	public void deleteCoupon(CouponDTO couponDTO) {
 		sqlSession.delete(namespace+".deleteCoupon", couponDTO);
+	}
+	// admin 쿠폰 갯수
+	@Override
+	public int getCouponListCount(CouponDTO couponDTO) {
+		return sqlSession.selectOne(namespace+".getCouponListCount",couponDTO);
 	}
 
 
