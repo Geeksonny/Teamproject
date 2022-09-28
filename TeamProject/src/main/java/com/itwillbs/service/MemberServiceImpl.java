@@ -180,10 +180,12 @@ public class MemberServiceImpl implements MemberService{
 	// 유저 리스트
 	@Override
 	public int getUserCount() {
+		System.out.println("suc");
 		return memberDAO.getUserCount();
 	}
 	@Override
 	public List<MemberDTO> getUserList(PageDTO pageDTO) {
+		System.out.println("sul");
 		// pageSize  pageNum  currentPage
 		int startRow=(pageDTO.getCurrentPage()-1)*pageDTO.getPageSize()+1;
 		int endRow=startRow+pageDTO.getPageSize()-1;

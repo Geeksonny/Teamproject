@@ -14,7 +14,6 @@ public class MemberDTO {
 	private String userNicknm;
 	private String userPhone;
 	private Timestamp userDate;
-	private int userPoint;
 	private int myCouponNum;
 	private String userRank;
 	private String userType;
@@ -92,12 +91,6 @@ public class MemberDTO {
 	public void setUserDate(Timestamp userDate) {
 		this.userDate = userDate;
 	}
-	public int getUserPoint() {
-		return userPoint;
-	}
-	public void setUserPoint(int userPoint) {
-		this.userPoint = userPoint;
-	}
 	public int getMyCouponNum() {
 		return myCouponNum;
 	}
@@ -140,6 +133,16 @@ public class MemberDTO {
 	public void setUserEmailKey(String userEmailKey) {
 		this.userEmailKey = userEmailKey;
 	}
+	@Override
+	public String toString() {
+		return "MemberDTO [userInfoNum=" + userInfoNum + ", userId=" + userId + ", userPass=" + userPass + ", userNm="
+				+ userNm + ", userEmail=" + userEmail + ", userGender=" + userGender + ", userAthletic=" + userAthletic
+				+ ", userNicknm=" + userNicknm + ", userPhone=" + userPhone + ", userDate=" + userDate
+				+ ", myCouponNum=" + myCouponNum + ", userRank=" + userRank + ", userType=" + userType + ", userStatus="
+				+ userStatus + ", userLastDate=" + userLastDate + ", userEmailAuth=" + userEmailAuth + ", userEmailKey="
+				+ userEmailKey + ", userKakaoLogin=" + userKakaoLogin + "]";
+	}
+
 
 
 

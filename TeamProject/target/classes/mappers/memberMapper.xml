@@ -217,7 +217,8 @@
 	<select id="getUserList" resultType="com.itwillbs.domain.MemberDTO">
 		SELECT *
 		  FROM USER_INFO
-	  ORDER BY USER_DATE DESC LIMIT #{startRow}, #{pageSize}
+	  ORDER BY USER_DATE DESC
+	  LIMIT #{startRow}, #{pageSize}
 	</select>
 
 

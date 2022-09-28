@@ -55,7 +55,7 @@ public interface MemberService {
 
 	// 유저 리스트
 	List<MemberDTO> getUserList(PageDTO pageDTO);
-	int getUserCount();
+	public int getUserCount();
 	// 유저 삭제
 	public void deleteUser(String userId);
 

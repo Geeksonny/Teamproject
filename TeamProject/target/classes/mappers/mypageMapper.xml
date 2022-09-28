@@ -202,5 +202,11 @@
 		WHERE   ORD_NUM =#{ordNum}
 	</update>
 
+<!-- 	주문확정    -->
+	<update id="updateOrderFin">
+		UPDATE	ORDER_LIST 
+		   SET	ORD_REFUND=#{ordRefund}
+		WHERE   ORD_NUM =#{ordNum}
+	</update>
 
 </mapper>

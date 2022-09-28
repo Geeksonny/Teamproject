@@ -73,7 +73,7 @@ src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
                                 	<button type="button" class="site-btn btn-lg w-100" onclick="location.href='${pageContext.request.contextPath }/member/login'">로그인 페이지로</button>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
-                                	<button type="button" class="site-btn btn-lg w-100" onclick="location.href='${pageContext.request.contextPath }/member/loginPassSearch'">비밀번호 찾기</button><br>
+                                	<button type="button" class="site-btn btn-lg w-100" onclick="location.href='${pageContext.request.contextPath }/member/passSearch'">비밀번호 찾기</button><br>
                                 </div>
                                 </div>
                             </li>

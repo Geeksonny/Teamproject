@@ -133,10 +133,12 @@ public class MemberDAOImpl implements MemberDAO{
 	// 유저 리스트
 	@Override
 	public int getUserCount() {
+		System.out.println("uc");
 		return sqlSession.selectOne(namespace + ".getUserCount");
 	}
 	@Override
 	public List<MemberDTO> getUserList(PageDTO pageDTO) {
+		System.out.println("ul");
 		return sqlSession.selectList(namespace + ".getUserList", pageDTO);
 	}
 

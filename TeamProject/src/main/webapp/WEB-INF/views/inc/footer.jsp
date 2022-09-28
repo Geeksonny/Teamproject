@@ -9,40 +9,41 @@
                         <div class="footer__logo">
                             <a href="#"><img src="${pageContext.request.contextPath }/resources/img/logo.png" alt=""></a>
                         </div>
-                        <p>회사 설명</p>
-                        <a href="#"><img src="${pageContext.request.contextPath }/resources/img/payment.png" alt=""></a>
+                        <p>나에게 딱 맞는 운동 쇼핑몰 핏티드!</p>
+                        <p>부산광역시 부산진구 동천로 109 삼한골든게이트 7층</p>
+                        <p>051-803-0909</p>
                     </div>
                 </div>
                 <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>SHOPPING</h6>
-                        <ul>
-                            <li><a href="${pageContext.request.contextPath }/product/shop">패션/용품</a></li>
-                            <li><a href="${pageContext.request.contextPath }/product/shop">기구</a></li>
-                            <li><a href="${pageContext.request.contextPath }/food/shop">도시락</a></li>
-                            <li><a href="${pageContext.request.contextPath }/food/shop">영양제</a></li>
-                        </ul>
+<!--                         <h6>SHOPPING</h6> -->
+<!--                         <ul> -->
+<%--                             <li><a href="${pageContext.request.contextPath }/product/shop">패션/용품</a></li> --%>
+<%--                             <li><a href="${pageContext.request.contextPath }/product/shop">기구</a></li> --%>
+<%--                             <li><a href="${pageContext.request.contextPath }/food/shop">도시락</a></li> --%>
+<%--                             <li><a href="${pageContext.request.contextPath }/food/shop">영양제</a></li> --%>
+<!--                         </ul> -->
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>고객센터</h6>
-                        <ul>
-                            <li><a href="#">이용약관</a></li>
-                            <li><a href="#">개인정보처리방침</a></li>
-                            <li><a href="#">교환/환불 정책</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>소식/알림</h6>
-                        <div class="footer__newslatter">
-                            <p>SNS 아이콘 넣는 곳</p>
-                            <form action="#">
-                                <input type="text" placeholder="Your email">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
+<!--                         <h6>고객센터</h6> -->
+<!--                         <ul> -->
+<!--                             <li><a href="#">이용약관</a></li> -->
+<!--                             <li><a href="#">개인정보처리방침</a></li> -->
+<!--                             <li><a href="#">교환/환불 정책</a></li> -->
+<!--                         </ul> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6"> -->
+<!--                     <div class="footer__widget"> -->
+<!--                         <h6>소식/알림</h6> -->
+<!--                         <div class="footer__newslatter"> -->
+<!--                             <p>SNS 아이콘 넣는 곳</p> -->
+<!--                             <form action="#"> -->
+<!--                                 <input type="text" placeholder="Your email"> -->
+<!--                                 <button type="submit"><span class="icon_mail_alt"></span></button> -->
+<!--                             </form> -->
                         </div>
                     </div>
                 </div>
