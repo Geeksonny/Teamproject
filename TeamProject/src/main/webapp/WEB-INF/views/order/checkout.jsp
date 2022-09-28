@@ -38,21 +38,18 @@ function usePoint1() {
       }else{
          var total = ${total}
       }
-      debugger;
          calc();
       if($('#textUsePoint').val()<1000 || nowPoint<$('#textUsePoint').val() || total < $('#textUsePoint').val()+1000){
     	  if($('#textUsePoint').val()<0 || $('#textUsePoint').val()<1000  ){
 	         alert('잘못입력하셨습니다.');
     	     $('#textUsePoint').val(0);
     	  }
-      }else if(nowPoint<$('#textUsePoint').val()){
+      }
+      if(nowPoint<$('#textUsePoint').val()){
 	    	 alert('잘못입력하셨습니다');
     	     $('#textUsePoint').val(0);
       }else if(1000<=$('#textUsePoint').val() && $('#textUsePoint').val()<=nowPoint && total >= $('#textUsePoint').val()+1000){
          $('#textUsePoint').val();
-      }else{
-         alert('잘못입력하셨습니다.');
-         $('#textUsePoint').val(0);
       }
       if($('#total2').text().slice(-6,4)<1000){
          alert('포인트를 다시 입력해주세요.');
