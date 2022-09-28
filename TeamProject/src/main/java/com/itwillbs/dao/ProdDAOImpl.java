@@ -48,6 +48,16 @@ public class ProdDAOImpl implements ProdDAO{
 	}
 
 	@Override
+	public List<ProdDTO> selectReplyList(ProdDTO prodDTO) {
+		return sqlSession.selectList(namespace+".selectReplyList",prodDTO);
+	}
+
+	@Override
+	public int selectReplyListCnt(ProdDTO prodDTO) {
+		return sqlSession.selectOne(namespace+".selectReplyListCnt",prodDTO);
+	}
+
+	@Override
 	public List<ProdDTO> selectProdRelatedList(ProdDTO details) {
 		return sqlSession.selectList(namespace+".selectProdRelatedList",details);
 	}

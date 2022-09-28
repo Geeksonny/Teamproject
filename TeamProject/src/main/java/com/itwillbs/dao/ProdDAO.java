@@ -22,6 +22,11 @@ public interface ProdDAO {
 	/* 댓글 존재 체크 */
 	public int checkReply(ProdDTO prodDTO);
 
+	/* 리뷰 페이징처리 */
+	public List<ProdDTO> selectReplyList(ProdDTO prodDTO);
+
+	public int selectReplyListCnt(ProdDTO prodDTO);
+
 	/* 추천 상품 리스트 */
 	public List<ProdDTO> selectProdRelatedList(ProdDTO details);
 
@@ -30,4 +35,5 @@ public interface ProdDAO {
 
 	/* 메인화면 - 많이 팔린 상품 리스트 */
 	public List<ProdDTO> selectProdBsList(ProdDTO prodDTO);
+
 }
