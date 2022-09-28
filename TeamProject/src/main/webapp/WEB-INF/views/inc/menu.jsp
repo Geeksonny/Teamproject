@@ -267,8 +267,6 @@
 	        buyer_tel: '${memberDTO.userPhone}'
 	    }, function (rsp) {
 	        console.log(rsp);
-			alert(${pointDTO.pointNow});
-			alert($('#pointChar').val());
 	        if (rsp.success) {
 	            var msg = '결제가 완료되었습니다.';
 	            msg += '고유ID : ' + rsp.imp_uid;

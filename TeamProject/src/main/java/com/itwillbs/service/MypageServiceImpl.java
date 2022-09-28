@@ -150,11 +150,15 @@ public class MypageServiceImpl implements MypageService {
 			return mypageDAO.getMyCouponListCount(couponDTO);
 		}
 
+		// 주문취소 시 상태변경
 		@Override
 		public void updateOrderStatus(OrderListDTO orderListDTO) {
 			mypageDAO.updateOrderStatus(orderListDTO);
 		}
-
-
+		// 주문취소 시 ORD_NUM 정보확인
+		@Override
+		public OrderListDTO numCheck(int ordNum) {
+			return mypageDAO.numCheck(ordNum);
+		}
 
 }

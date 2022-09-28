@@ -12,6 +12,19 @@
   data-template="vertical-menu-template-free"
 >
   <head>
+  <%
+ String strReferer = request.getHeader("referer"); //이전 URL 가져오기
+ 
+ if(strReferer == null){
+%>
+ <script language="javascript">
+  alert("정상적인 경로를 통해 다시 접근해 주세요.");
+  document.location.href="${pageContext.request.contextPath }/main/main";
+ </script>
+<%
+  return;
+ }
+%>
   </head>
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="${pageContext.request.contextPath }/resources/js/date.js"></script>
@@ -44,7 +57,7 @@
                   </ul>
 
                  <div class="card">
-                <h5 class="card-header">주문 관리</h5>
+                <h5 class="card-header">주문 관리 </h5>
                 <hr class="my-0" />
                 <div class="card-body">
                 <div class="table-responsive text-nowrap">
@@ -71,7 +84,7 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th colspan="2" style="vertical-align: middle">상품정보</th>
+                        <th colspan="2">상품정보  </th>
                         <th> 수량 </th>
                         <th>할인금액</th>
                         <th>결제금액</th>
@@ -86,7 +99,7 @@
                         <td><img src="${pageContext.request.contextPath }/resources/img/product/${orderListDTO.prodLMainimg}" width="150"/></td>
                         <td style="vertical-align: middle">${orderListDTO.prodLProdnm}</td>
                         <td style="vertical-align: middle">${orderListDTO.ordLQuantity}개</td>
-                        <td style="vertical-align: middle">${orderListDTO.ordCouponDc}원</td>
+                        <td style="vertical-align: middle">${orderListDTO.ordCouponDc}원 </td>
                         <td style="vertical-align: middle">${orderListDTO.ordFinalPrice} 원</td>
                         <td style="vertical-align: middle">${fn:substring(orderListDTO.ordLDate,0,16)}</td>
                         <td style="vertical-align: middle">
@@ -118,10 +131,11 @@
                         <td style="vertical-align: middle">
                          		<c:choose>
 						 			<c:when test="${orderListDTO.ordRefund eq '10'}">
-						  				<button class="btn btn-outline-primary">
-						  				<a href="${pageContext.request.contextPath }/mypage/orderRefund" >주문취소</a>
-						  				</button>
+						  				<form action="${pageContext.request.contextPath }/mypage/orderRefund" method="post">
+						  				<button class="btn btn-outline-primary">주문취소</button>
+						  				<input type="hidden" value="${orderListDTO.ordNum}" id="ordNum" name="ordNum">
                        					<div></div>
+                       					</form>
 						 			</c:when>
 						 			<c:when test="${orderListDTO.ordRefund eq '11'}">
 						  				취소요청&nbsp;&nbsp;

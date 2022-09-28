@@ -14,6 +14,19 @@
    <head>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/date.js"></script>
+<%
+ String strReferer = request.getHeader("referer"); //이전 URL 가져오기
+ 
+ if(strReferer == null){
+%>
+ <script language="javascript">
+  alert("정상적인 경로를 통해 다시 접근해 주세요.");
+  document.location.href="${pageContext.request.contextPath }/main/main";
+ </script>
+<%
+  return;
+ }
+%>
   </head>
 
   <body>
