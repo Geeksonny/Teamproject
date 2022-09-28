@@ -1,6 +1,9 @@
 package com.itwillbs.domain;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ProdDTO extends PageDTO {
 
@@ -35,7 +38,9 @@ public class ProdDTO extends PageDTO {
 	private int replyNum;
 	private String content;
 	private int rating;
-	private Timestamp replyDate;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date replyDate;
 
 	// 사업자
 	private String compNm;
@@ -173,10 +178,10 @@ public class ProdDTO extends PageDTO {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public Timestamp getReplyDate() {
+	public Date getReplyDate() {
 		return replyDate;
 	}
-	public void setReplyDate(Timestamp replyDate) {
+	public void setReplyDate(Date replyDate) {
 		this.replyDate = replyDate;
 	}
 	public int getAvgRating() {
