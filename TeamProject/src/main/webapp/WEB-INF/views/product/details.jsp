@@ -71,11 +71,6 @@ function printReplyList(data){
 
 	$('.review_list').empty();
 
-	//const replyDate = '${details.replyDate}';
-	// 날짜 형식 (time stemp 형태라서 가져올때 long타입으로 가져와져서 형태 바꿔줌)
-// 	const currentTime = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
-//	replyDate.toISOString().replace("T", " ").replace(/\..*/, '');
-
 	data.forEach((e, index) => {
 
 		var result = '<div class="review_item"> '
@@ -86,7 +81,7 @@ function printReplyList(data){
 	            +    '<div class="media-body"> '
 	            +      '<span style="font-size: 24px; margin-right:2px">' + e.userId + '</span> ';
 
-        for(var i = 0; i< e.rating; i++){
+        for(var i = 0; i < e.rating; i++){
  		    result += '<i class="fa fa-star" style="color:orange"></i> ';
  		}
 
@@ -102,35 +97,6 @@ function printReplyList(data){
 
 		$('.review_list').append(result);
 
-// 		$('.review_list').append(
-// 				'<div class="review_item"> '
-// 	            +  '<div class="media"> '
-// 	            +    '<div class="d-flex"> '
-// 	            +      '<img src="${pageContext.request.contextPath }/resources/img/product/single-product/review-1.png" alt="" /> '
-// 	            +    '</div> '
-// 	            +    '<div class="media-body"> '
-// 	            +      '<span style="font-size: 24px; margin-right:2px">' + e.userId + '</span> '
-// 		);
-
-// 		for(var i = 0; i< e.rating; i++){
-// 			$('.media-body').append(
-// 		    	'<i class="fa fa-star" style="color:orange"></i> '
-// 			);
-// 		}
-// 		$('.media-body').append(
-// 			'(' + e.rating + '점) '
-// 		)
-// 		$('.review_list').append(
-// 	                 '</div> '
-// 	            +  '</div> '
-// 	            + '<br> '
-// 	            +    '<span>' + currentTime + '</span> '
-// 	            +  '<p> '
-// 	            +    e.content
-// 	            +  '</p> '
-// 	            +'</div> '
-// 	            +'<br> '
-// 		);
 	});
 
 }

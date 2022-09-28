@@ -78,39 +78,40 @@ function searchProd(comp){
 function printProdList(data){
 	$('#prodContainer').empty();
 	data.forEach((e, i) => {
-// 		debugger;
-    // 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함
-	var prodLPrice = e.prodLPrice;
-	var price = prodLPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-	    $('#prodContainer').append(
-    		'<div class="col-lg-4 col-md-6 col-sm-6">'
-    		+	'<div class="product__item">'
-    		+		'<div class="product__item__pic set-bg" style="background-image: url(&quot;undefined&quot;);">'
-    		+		'<a href="/web/product/details?prodLNum='+ e.prodLNum +'">'
-    		+ 			'<img src="/web/resources/img/product/'+ e.prodLMainimg +'" alt="위의 이미지를 누르면 연결됩니다.">'
-    		+ 		'</a>'
-    		+ 			'<ul class="product__hover">'
-    		+ 			   '<li><a href="#"><img src="/web/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>'
-    		+ 		   '</ul>'
-    		+ 		'</div>'
-    		+ 		'<div class="product__item__text">'
-    		+ 		   '<h7>'+ e.prodLProdnm +'</h7>'
-    		+ 		   '<h5>'
-    		+ 			price
-    		+ 			'원</h5>'
-    		+ 			'<div class="rating">'
-    		+ 				'<i class="fa fa-star-o"></i> '
-    		+ 				'<i class="fa fa-star-o"></i> '
-    		+ 				'<i class="fa fa-star-o"></i> '
-    		+ 				'<i class="fa fa-star-o"></i> '
-    		+ 				'<i class="fa fa-star-o"></i> '
-    		+ 			'</div>'
-    		+ 		'</div>'
-    		+ 	'</div>'
-    		+ '</div>'
-	    );
+
+		// 상품가격의 가독성을 높이기 위해 숫자 3자리마다 콤마(,)를 찍어주도록 처리함
+		var prodLPrice = e.prodLPrice;
+		var price = prodLPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+
+		var result = '<div class="col-lg-4 col-md-6 col-sm-6"> '
+	            +  '<div class="product__item"> '
+	            +      '<div class="product__item__pic set-bg"> '
+	            +      '<a href="${pageContext.request.contextPath }/product/details?prodLNum=' + e.prodLNum + '"> '
+				+			'<img src="${pageContext.request.contextPath }/resources/img/product/' + e.prodLMainimg + '" alt="위의 이미지를 누르면 연결됩니다."/> '
+				+	   '</a> '
+	            +      '<ul class="product__hover"> '
+	            +      '<li><a href="${pageContext.request.contextPath }/product/likeinsert?prodLCode=' + e.prodLCode + '"> '
+	            +      	   '<img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li> '
+	            +      '</ul> '
+	            +      '</div> '
+	            +      '<div class="product__item__text"> '
+	            +         '<h7>'+ e.prodLProdnm +'</h7> '
+	            +         '<h5>' + price + '</h5> ';
+
+		for(var i = 0; i < e.avgRating; i++){
+			result += '<i class="fa fa-star" style="color:orange"></i> ';
+		}
+
+		result += '</div> '
+				+ 		'</div> '
+				+ 	'</div> '
+				+ '</div> ';
+
+		$('#prodContainer').append(result);
+
 	});
 }
+
 
 /* ----- 페이징 처리 ----- */
 function printPaging(dto){
