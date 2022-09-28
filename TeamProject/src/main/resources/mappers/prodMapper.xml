@@ -146,6 +146,11 @@
               ,P.PROD_L_DETAIL
               ,P.PROD_L_QUANTITY
               ,C.COMP_NM
+              ,CASE WHEN (SELECT COUNT(*)
+				           FROM PRODUCT_LIKE
+				          WHERE USER_ID = #{userId}
+				            AND PROD_L_CODE = P.PROD_L_CODE) = 1 THEN 'redhart.png' ELSE 'heart.png'
+				            END AS heart
 		  FROM projectdb.PRODUCT_LIST AS P
           JOIN projectdb.COMPANY_INFO AS C
             ON P.PROD_L_COMPNM=C.COMP_ID
@@ -154,35 +159,63 @@
 
 	<!-- '리뷰 등록(팝업창)' 뷰로 보내줄 정보 (prodLNum값을 통해 prodLProdnm값을 반환) -->
 	<select id="getProdNumName" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
-		SELECT R.REPLY_NUM
-		      ,L.PROD_L_NUM
-		      ,U.USER_ID
-		      ,R.CONTENT
-		      ,R.RATING
-		      ,R.REPLY_DATE
-		      ,(SELECT round(AVG(B.RATING)) AS AV FROM PRODUCT_REPLY B WHERE B.PROD_L_NUM  = L.PROD_L_NUM) AS avgRating
-		      ,(SELECT COUNT(B.PROD_L_NUM) FROM PRODUCT_REPLY B WHERE B.PROD_L_NUM  = L.PROD_L_NUM) AS countRating
-	      FROM PRODUCT_REPLY R
-	      LEFT OUTER JOIN PRODUCT_LIST L ON R.PROD_L_NUM = L.PROD_L_NUM
-	      LEFT OUTER JOIN USER_INFO U ON R.USER_ID = U.USER_ID
-	     WHERE 1=1
-		   AND L.PROD_L_NUM = #{prodLNum}
-		 ORDER BY R.REPLY_DATE DESC
+		SELECT *
+		  FROM (
+			  SELECT R.REPLY_NUM
+			      ,L.PROD_L_NUM
+			      ,U.USER_ID
+			      ,R.CONTENT
+			      ,R.RATING
+			      ,R.REPLY_DATE
+			      ,(SELECT round(AVG(B.RATING)) AS AV FROM PRODUCT_REPLY B WHERE B.PROD_L_NUM  = L.PROD_L_NUM) AS avgRating
+			      ,(SELECT COUNT(B.PROD_L_NUM) FROM PRODUCT_REPLY B WHERE B.PROD_L_NUM  = L.PROD_L_NUM) AS countRating
+		      FROM PRODUCT_REPLY R
+		      LEFT OUTER JOIN PRODUCT_LIST L ON R.PROD_L_NUM = L.PROD_L_NUM
+		      LEFT OUTER JOIN USER_INFO U ON R.USER_ID = U.USER_ID
+		     WHERE 1=1
+			   AND L.PROD_L_NUM = #{prodLNum}
+			 ORDER BY R.REPLY_DATE DESC) A
+		 LIMIT #{startRow}, #{pageSize}
 	</select>
 
-	<!-- 댓글등록 -->
+	<!-- 리뷰 등록 -->
   	<insert id="enrollReply" parameterType="com.itwillbs.domain.ProdDTO">
   		INSERT INTO PRODUCT_REPLY(PROD_L_NUM, USER_ID, CONTENT, RATING)
   		VALUES (#{prodLNum}, #{userId}, #{content}, #{rating})
   	</insert>
 
-	<!-- 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능 -->
+	<!-- 리뷰 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능 -->
 	<select id="checkReply" parameterType="com.itwillbs.domain.ProdDTO" resultType="integer">
 		SELECT COUNT(REPLY_NUM)
 		  FROM PRODUCT_REPLY
 		 WHERE USER_ID = #{userId}
 		   AND PROD_L_NUM = #{prodLNum}
 	</select>
+
+	<!-- TODO 삭제예정 -->
+	<!-- 리뷰 페이징 -->
+	<select id="selectReplyList" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT *
+		  FROM (
+				SELECT REPLY_NUM
+					  ,PROD_L_NUM
+					  ,USER_ID
+					  ,CONTENT
+					  ,RATING
+					  ,REPLY_DATE
+				  FROM PRODUCT_REPLY
+				 WHERE PROD_L_NUM = #{prodLNum}
+				 ORDER BY REPLY_DATE DESC
+			   ) A
+	 	 LIMIT #{startRow}, #{pageSize}
+	</select>
+
+	<select id="selectReplyListCnt" parameterType="com.itwillbs.domain.ProdDTO" resultType="java.lang.Integer">
+		SELECT COUNT(REPLY_NUM)
+		  FROM PRODUCT_REPLY
+		 WHERE PROD_L_NUM = #{prodLNum}
+	</select>
+
 
 	<!-- 추천 상품 -->
 	<select id="selectProdRelatedList" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
@@ -226,6 +259,11 @@
               ,PL.PROD_L_DETAIL
               ,PL.PROD_L_QUANTITY
               ,PR.avgRating
+              ,CASE WHEN (SELECT COUNT(*)
+				            FROM PRODUCT_LIKE
+				           WHERE USER_ID = #{userId}
+				             AND PROD_L_CODE = PL.PROD_L_CODE) = 1 THEN 'redhart.png' ELSE 'heart.png'
+				             END AS heart
 		  FROM projectdb.PRODUCT_LIST PL
 		  LEFT OUTER JOIN (SELECT PROD_L_NUM,ROUND(AVG(RATING)) AS avgRating FROM projectdb.PRODUCT_REPLY GROUP BY PROD_L_NUM) PR
 		  	ON PR.PROD_L_NUM = PL.PROD_L_NUM
