@@ -38,69 +38,34 @@ function usePoint1() {
       }else{
          var total = ${total}
       }
-      if($('#textUsePoint').val()%1==0){
+      debugger;
          calc();
-         
-            // 0<입력포인트<1000P &&  * 입력포인트<=보유포인트 && 총금액 >=2000
-         if(0<$('#textUsePoint').val() && $('#textUsePoint').val()<1000 && $('#textUsePoint').val()<nowPoint && total>=2000){
-              if(nowPoint>=1000){
-                 alert('최소 사용 가능 포인트는 1000P 입니다.');
-                 $('#textUsePoint').val(1000);
-              }else{
-                 alert('최소 사용 가능 포인트는 1000P 입니다.');
-                 alert('포인트가 부족합니다.');
-                 $('#textUsePoint').val(0);
-              }
-           // 0<입력포인트<1000P && 입력포인트>보유포인트   
-         }else if(0<$('#textUsePoint').val() && $('#textUsePoint').val()<1000 && $('#textUsePoint').val()>nowPoint){
-              alert('최소 사용 가능 포인트는 1000P 입니다.');
-              alert('사용 가능 포인트를 초과하였습니다.');
-              $('#textUsePoint').val(0);
-           // 입력포인트>total+1000 && 입력포인트>보유포인트 : 결제금액이 1000원 이상이될때   
-         }else if($('#textUsePoint').val()>total-1000 && $('#textUsePoint').val()>=nowPoint){
-              alert('사용 가능 포인트를 초과하였습니다.');
-              if(total>=nowPoint+1000 && nowPoint>=1000 ){
-                 $('#textUsePoint').val(nowPoint);
-              }else{
-                 alert('최소 결제금액은 1000원입니다.');
-                 $('#textUsePoint').val(0);
-              }
-          // 입력포인트>=total-1000 && 입력포인트<=보유포인트 :    
-         }else if($('#textUsePoint').val()>=total-1000 && $('#textUsePoint').val()<=nowPoint){
-            if(total-$('#textUsePoint').val()>=1000){
-                 alert('최소 결제금액은 1000원입니다.');
-                 $('#textUsePoint').val(Math.floor(total-1000));
-              }else{
-                 alert('최소 결제금액은 1000원입니다.');
-                 $('#textUsePoint').val(Math.floor(total-1000));
-              }
-         }else if($('#textUsePoint').val()==total ){
-            if($('#textUsePoint').val()<=nowPoint){
-                 alert('최소 결제금액은 1000원입니다.');
-                 $('#textUsePoint').val(Math.floor(total-1000));
-            }else{
-                 Math.floor($('#textUsePoint').val());
-            }
-         }else if(0<$('#textUsePoint').val() && $('#textUsePoint').val()>nowPoint){
-              alert('사용 가능 포인트를 초과하였습니다.');
-              $('#textUsePoint').val(0);
-         }     
-         
-      calc();
+      if($('#textUsePoint').val()<1000 || nowPoint<$('#textUsePoint').val() || total < $('#textUsePoint').val()+1000){
+    	  if($('#textUsePoint').val()<0 || $('#textUsePoint').val()<1000  ){
+	         alert('잘못입력하셨습니다.');
+    	     $('#textUsePoint').val(0);
+    	  }
+      }else if(nowPoint<$('#textUsePoint').val()){
+	    	 alert('잘못입력하셨습니다');
+    	     $('#textUsePoint').val(0);
+      }else if(1000<=$('#textUsePoint').val() && $('#textUsePoint').val()<=nowPoint && total >= $('#textUsePoint').val()+1000){
+         $('#textUsePoint').val();
       }else{
-         alert('올바른 숫자를 입력하세요.');
+         alert('잘못입력하셨습니다.');
          $('#textUsePoint').val(0);
       }
+      if($('#total2').text().slice(-6,4)<1000){
+         alert('포인트를 다시 입력해주세요.');
+    	  $('#textUsePoint').val(0);
+      }
+      calc();
 }
-
-// $('#textUsePoint').val()<nowPoint && total>$('#textUsePoint').val()
 
 function useCoupon1(){
    calc();
    var total1 = $('#total2').text().slice(-6,4);
    var point1 = $('#usePoint2').text().slice(-6,4);
    if(total1 != ${total}){
-//       $('#textUsePoint').val(point1 + total1 - 1000);
       calc();
       usePoint1();
    }else {
@@ -201,8 +166,6 @@ function myCoupon(){
                 addZipcode += '${addressDTO.addressZipcode }';
                 alert(msg);
 
-                debugger;
-                
                 $.ajax({
                     url: "orderComplete",
                    type: "POST",
