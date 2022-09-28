@@ -32,7 +32,7 @@ public class ProdController {
 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
-	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, HttpSession session,@ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			// ---------------- 자동 코드값 생성 시작
@@ -55,9 +55,11 @@ public class ProdController {
 				pageNum = "1";
 			}
 			int currentPage=Integer.parseInt(pageNum);
-
+			String userId = (String)session.getAttribute("userId");
 			prodDTO.setCurrentPage(currentPage);
 			prodDTO.setPageSize(9);
+			
+			prodDTO.setUserId(userId);
 
 			List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
 			int count = prodService.selectProdListCnt(prodDTO);
@@ -313,9 +315,13 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
+			
+			
+			String userId = (String)session.getAttribute("userId");
+			prodDTO.setUserId(userId);
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
 			// 데이터 담기

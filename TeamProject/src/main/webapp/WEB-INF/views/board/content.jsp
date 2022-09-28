@@ -18,19 +18,16 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	//id="idbtn"
+	
 	$('#pic').click(function(){
 		$.ajax({
+			type : 'POST', 
 			url:'${pageContext.request.contextPath}/board/likeinset',
 			data:{'boardNum' : $('#boardNum').val()},
+			/* dataType : 'text', */
 			success:function(rdata){
-				var result = "${pageContext.request.contextPath }/resources/img/icon/";
-				
-				if(rdata == 'likeno')	result += "heart.png";
-				else 					result += "redhart.png";
-				
+				var result = "${pageContext.request.contextPath }/resources/img/icon/"+rdata;
 				$("#pic").attr("src", result);
-				
 			}
 		});
 	});
@@ -101,15 +98,8 @@ $(document).ready(function(){
                             </tr>
                         </tbody>
                     </table>
-                    <form action="${pageContext.request.contextPath }/board/likeinset">
-                    <input type="hidden" name="boardNum" value="${boardDTO2.boardNum}"></input>
-	                   			<input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/${boardDTO2.heart}" value="추천">
-        			<%-- <c:if test="${userId == lId}">
-                    </c:if>
-
-                    <c:if test="${userId != lId}">
-                    </c:if> --%>
-                    </form>
+                    <input type="hidden" id="boardNum" name="boardNum" value="${boardDTO2.boardNum}"></input>
+	                <input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/${boardDTO2.heart}">
                     <table class="table table-striped" >
                <c:forEach items="${replyList}" var="replyDTO">
 				<!-- 댓글 테이블 -->
@@ -135,8 +125,7 @@ $(document).ready(function(){
                             <td>
                                 <span class="form-inline mt-2" role="form">
                                 		<h5>댓글</h5></span>
-
-                                		<input type="hidden" name="boardNum" value="${boardDTO.boardNum}">
+                                		<input type="hidden" name="boardNum" value="${boardDTO2.boardNum}">
                                         <textarea id="commentParentText" name="rContent" class="form-control col-lg-12 mt-3" style="width:100%" rows="4" cols="180"></textarea><br>
                                         <button type="submit" class="site-btn">댓글 등록</button>
                             </td>

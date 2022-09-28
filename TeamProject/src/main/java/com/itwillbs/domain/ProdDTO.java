@@ -24,6 +24,14 @@ public class ProdDTO extends PageDTO {
 	private String prodLDetail;
 	private int prodLQuantity;
 
+	private String heart;
+	public String getHeart() {
+		return heart;
+	}
+	public void setHeart(String heart) {
+		this.heart = heart;
+	}
+	
 	// 별점 평균, 카운트
 	private int avgRating;
 	private int countRating;

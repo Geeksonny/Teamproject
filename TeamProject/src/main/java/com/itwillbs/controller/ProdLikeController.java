@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itwillbs.domain.MypageDTO;
 import com.itwillbs.domain.ProdDTO;
@@ -77,31 +78,99 @@ public class ProdLikeController {
 		return "redirect:/product/details";
 	}
 	
-	
-	@RequestMapping(value = "/main/likeinsert2", method = RequestMethod.GET)
-	public String likeinsert2(HttpServletRequest request, HttpSession session,Model model) throws Exception {
+	@ResponseBody
+	@RequestMapping(value = "/main/mainLike", method = RequestMethod.POST)
+	public String mainLike(HttpServletRequest request, HttpSession session) throws Exception {
+		String result="";
 		String userId = (String)session.getAttribute("userId");
 		prodLikeDTO prodLikeDTO = new prodLikeDTO();
 		prodLikeDTO.setUserId(userId);
 		prodLikeDTO.setProdLCode(request.getParameter("prodLCode"));
 		MypageDTO mypageDTO =new MypageDTO();
-		mypageDTO.setUserId((String)session.getAttribute("userId"));
+		mypageDTO.setUserId(userId);
 		prodLikeDTO prodLikeDTO2 = prodLikeService.prodLikeCheck(prodLikeDTO);
+		System.out.println("userId"+userId);
+		System.out.println("getProdLCode"+prodLikeDTO.getProdLCode());
 		
 		if(userId != null) {
-			if(prodLikeDTO2 != null) {
+			if(prodLikeDTO2 != null) { 
+				System.out.println("deleteProdLike");
 				prodLikeService.deleteProdLike(prodLikeDTO);
 				mypageService.productLikesub(mypageDTO);
+				result = "heart.png";
 			}else {
+				System.out.println("inserProdLike");
 				prodLikeService.inserProdLike(prodLikeDTO);
 				mypageService.productLike(mypageDTO);
+				result = "redhart.png";
 			}
 		}else {
 			return"/product/msg";
 		}
 		
 
-		return "redirect:/main/main";
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/main/mainbsLike", method = RequestMethod.POST)
+	public String mainbsLike(HttpServletRequest request, HttpSession session) throws Exception {
+		String result="";
+		String userId = (String)session.getAttribute("userId");
+		prodLikeDTO prodLikeDTO = new prodLikeDTO();
+		prodLikeDTO.setUserId(userId);
+		prodLikeDTO.setProdLCode(request.getParameter("prodLCode"));
+		MypageDTO mypageDTO =new MypageDTO();
+		mypageDTO.setUserId(userId);
+		prodLikeDTO prodLikeDTO2 = prodLikeService.prodLikeCheck(prodLikeDTO);
+		
+		if(userId != null) {
+			if(prodLikeDTO2 != null) {
+				prodLikeService.deleteProdLike(prodLikeDTO);
+				mypageService.productLikesub(mypageDTO);
+				result = "heart.png";
+			}else {
+				prodLikeService.inserProdLike(prodLikeDTO);
+				mypageService.productLike(mypageDTO);
+				result = "redhart.png";
+			}
+		}else {
+			return"/product/msg";
+		}
+		
+
+		return result;
+	}
+	
+
+	@ResponseBody
+	@RequestMapping(value = "/product/shopLike", method = RequestMethod.POST)
+	public String shopLike(HttpServletRequest request, HttpSession session) throws Exception {
+		String result="";
+		String userId = (String)session.getAttribute("userId");
+		prodLikeDTO prodLikeDTO = new prodLikeDTO();
+		prodLikeDTO.setUserId(userId);
+		prodLikeDTO.setProdLCode(request.getParameter("prodLCode"));
+		MypageDTO mypageDTO =new MypageDTO();
+		mypageDTO.setUserId(userId);
+		prodLikeDTO prodLikeDTO2 = prodLikeService.prodLikeCheck(prodLikeDTO);
+		
+		if(userId != null) {
+			if(prodLikeDTO2 != null) {
+				prodLikeService.deleteProdLike(prodLikeDTO);
+				mypageService.productLikesub(mypageDTO);
+				result = "heart.png";
+			}else {
+				prodLikeService.inserProdLike(prodLikeDTO);
+				mypageService.productLike(mypageDTO);
+				result = "redhart.png";
+			}
+		}else {
+			return"/product/msg";
+		}
+		
+
+		return result;
 	}
 
 

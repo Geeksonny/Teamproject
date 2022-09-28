@@ -6,6 +6,67 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+/* $(document).ready(function(){
+	//id="idbtn"
+	$('.prodLike').click(function(){
+		var prodLCode = this.value;
+		var i = $(this).next().val();
+		$.ajax({
+			type : 'POST', 
+			url:'${pageContext.request.contextPath}/main/mainLike',
+			data:{'prodLCode' : prodLCode},
+			/* dataType : 'text', 
+			success:function(rdata){
+				var result = "${pageContext.request.contextPath }/resources/img/icon/"+rdata;
+				$("input[id$="+i+"]").attr("src", result);
+			}
+		});
+	});
+}); */
+
+$(document).ready(function(){
+	//id="idbtn"
+	$('.prodLike').click(function(){
+		var prodLCode = this.value;
+		var th = this;
+		$.ajax({
+			type : 'POST', 
+			url:'${pageContext.request.contextPath}/main/mainLike',
+			data:{prodLCode : prodLCode},
+			/* dataType : 'text', */
+			success:function(rdata){
+				var value = this.data.split('=')[1];
+				var result = "${pageContext.request.contextPath }/resources/img/icon/"+rdata;
+				$('input[value=' + value + ']').attr("src", result);
+// 				$(".prodLike").attr("src", result);
+			}
+		});
+	});
+	
+});
+
+
+$(document).ready(function(){
+	$('.prodbsLike').click(function(){
+		var prodLCode = this.value;
+		var th = this;
+		$.ajax({
+			type : 'POST', 
+			url:'${pageContext.request.contextPath}/main/mainbsLike',
+			data:{prodLCode : prodLCode},
+			/* dataType : 'text', */
+			success:function(rdata){
+				var value = this.data.split('=')[1];
+				var result = "${pageContext.request.contextPath }/resources/img/icon/"+rdata;
+				$('input[value=' + value + ']').attr("src", result);
+			}
+		});
+	});
+});
+
+</script>
 </head>
 <body>
 <!-- 메뉴단 -->
@@ -77,8 +138,7 @@
 							</a>
                             <span class="label">New</span>
                             <ul class="product__hover">
-               	 	           <li><a href="${pageContext.request.contextPath }/main/likeinsert2?prodLCode=${newProdList.prodLCode}">
-               	 	           <img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+               	 	           <li><input type="image" class="prodLike" id="prodpic${status.index}" src="${pageContext.request.contextPath }/resources/img/icon/${newProdList.heart}" value="${newProdList.prodLCode}">
                             </ul>
                         </div>
                         <div class="product__item__text">
@@ -104,8 +164,7 @@
 							</a>
 							<span class="label">Hot</span>
                             <ul class="product__hover">
-                                <li><a href="${pageContext.request.contextPath }/main/likeinsert2?prodLCode=${prodList.prodLCode}">
-                                <img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
+                                <li><input type="image" class="prodbsLike" id="prodbspic" src="${pageContext.request.contextPath }/resources/img/icon/${bsProdList.heart}" value="${bsProdList.prodLCode}"></li>
                            </ul>
                         </div>
                         <div class="product__item__text">

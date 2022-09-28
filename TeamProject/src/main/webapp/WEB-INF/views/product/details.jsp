@@ -209,6 +209,12 @@ function printProdList(data){
         <div class="col-lg-6 col-xl-6">
         <div style="padding:30px">
             <h5 class="mt-3">${details.compNm}</h5>
+            <form action="${pageContext.request.contextPath }/product/detailsLike">
+            <input type="hidden" name="prodLNum" value="${details.prodLNum}">
+            <input type="hidden" name="userId" value="${sessionScope.userId}">
+            <input type="hidden" name="prodLCode" value="${details.prodLCode}">
+            <input type="image" src="${pageContext.request.contextPath }/resources/img/icon/${details.heart}" >
+            </form>
             <hr style="margin-bottom:12%">
           <div class="product__details__text">
             <h3>${details.prodLProdnm}</h3>
@@ -229,7 +235,6 @@ function printProdList(data){
             <hr class="md-4"><br>
               <!-- 내가 찜한 목록들 리스트 볼수있게 이동? -->
               <div class="center" style="display:block">
-                  <a class="site-btn mr-2" id="prodLike"><span id="sp">찜하기</span></a>
 	              <a class="site-btn" id="insertBasket"><span id="sp">장바구니에 담기</span></a>
 <!-- 	              장바구니에 가져갈 히든 값. 제품 코드와 가격, 수량 1개 -->
 				  <input type="hidden" name="prodLcount" type="text" id="prodLcount" value="1">

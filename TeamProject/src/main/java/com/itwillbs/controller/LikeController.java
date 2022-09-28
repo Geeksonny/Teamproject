@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -37,8 +38,8 @@ public class LikeController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value = "/board/likeinset", method = RequestMethod.GET)
-	public String likeinset(HttpServletRequest request, HttpSession session, Model model) {
+	@RequestMapping(value = "/board/likeinset", method = RequestMethod.POST)
+	public String likeinset(HttpServletRequest request, HttpSession session) {
 		String result="";
 		String userId = (String)session.getAttribute("userId");
 		int boardNum=Integer.parseInt(request.getParameter("boardNum"));
@@ -48,21 +49,19 @@ public class LikeController {
 		BoardDTO boardDTO=new BoardDTO();
 		boardDTO.setBoardNum(boardNum);
 		
-		List<LikeDTO> likeList = likeService.getLikeList(likeDTO);
 		LikeDTO likeDTO2=likeService.likeCheck(likeDTO);
 		
 		
 		if(likeDTO2 != null) {
 			likeService.deleteLike(likeDTO);
 			likeService.updateLikeCancel(boardDTO);
-			result = "likeno";
+			result = "heart.png";
 		}else{
 			likeService.insertLike(likeDTO);
 			likeService.updateLike(boardDTO);
-			result = "likeok";
+			result = "redhart.png";
 		}
 			
-		model.addAttribute("likeList",likeList);
 		return result;
 	}
 	

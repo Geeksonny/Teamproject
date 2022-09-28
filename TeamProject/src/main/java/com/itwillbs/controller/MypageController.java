@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itwillbs.domain.AddressDTO;
 import com.itwillbs.domain.BoardDTO;
+import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.CompDTO;
 import com.itwillbs.domain.CouponDTO;
 import com.itwillbs.domain.MemberDTO;
@@ -37,6 +38,7 @@ import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.mail.MailUtils;
 import com.itwillbs.mail.TempKey;
 import com.itwillbs.service.AddressService;
+import com.itwillbs.service.CommonService;
 import com.itwillbs.service.CompService;
 import com.itwillbs.service.MemberService;
 import com.itwillbs.service.MypageService;
@@ -53,6 +55,8 @@ public class MypageController {
 	private AddressService addressService;
 	@Inject
 	private MypageService mypageService;
+	@Inject
+	private CommonService commonService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
@@ -64,7 +68,30 @@ public class MypageController {
 		MemberDTO memberDTO = memberService.getMember(userId);
 		PointDTO pointDTO = pointService.getMember(userId);
 		AddressDTO addressDTO = addressService.getAddress(userId);
+		
+		// 쿠폰 개수
+		CommonDTO commonDTO =  new CommonDTO();
+		commonDTO.setTableNm("COUPON"); 		// 기준 컬럼
+		commonDTO.setColumnNm("COU_USER_ID");
+		commonDTO.setUserId((String)session.getAttribute("userId"));
+		int couCount = commonService.getMemCount(commonDTO);
+		model.addAttribute("couCount", couCount);
 
+		// 주문
+		commonDTO.setTableNm("ORDER_LIST"); 		// 기준 컬럼
+		commonDTO.setColumnNm("ORD_L_USER");
+		commonDTO.setUserId((String)session.getAttribute("userId"));
+		int ordCount = commonService.getMemCount(commonDTO);
+		model.addAttribute("ordCount", ordCount);
+
+		// 주문
+		commonDTO.setTableNm("SHOPPING_BASKET"); 		// 기준 컬럼
+		commonDTO.setColumnNm("SB_USER");
+		commonDTO.setUserId((String)session.getAttribute("userId"));
+		int sbCount = commonService.getMemCount(commonDTO);
+		System.out.println(sbCount);
+		model.addAttribute("sbCount", sbCount);
+		
 		MypageDTO mypageDTO =new MypageDTO();
 		mypageDTO.setUserId((String)session.getAttribute("userId"));
 		MypageDTO mypageDTO2 = mypageService.mypageselect(mypageDTO);
