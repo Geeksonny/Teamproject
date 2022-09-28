@@ -91,8 +91,7 @@
 
 ### - 기능 설계 (업데이트 중)
 
-[기능 및 URI / 데이터 형식 정리 문서](https://docs.google.com/spreadsheets/d/19oPNfCTL_OXyHovfZxVAREARITUT3rs9SKK6dXbfqek/edit?usp=sharing
-)
+[기능 및 URI / 데이터 형식 정리 문서](https://docs.google.com/document/d/1Bep4sCVTUXkl6zIJfLv8Oft9x7AtLScx19WQAvlL5K4/edit?usp=sharing)
 
 <br>
 <hr>
