@@ -85,7 +85,7 @@
                       <tr>
                         <td><img src="${pageContext.request.contextPath }/resources/img/product/${orderListDTO.prodLMainimg}" width="150"/></td>
                         <td style="vertical-align: middle">${orderListDTO.prodLProdnm}</td>
-                        <td style="vertical-align: middle">${orderListDTO.ordLQuantity}개 ${orderListDTO.ordNum}</td>
+                        <td style="vertical-align: middle">${orderListDTO.ordLQuantity}개</td>
                         <td style="vertical-align: middle">${orderListDTO.ordCouponDc}원 </td>
                         <td style="vertical-align: middle">${orderListDTO.ordFinalPrice} 원</td>
                         <td style="vertical-align: middle">${fn:substring(orderListDTO.ordLDate,0,16)}</td>
