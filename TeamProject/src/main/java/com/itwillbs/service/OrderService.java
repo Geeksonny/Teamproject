@@ -14,8 +14,6 @@ public interface OrderService {
 
 	void orderComplete(Map<String, Object> sMap);
 
-//	public BasketDTO getItemCode(String userId);
-
 	public void updateQuantity(Map<String, Object> sMap);
 
 	public void removeItemBasket(Map<String, Object> sMap);
@@ -27,4 +25,6 @@ public interface OrderService {
 	public void insertUsePoint(Map<String, Object> sMap);
 
 	public void updateCoupon(Map<String, Object> sMap);
+	
+	public void deletePoint();
 }

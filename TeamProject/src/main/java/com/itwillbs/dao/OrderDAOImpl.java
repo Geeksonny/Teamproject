@@ -32,14 +32,6 @@ public class OrderDAOImpl implements OrderDAO {
 		sqlSession.insert(namespace+".orderComplete", sMap);
 	}
 
-
-//	@Override
-//	public BasketDTO getItemCode(String userId) {
-//		return sqlSession.selectOne(namespace+".getItemCode", userId);
-//	}
-
-
-
 	@Override
 	public void updateQuantity(Map<String, Object> sMap) {
 		sqlSession.update(namespace + ".updateQuantity", sMap);
@@ -75,4 +67,11 @@ public class OrderDAOImpl implements OrderDAO {
 		System.out.println("updateCouponDAOImpl!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		sqlSession.update(namespace + ".updateCoupon", sMap);
 	}
+
+	@Override
+	public void deletePoint() {
+		sqlSession.update(namespace + ".deletePoint");		
+	}
+	
+	
 }

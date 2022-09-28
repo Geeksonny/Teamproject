@@ -85,7 +85,6 @@
 
 <!--  사용한 포인트 입력 -->
    <insert id="insertUsePoint">
-     IF(POINT_USED!=0 AND POINT_USED!=NULL) 
       INSERT INTO POINT(
          POINT_NUM
          ,USER_ID
@@ -118,6 +117,12 @@
          WHERE COU_NUM =#{couNm}
            AND COU_USER_ID=#{userId}
    </update>
+   
+   <delete id="deletePoint">
+   	DELETE FROM POINT
+   	 WHERE POINT_USED=0
+   	   AND POINT_CHARGE=0
+   </delete>
 
 
 </mapper>

@@ -39,16 +39,6 @@ public class OrderServiceImpl implements OrderService {
 		orderDAO.updateQuantity(sMap);
 	}
 
-
-//
-//	@Override
-//	public BasketDTO getItemCode(String userId) {
-//		return orderDAO.getItemCode(userId);
-//
-//	}
-
-
-
 	@Override
 	public void removeItemBasket(Map<String, Object> sMap) {
 		orderDAO.removeItemBasket(sMap);
@@ -78,6 +68,11 @@ public class OrderServiceImpl implements OrderService {
 		orderDAO.updateCoupon(sMap);
 	}
 
+	@Override
+	public void deletePoint() {
+		orderDAO.deletePoint();
+	}
 
+	
 
 }

@@ -113,6 +113,7 @@ public class OrderController {
          }
              orderService.insertUsePoint(sMap);
              orderService.updateCoupon(sMap);
+             orderService.deletePoint();
              orderService.removeItemBasket(sMap);
             System.out.println(sMap);
          return "redirect:/main/main";

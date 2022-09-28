@@ -13,8 +13,6 @@ public interface OrderDAO {
 
 	public void removeItemBasket(Map<String, Object> sMap);
 
-//	public BasketDTO getItemCode(String userId);
-
 	void orderComplete(Map<String, Object> sMap);
 
 	public void insertUsePoint(Map<String, Object> sMap);
@@ -24,6 +22,8 @@ public interface OrderDAO {
 	List<ProdDTO> getQuantityList(ProdDTO proDTO);
 
 	public void updateCoupon(Map<String, Object> sMap);
+	
+	public void deletePoint();
 }
 
 
