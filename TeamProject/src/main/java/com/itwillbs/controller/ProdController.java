@@ -1,36 +1,24 @@
 package com.itwillbs.controller;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.itwillbs.domain.ProdDTO;
-import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.CommonDTO;
-import com.itwillbs.domain.MemberDTO;
-import com.itwillbs.domain.PageDTO;
-import com.itwillbs.service.BoardService;
+import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.CommonService;
-import com.itwillbs.service.MemberService;
 import com.itwillbs.service.ProdService;
 
 @Controller
@@ -41,9 +29,6 @@ public class ProdController {
 	private ProdService prodService;
 	@Inject
 	private CommonService commonService;
-	@Inject
-	private BoardService boardService;
-	
 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
@@ -114,6 +99,8 @@ public class ProdController {
 		String pageNum = req.getParameter("pageNum");
 		String gridColumn = req.getParameter("gridColumn");
 
+
+		// ---------------- 페이징 처리(Ajax) 시작
 		if(pageNum == null) {
 			pageNum = "1";
 		}
@@ -121,7 +108,7 @@ public class ProdController {
 
 		prodDTO.setCurrentPage(currentPage);
 		prodDTO.setPageSize(9);
-		// ---------------- 페이징 처리(Ajax) 시작
+
 		int pageSize = 9;
 		int count = prodService.selectProdListCnt(prodDTO);
 		int pageBlock = 3;
@@ -133,7 +120,7 @@ public class ProdController {
 		}
 
 		prodDTO.setCurrentPage(currentPage);
-		prodDTO.setPageSize(9);
+		prodDTO.setPageSize(pageSize);
 		prodDTO.setCount(count);
 		prodDTO.setPageBlock(pageBlock);
 		prodDTO.setStartPage(startPage);
@@ -163,7 +150,33 @@ public class ProdController {
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
 
+			// ---------------- 페이징 처리 시작
+			int pageSize = 3;
+			String pageNum = prodDTO.getPageNum();
+			if(pageNum == null) {
+				pageNum = "1";
+			}
+			int currentPage=Integer.parseInt(pageNum);
+
+			prodDTO.setCurrentPage(currentPage);
+			prodDTO.setPageSize(pageSize);
+
 			List<ProdDTO> prodReply = prodService.getProdNumName(prodDTO);
+			int count = prodService.selectReplyListCnt(prodDTO);
+			int pageBlock = 3;
+			int startPage = (currentPage-1)/pageBlock*pageBlock+1;
+			int endPage=startPage+pageBlock-1;
+			int pageCount=count / pageSize +(count % pageSize==0?0:1);
+			if(endPage > pageCount){
+				endPage = pageCount;
+			}
+			prodDTO.setCount(count);
+			prodDTO.setPageBlock(pageBlock);
+			prodDTO.setStartPage(startPage);
+			prodDTO.setEndPage(endPage);
+			prodDTO.setPageCount(pageCount);
+			// ---------------- 페이징 처리 끝
+
 			if(prodReply.size() > 0) {
 				prodDTO.setAvgRating(prodReply.get(0).getAvgRating());
 				prodDTO.setCountRating(prodReply.get(0).getCountRating());
@@ -179,7 +192,6 @@ public class ProdController {
 
 			mv.addObject("details", details);
 			mv.addObject("prodReply", prodReply);
-			// 추천 꺼 만들기
 			mv.addObject("prodRelatedList", prodRelatedList);
 			mv.addObject("prodDTO", prodDTO);
 			mv.setViewName("product/details");
@@ -191,6 +203,53 @@ public class ProdController {
 		return null;
 
 	}
+
+	// 리뷰 Ajax
+	@RequestMapping(value = "/product/detailsAjax", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> detailsAjax(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) {
+		Map<String, Object> map = new HashMap<>();
+		String pageNum = req.getParameter("pageNum");
+
+		// ---------------- 페이징 처리(Ajax) 시작
+		if(pageNum == null) {
+			pageNum = "1";
+		}
+		int currentPage=Integer.parseInt(pageNum);
+		int prodLNum = Integer.parseInt(req.getParameter("prodLNum"));
+
+		prodDTO.setCurrentPage(currentPage);
+		prodDTO.setPageSize(3);
+		prodDTO.setProdLNum(prodLNum);
+
+		int pageSize = 3;
+		int count = prodService.selectReplyListCnt(prodDTO);
+		int pageBlock = 3;
+		int startPage = (currentPage-1)/pageBlock*pageBlock+1;
+		int endPage=startPage+pageBlock-1;
+		int pageCount=count / pageSize +(count % pageSize==0?0:1);
+		if(endPage > pageCount){
+			endPage = pageCount;
+		}
+
+		prodDTO.setCurrentPage(currentPage);
+		prodDTO.setPageSize(pageSize);
+		prodDTO.setCount(count);
+		prodDTO.setPageBlock(pageBlock);
+		prodDTO.setStartPage(startPage);
+		prodDTO.setEndPage(endPage);
+		prodDTO.setPageCount(pageCount);
+		// ---------------- 페이징 처리(Ajax) 끝
+
+		// 삭제 ?
+		List<ProdDTO> prodList = prodService.selectReplyList(prodDTO);
+		map.put("prodList", prodList);
+		// 삭제 ?
+
+		map.put("prodDTO", prodDTO);
+
+		return map;
+	}
+
 
 	// 리뷰창
 	@RequestMapping(value = "/product/replyEnroll", method = RequestMethod.GET)
@@ -216,7 +275,7 @@ public class ProdController {
 	}
 
 	// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
-	// 존재 : 1  /  존재x : 0
+	// 존재 : F  /  존재x : S
 	@RequestMapping(value = "/product/check", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> replyCheck(HttpServletRequest req, HttpServletResponse res, ProdDTO prodDTO) {
 		Map<String, Object> map = new HashMap<>();
@@ -254,14 +313,12 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO,BoardDTO boardDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
-			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
 			// 데이터 담기
-			mv.addObject("boardTopList", boardTopList);
 			mv.addObject("newProdList", newProdList);
 			mv.addObject("bsProdList", bsProdList);
 			mv.addObject("prodDTO", prodDTO);
