@@ -17,8 +17,8 @@ public class PageDTO {
 	private String userId;
 	private String startDate;
 	private String endDate;
-	
-	
+
+
 	// 삭제하는 물건 검색시 필요한것추가 업체 아이디
 	private String compId;
 	private String status;
@@ -134,4 +134,5 @@ public class PageDTO {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
 }
