@@ -21,6 +21,7 @@ function checkCouNum() {
 	if (!numRegex.exec(couNum) || couNum.length == 0 || couNum.length == "") {
 
 		spanElem.innerHTML = "18자리의 숫자를 입력해주세요";
+		spanElem.style.color = "RED";
 		checkCouNumResult = false;
 	} else {	debugger; // 18자리가 숫자가 맞으면 들어옴
 
@@ -38,10 +39,12 @@ function checkCouNum() {
 						success: function(rdata) {
 							if (rdata == '0') {	// 유저테이블에 쿠폰이 없으면
 								spanElem.innerHTML = "사용가능한 쿠폰입니다.";
+								spanElem.style.color = "GREEN";
 								checkCouNumResult = true;
 							} else { //유저 테이블에 쿠폰이 있으면
 								spanElem.innerHTML = "이미 등록된 쿠폰입니다.";
 								checkCouNumResult = false;
+								spanElem.style.color = "RED";
 							}
 						}
 					}); //ajax myCouNumDupCheck
@@ -49,6 +52,7 @@ function checkCouNum() {
 				} else { // 관리자 쿠폰 테이블에 쿠폰이 없는경우
 					checkCouNumResult = false;
 					spanElem.innerHTML = "없는 쿠폰입니다.";
+					spanElem.style.color = "RED";
 				}
 			}
 		}); //couNumDupCheck ajax

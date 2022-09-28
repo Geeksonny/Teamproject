@@ -60,6 +60,7 @@ function couponDelete(){
 
 	if (!numRegex.exec(couNum) || couNum.length == 0 || couNum.length == "" ){
 		spanElem.innerHTML = "18자리의 숫자를 입력해주세요";
+		spanElem.style.color = "RED";
 		checkCouNumResult =false;
 	} else  {
 
@@ -70,9 +71,11 @@ function couponDelete(){
 		success:function(rdata){
 			if(rdata=='1'){	// 아이디가 중복이거나 글자 수 넘억
 				spanElem.innerHTML = "중복입니다.";
+				spanElem.style.color = "RED";
 				checkCouNumResult =false;
 			}else{
 				spanElem.innerHTML = "사용가능한 상품코드입니다.";
+				spanElem.style.color = "GREEN";
 				checkCouNumResult =true;
 			}
 		}
