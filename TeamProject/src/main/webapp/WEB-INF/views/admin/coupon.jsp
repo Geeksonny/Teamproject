@@ -12,8 +12,23 @@
   data-template="vertical-menu-template-free"
 >
   <head>
+
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="${pageContext.request.contextPath }/resources/jsPro/coupon.js"></script>
+
+  <%
+ String strReferer = request.getHeader("referer"); //이전 URL 가져오기
+
+ if(strReferer == null){
+%>
+ <script language="javascript">
+  alert("정상적인 경로를 통해 다시 접근해 주세요.");
+  document.location.href="${pageContext.request.contextPath }/main/main";
+ </script>
+<%
+  return;
+ }
+%>
   </head>
 
   <body>
@@ -36,11 +51,12 @@
 
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" action="${pageContext.request.contextPath}/admin/couponInsert" method="POST">
+                      <form id="formAccountSettings" name="coupon" action="${pageContext.request.contextPath}/admin/couponInsert" onsubmit="return couponChk()" method="POST">
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="userNm" class="form-label">쿠폰 코드</label>
-                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum" placeholder="16자리 숫자를 입력하세요"/>
+                            <input class="form-control form-control-lg" type="text" name="couNum" id="couNum"  placeholder="18자리 숫자를 입력하세요"/>
+                            <span id="checkCouNumResult"><!-- 쿠폰코드 결과 표시 영역 --></span>
                           </div>
                           <div class="mb-3 col-md-6">
 	                          <button type="button" class="btn btn-outline-primary me-2" style="margin-top: 1.8rem; height:60%;" id=couNumbtn > 쿠폰 코드 생성 </button>
@@ -66,7 +82,7 @@
                             <input class="form-control form-control-lg" type="text" name="couDet" id="couDet" placeholder="상세 설명을 적어주세요"/>
                           </div>
                         <div class="mb-3 col-md-3">
-                          <button type="submit" class="btn btn-primary me-2" style="margin-top: 1.8rem; height:60%" >+ 추가</button>
+                          <button type="submit" class="btn btn-primary me-2" style="margin-top: 1.8rem; height:60%" onclick="couponChk();">+ 추가</button>
                           <button type="reset" class="btn btn-outline-secondary" style="margin-top: 1.8rem; height:60%">취소</button>
                         </div>
                       </form>
@@ -84,6 +100,7 @@
                     <a onclick="couponDelete();"><img src="${pageContext.request.contextPath }/resources/img/icon/ic_close.svg" class="m_header-banner-close right" width="50px" style="cursor:pointer;"></a>
                     <div class="card-header"><h2 style="color:#6c757d; font-weight:990 !important">
                     	<strong>${couponDTO.couNum }</strong></h2>
+
                     </div>
                     <div class="card-body">
                       <h5 class="card-title"><strong>${couponDTO.couNm }

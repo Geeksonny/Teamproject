@@ -392,4 +392,16 @@
 		DELETE FROM COUPON_INFO
 		 WHERE COU_NUM	=#{couNum}
 	</delete>
+	<!-- 쿠폰 갯수  -->
+	<select id="getCouponNum" resultType="com.itwillbs.domain.CouponDTO">
+		 SELECT  *
+		  FROM   COUPON_INFO
+		  WHERE  COU_NUM=#{couNum}
+	</select>
+<!-- 	마이 쿠폰 갯수 -->
+	<select id="getMyCouponNum" resultType="java.lang.Integer">
+		 SELECT  count(*)
+		  FROM   COUPON
+		  WHERE  COU_NUM=#{couNum}
+	</select>
 </mapper>

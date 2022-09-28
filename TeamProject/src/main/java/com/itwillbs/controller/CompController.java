@@ -95,21 +95,7 @@ public class CompController {
 		}
 	}
 
-	// 제품코드 중복검사
-	@RequestMapping(value = "/comp/idDupCheck", method = RequestMethod.POST)
-	public ResponseEntity<String> compidCheck(HttpServletRequest request) {
-		String prodLCode = request.getParameter("prodLCode");
-		ProdDTO prodDTO = compService.getProd(prodLCode);
-		String result = "";
-		if (prodDTO != null) { // 상품코드 중복
-			result = "iddup";
-		} else { // 상품코드 사용가능
-			result = "idok";
-		}
 
-		ResponseEntity<String> entity = new ResponseEntity<String>(result, HttpStatus.OK);
-		return entity;
-	}
 	// 물건 등록
 	@RequestMapping(value = "/comp/insertGoodsPro", method = RequestMethod.POST)
 	public String insertPro(HttpServletRequest request, HttpSession session, MultipartFile prodLMainimg,

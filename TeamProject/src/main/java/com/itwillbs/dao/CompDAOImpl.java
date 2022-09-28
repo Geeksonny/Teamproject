@@ -175,6 +175,15 @@ public class CompDAOImpl implements CompDAO {
 	public int getCouponListCount(CouponDTO couponDTO) {
 		return sqlSession.selectOne(namespace+".getCouponListCount",couponDTO);
 	}
+	// 쿠폰 코드 갖고오기
+	@Override
+	public CouponDTO getCouponNum(CouponDTO couponDTO) {
+		return sqlSession.selectOne(namespace+".getCouponNum",couponDTO);
+	}
+	@Override
+	public int getMyCouponNum(CouponDTO couponDTO) {
+		return sqlSession.selectOne(namespace+".getMyCouponNum",couponDTO);
+	}
 
 
 

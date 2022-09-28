@@ -195,13 +195,12 @@
 
         var optionMax= $('#quantity_'+index).val(); // 디비저정된 수량 최대값
 
-        if ($button.hasClass('inc') && oldValue <= optionMax) {
-            if(oldValue == optionMax){
+        if ($button.hasClass('inc')) {
+            if(parseInt(oldValue) >= parseInt(optionMax)){
 				alert("재고수량이상으로 주문하실수 없습니다.");
 				var newVal = oldValue;
 			}else {
              newVal = parseFloat(oldValue) + 1;
-
 			}
         } else {
             // Don't allow decrementing below zero

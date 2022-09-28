@@ -95,4 +95,8 @@ public interface CompService {
 
 	// 쿠폰리스트 갯수
 	int getCouponListCount(CouponDTO couponDTO);
+	//쿠폰 코드
+	public CouponDTO getCouponNum(CouponDTO couponDTO);
+	// 마이페이지 쿠폰 코드
+	public int getMyCouponNum(CouponDTO couponDTO);
 }

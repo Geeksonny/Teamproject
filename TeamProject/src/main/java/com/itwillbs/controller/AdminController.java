@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itwillbs.domain.CommonDTO;
@@ -400,6 +401,30 @@ public class AdminController {
 
 		ResponseEntity<String> entity = new ResponseEntity<String>("1", HttpStatus.OK);
 		return entity;
+	}
+	@RequestMapping(value = "/admin/couNumDupCheck")
+	public ResponseEntity<String> couNumDupCheck(HttpServletRequest request, CouponDTO couponDTO) {
+
+		CouponDTO couponDTO2 =compService.getCouponNum(couponDTO);
+		if(couponDTO2!=null) {
+			ResponseEntity<String> entity = new ResponseEntity<String>("1", HttpStatus.OK);
+			return entity;
+
+		}else {System.out.println("/web/admin/couNumDupCheck  쿠폰없다");
+			ResponseEntity<String> entity = new ResponseEntity<String>("2", HttpStatus.OK);
+			return entity;
+		}
+
+
+	}
+	@ResponseBody
+	@RequestMapping(value = "/admin/myCouNumDupCheck")
+	public ResponseEntity<Integer> myCouNumDupCheck(HttpServletRequest request, CouponDTO couponDTO) {
+
+		int count =compService.getMyCouponNum(couponDTO);
+			ResponseEntity<Integer> entity = new ResponseEntity<Integer>(count, HttpStatus.OK);
+			return entity;
+
 	}
 
 }

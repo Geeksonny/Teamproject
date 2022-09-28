@@ -223,5 +223,15 @@ public class CompServiceImpl implements CompService {
 	public int getCouponListCount(CouponDTO couponDTO) {
 		return compDAO.getCouponListCount(couponDTO);
 	}
+	// 쿠폰 코드갖고오기
+	@Override
+	public CouponDTO getCouponNum(CouponDTO couponDTO) {
+		return compDAO.getCouponNum(couponDTO);
+	}
+
+	@Override
+	public int getMyCouponNum(CouponDTO couponDTO) {
+		return compDAO.getMyCouponNum(couponDTO);
+	}
 
 }

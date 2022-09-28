@@ -77,4 +77,8 @@ public interface CompDAO {
 	public void deleteCoupon(CouponDTO couponDTO);
 	// admin 쿠폰리스트 갯수
 	public int getCouponListCount(CouponDTO couponDTO);
+	// 쿠폰 코드 갖고오기
+	public CouponDTO getCouponNum(CouponDTO couponDTO);
+	// 마이페이지 쿠폰 코드 검사
+	public int getMyCouponNum(CouponDTO couponDTO);
 }
