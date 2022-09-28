@@ -51,4 +51,6 @@ public interface MypageDAO {
 			
 		// 주문취소 시 ORD_NUM 정보확인
 		OrderListDTO numCheck(int ordNum);
+		// 주문확정
+		void updateOrderFin(OrderListDTO orderListDTO);
 }

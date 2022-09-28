@@ -434,4 +434,19 @@ public class MypageController {
 			}	
 				
 		}
+		// 주문확정
+		@RequestMapping(value="/mypage/orderFin" , method=RequestMethod.POST)
+		public String orderFin(HttpSession session, HttpServletRequest request, OrderListDTO orderListDTO) throws Exception{
+			int ordNum = Integer.parseInt(request.getParameter("ordNum"));
+			OrderListDTO orderListDTO2=mypageService.numCheck(ordNum);
+			if(orderListDTO2!=null) {
+				orderListDTO.setOrdRefund("13");
+				mypageService.updateOrderFin(orderListDTO);
+				return "redirect:/mypage/order";	
+			}else {
+				// "틀림" 뒤로이동
+				return "member/msg";
+			}	
+				
+		}
 }

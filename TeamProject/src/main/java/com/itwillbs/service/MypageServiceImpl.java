@@ -160,5 +160,10 @@ public class MypageServiceImpl implements MypageService {
 		public OrderListDTO numCheck(int ordNum) {
 			return mypageDAO.numCheck(ordNum);
 		}
+		// 주문확정
+		@Override
+		public void updateOrderFin(OrderListDTO orderListDTO) {
+			mypageDAO.updateOrderFin(orderListDTO);
+		}
 
 }

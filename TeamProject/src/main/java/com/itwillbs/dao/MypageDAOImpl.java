@@ -120,5 +120,10 @@ public class MypageDAOImpl implements MypageDAO {
 	public OrderListDTO numCheck(int ordNum) {
 		return sqlSession.selectOne(namespace+".numCheck",ordNum);
 	}
+	// 주문확정
+	@Override
+	public void updateOrderFin(OrderListDTO orderListDTO) {
+		sqlSession.update(namespace + ".updateOrderFin", orderListDTO);
+	}
 
 }
