@@ -137,12 +137,12 @@
                 </li>
                 <li class="menu-item">
                   <a href="${pageContext.request.contextPath }/mypage/prodLikeList?userId=${sessionScope.userId}" class="menu-link">
-                    <div data-i18n="Basic Inputs">좋아요한 상품</div>
+                    <div data-i18n="Basic Inputs">찜 목록</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="${pageContext.request.contextPath }/mypage/likeList?userId=${sessionScope.userId}" class="menu-link">
-                    <div data-i18n="Input groups">좋아요</div>
+                    <div data-i18n="Input groups">좋아요 목록</div>
                   </a>
                 </li>
               </ul>
