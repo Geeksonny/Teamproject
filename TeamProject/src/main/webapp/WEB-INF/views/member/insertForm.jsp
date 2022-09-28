@@ -20,116 +20,131 @@ src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 	function checkPass(password){
 			// 패스워드 검사를 위한 정규표현식 패턴 작성 및 검사 결과에 따른 변수값 변경
 		var spanElem = document.getElementById("checkPassResult");
-			
+
 		// 정규표현식 패턴 정의
 		var lengthRegex = /^[A-Za-z0-9!@#$%]{8,16}$/; // 길이 및 사용 가능 문자 규칙
 		var engLowerRegex = /[a-z]/;	// 소문자
 		var numRegex = /[0-9]/;		// 숫자 규칙
 		var specRegex = /[!@#$%]/;	// 특수문자 규칙
-		
+
 		var count = 0;	// 각 규칙별 검사 결과를 카운팅 할 변수
-		
+
 		if(lengthRegex.exec(password)){	// 패스워드 길이 및 사용 가능 문자 규칙 통과 시
-			spanElem.innerHTML = "사용 가능한 패스워드";
-			spanElem.style.color = "GREEN";
-				
+			$('#userPass').removeClass("is-invalid");
+			$('#userPass').addClass("is-valid");
+// 			spanElem.innerHTML = "사용 가능한 패스워드";
+// 			spanElem.style.color = "GREEN";
+
 			// 각 규칙별 검사 후 해당 항목이 포함되어 있을 경우 카운트 증가
 			if(engLowerRegex.exec(password)) count++;
 			if(numRegex.exec(password)) count++;
 			if(specRegex.exec(password)) count++;
-			
+
 			switch(count){
 			case 3: // 특수문자, 대문자, 소문자, 숫자 중 3개를 만족
-				spanElem.innerHTML = '"보안 강도 : 안전"';
-				spanElem.style.color = "GREEN";
+				$('#userPass').removeClass("is-invalid");
+				$('#userPass').addClass("is-valid");
+				spanElem.innerHTML = '';
 				checkPassResult = true;
 				break;
 			case 2: // 특수문자, 대문자, 소문자, 숫자 중 2개를 만족
-				spanElem.innerHTML = '"보안 강도 : 보통"';
-				spanElem.style.color = "ORANGE";
+				$('#userPass').removeClass("is-valid");
+				$('#userPass').addClass("is-invalid");
+				spanElem.innerHTML = '';
+// 				spanElem.innerHTML = '"보안 강도 : 보통"';
+// 				spanElem.style.color = "ORANGE";
 				checkPassResult = true;
 				break;
-			default: 
-				spanElem.innerHTML = '"영문자, 숫자, 특수문자 중 2가지 이상 조합 필수!"';
-				spanElem.style.color = "RED";
+			default:
+				$('#userPass').removeClass("is-valid");
+				$('#userPass').addClass("is-invalid");
+				spanElem.innerHTML = '영문자, 숫자, 특수문자 중 2가지 이상 조합 필수!';
+				spanElem.style.color = "#dc3545";
 				checkPassResult = false;
-			}			
+			}
 		} else {
 				//spanElem.innerHTML = "사용 불가능한 패스워드";
-			spanElem.innerHTML = '"영문자, 숫자, 특수문자 조합 8 ~ 16자리 필수!"';
-			spanElem.style.color = "RED";
+				$('#userPass').removeClass("is-valid");
+				$('#userPass').addClass("is-invalid");
+			spanElem.innerHTML = '영문자, 숫자, 특수문자 조합 8 ~ 16자리 필수!';
+			spanElem.style.color = "#dc3545";
 			checkPassResult = false;
 		}
-			
+
 	}
-	
+
 	function checkRetypePass(userPass2){
 		var pass = document.userForm.userPass.value;
 		var spanElem = document.getElementById("checkRetypePassResult");
 		if(pass == userPass2){	// 패스워드 일치
-			spanElem.innerHTML = "패스워드 일치";
-			spanElem.style.color = "GREEN";
+// 			spanElem.innerHTML = "패스워드 일치";
+// 			spanElem.style.color = "GREEN";
 			checkRetypePassResult = true;
+			$('#userPass2').removeClass("is-invalid");
+			$('#userPass2').addClass("is-valid");
 		} else {	// 패스워드 불일치
-			spanElem.innerHTML = "패스워드 불일치";
-			spanElem.style.color = "RED"
+// 			spanElem.innerHTML = "패스워드 불일치";
+// 			spanElem.style.color = "#dc3545"
 			checkRetypePassResult = false;
+			$('#userPass2').removeClass("is-valid");
+			$('#userPass2').addClass("is-invalid");
 		}
-		
+
 	}
-	
+
 	function checkName(userNm) {
 		var spanElem = document.getElementById("checkNameResult");
-		
+
 		var lengthRegex = /^[가-힣]{2,5}$/;
-		
+
 		if(lengthRegex.exec(userNm)){
-			spanElem.innerHTML = "이름 형식 일치";
-			spanElem.style.color = "GREEN";
+// 			spanElem.innerHTML = "이름 형식 일치";
+// 			spanElem.style.color = "GREEN";'
+			$('#userNm').removeClass("is-invalid");
+			$('#userNm').addClass("is-valid");
 			checkNameResult = true;
 		} else {
-			spanElem.innerHTML = "이름 형식 불일치";
-			spanElem.style.color = "RED";
+// 			spanElem.innerHTML = "이름 형식 불일치";
+// 			spanElem.style.color = "RED";
+			$('#userNm').removeClass("is-valid");
+			$('#userNm').addClass("is-invalid");
 			checkNameResult = false;
 		}
-		
+
 	}
-	
+
 	function checkSubmit(){
-		
-		if(!checkIdResult){
-			alert("아이디 중복확인 필수!");
-			document.userForm.id.focus();
-			return false;
-		} else if (document.userForm.userId.value == "") {
+
+// 				!checkIdResult){
+// 			alert("아이디 중복확인 필수!");
+// 			document.userForm.id.focus();
+// 			return false;
+		if (document.userForm.userId.value == "") {
 			alert("아이디를 입력해 주세요!");
-			document.userForm.id.focus();
+			document.userForm.userId.focus();
 			return checkIdResult = false;
 		} else if(!checkPassResult){
 			alert("올바른 패스워드 입력 필수!");
 			document.userForm.userPass.focus();
-			return false; 
+			return false;
 		} else if(!checkRetypePassResult){
 			alert("패스워드 확인 필수!");
 			document.userForm.userPass2.focus();
 			return false;
 		} else if (!checkNameResult) {
 			alert("이름 입력 필수!");
-			document.userForm.name.focus();
+			document.userForm.userNm.focus();
 			return false;
-		}else if (!checkEmailResult) {
-			alert("이메일 입력 필수!");
-			document.userForm.email.focus();
-			return false;
-		} else if (document.userForm.emailnet.value == "") {
-			alert("도메인을 선택해 주세요");
-			return false;
+// 		}else if (!checkEmailResult) {
+// 			alert("이메일 입력 필수!");
+// 			document.userForm.userEmail.focus();
+// 			return false;
 		}
-		
-		
-//		return true;
-	}	
-	
+
+
+		return true;
+	}
+
 // 회원 타입 선택
 $(document).ready(function(){
 	 $("form[name=compForm]").hide();
@@ -239,7 +254,7 @@ $(document).ready(function () {
           </div>
            <div class="form-floating mb-3">
             <input type="text" class="form-control" name="userNm" id="userNm" placeholder="홍길동" onkeyup="checkName(this.value)">
-            <span id="checkNameResult"><!-- 이름 형식 일치 여부 표시  --></span>
+            <span class="mt-1" id="checkNameResult"><!-- 이름 형식 일치 여부 표시  --></span>
             <label for="userNm">이름</label>
           </div>
            <div class="form-floating mb-3">
