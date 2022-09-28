@@ -1,7 +1,3 @@
-# TeamProject-2/TP
-2조의 팀 프로젝트 핏티드에 대한 설명 입니다. 
-<hr><hr>
-
 # 나에게 딱 맞는 운동 쇼핑몰! <핏티드 Fitted>
 <img width="50%" src="https://user-images.githubusercontent.com/108128650/187670001-4b00e7ed-d12b-49f2-9d06-0c7fb9b9693b.png"/>
 
