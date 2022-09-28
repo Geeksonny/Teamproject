@@ -8,17 +8,17 @@
 <!-- 네이버로그인 -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript">
-// 구글 로그인 버튼 클릭
-function loginWithGoogle() {
-    $.ajax({
-        url: '${pageContext.request.contextPath }/auth/getGoogleAuthUrl',
-        type: 'get',
-    }).done(function (res) {
-        location.href = res;
-    });
-}
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- // 구글 로그인 버튼 클릭 -->
+<!-- function loginWithGoogle() { -->
+<!--     $.ajax({ -->
+<%--         url: '${pageContext.request.contextPath }/auth/getGoogleAuthUrl', --%>
+<!--         type: 'get', -->
+<!--     }).done(function (res) { -->
+<!--         location.href = res; -->
+<!--     }); -->
+<!-- } -->
+<!-- </script> -->
 </head>
 <body>
 <!-- 메뉴단 -->
@@ -60,7 +60,7 @@ function loginWithGoogle() {
 							    	<img src="${pageContext.request.contextPath}/resources/img/kakao_login_medium_wide.png" style="width: 70px; height: 70px">
 							    </a>
 							    <!--     구글 로그인 -->
-							    	<img onclick="loginWithGoogle()" src="${pageContext.request.contextPath}/resources/img/oauth_google.png" style="width: 70px; height: 70px; cursor: pointer;">
+<%-- 							    	<img onclick="loginWithGoogle()" src="${pageContext.request.contextPath}/resources/img/oauth_google.png" style="width: 70px; height: 70px; cursor: pointer;"> --%>
 							<br><br>
                         <ul>
                         	<li>
