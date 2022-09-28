@@ -31,6 +31,11 @@
 			              ,PR.PROD_L_DETAIL
 			              ,PR.PROD_L_QUANTITY
 			              ,PL.avgRating
+			              ,CASE WHEN (SELECT COUNT(*)
+		                                FROM PRODUCT_LIKE
+		                               WHERE USER_ID = #{userId}
+		                                 AND PROD_L_CODE = PR.PROD_L_CODE) = 1 THEN 'redhart.png' ELSE 'heart.png'
+		                                 END AS heart
 					  FROM projectdb.PRODUCT_LIST PR
 					  LEFT OUTER JOIN (SELECT PROD_L_NUM,ROUND(AVG(RATING)) AS avgRating FROM projectdb.PRODUCT_REPLY GROUP BY PROD_L_NUM) PL
 		  				ON PR.PROD_L_NUM = PL.PROD_L_NUM
@@ -147,10 +152,10 @@
               ,P.PROD_L_QUANTITY
               ,C.COMP_NM
               ,CASE WHEN (SELECT COUNT(*)
-				           FROM PRODUCT_LIKE
-				          WHERE USER_ID = #{userId}
-				            AND PROD_L_CODE = P.PROD_L_CODE) = 1 THEN 'redhart.png' ELSE 'heart.png'
-				            END AS heart
+				            FROM PRODUCT_LIKE
+				           WHERE USER_ID = #{userId}
+				             AND PROD_L_CODE = P.PROD_L_CODE) = 1 THEN 'redhart.png' ELSE 'heart.png'
+				             END AS heart
 		  FROM projectdb.PRODUCT_LIST AS P
           JOIN projectdb.COMPANY_INFO AS C
             ON P.PROD_L_COMPNM=C.COMP_ID
@@ -161,7 +166,7 @@
 	<select id="getProdNumName" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
 		SELECT *
 		  FROM (
-			  SELECT R.REPLY_NUM
+			SELECT R.REPLY_NUM
 			      ,L.PROD_L_NUM
 			      ,U.USER_ID
 			      ,R.CONTENT
@@ -175,7 +180,7 @@
 		     WHERE 1=1
 			   AND L.PROD_L_NUM = #{prodLNum}
 			 ORDER BY R.REPLY_DATE DESC) A
-		 LIMIT #{startRow}, #{pageSize}
+			 LIMIT #{startRow}, #{pageSize}
 	</select>
 
 	<!-- 리뷰 등록 -->
@@ -183,6 +188,12 @@
   		INSERT INTO PRODUCT_REPLY(PROD_L_NUM, USER_ID, CONTENT, RATING)
   		VALUES (#{prodLNum}, #{userId}, #{content}, #{rating})
   	</insert>
+
+	<!-- 리뷰 수정 -->
+<!-- 	<update id="updateBoard"> -->
+<!-- 		UPDATE PRODUCT_REPLY -->
+<!-- 		   SET BOARD_SUBJECT=#{boardSubject}, BOARD_CONTENT=#{boardContent} where BOARD_NUM=#{boardNum} -->
+<!-- 	</update> -->
 
 	<!-- 리뷰 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능 -->
 	<select id="checkReply" parameterType="com.itwillbs.domain.ProdDTO" resultType="integer">
@@ -287,6 +298,11 @@
               ,PL.PROD_L_DETAIL
               ,PL.PROD_L_QUANTITY
               ,PR.avgRating
+              ,CASE WHEN (SELECT COUNT(*)
+	                        FROM PRODUCT_LIKE
+	                       WHERE USER_ID = #{userId}
+	                         AND PROD_L_CODE = PL.PROD_L_CODE) = 1 THEN 'redhart.png' ELSE 'heart.png'
+	                         END AS heart
 		  FROM projectdb.PRODUCT_LIST PL
 		 INNER JOIN( SELECT A.ORD_L_CODE,A.ORD_L_QUANTITY FROM
 			 			( SELECT ORD_L_CODE, SUM(ORD_L_QUANTITY) AS ORD_L_QUANTITY FROM projectdb.ORDER_LIST GROUP BY ORD_L_CODE) A
