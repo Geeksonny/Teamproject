@@ -10,10 +10,10 @@
 <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 
-// 리뷰쓰기
+/* 리뷰 쓰기 */
 $(document).ready(function(){
 	$("#detailReply").on("click", function(e){
-		debugger;
+// 		debugger;
 		e.preventDefault();
 
 		const userId = '${prodDTO.userId}';
@@ -41,6 +41,137 @@ $(document).ready(function(){
 			}
 		});
 
+	});
+});
+
+
+
+/* 리뷰 리스트, 페이징 AJAX 호출 */
+function searchProd(comp){
+	var pageNum = "1";
+	pageNum = comp.getAttribute('data-value');
+	$.ajax({
+    	url: '${pageContext.request.contextPath }/product/detailsAjax',
+		type: 'post',
+		data : {pageNum : pageNum,
+				prodLNum : '${prodDTO.prodLNum}'},
+		dataType: "json",
+		success:function( data ) {
+			// 리뷰 뿌려주기
+			printReplyList(data.prodList);
+			// 페이징 처리
+			printPaging(data.prodDTO);
+		}
+	});
+}
+
+
+/* ----- 리뷰 뿌려주기 ----- */
+function printReplyList(data){
+
+	$('.review_list').empty();
+
+	//const replyDate = '${details.replyDate}';
+	// 날짜 형식 (time stemp 형태라서 가져올때 long타입으로 가져와져서 형태 바꿔줌)
+// 	const currentTime = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+//	replyDate.toISOString().replace("T", " ").replace(/\..*/, '');
+
+	data.forEach((e, index) => {
+
+		var result = '<div class="review_item"> '
+	            +  '<div class="media"> '
+	            +    '<div class="d-flex"> '
+	            +      '<img src="${pageContext.request.contextPath }/resources/img/product/single-product/review-1.png" alt="" /> '
+	            +    '</div> '
+	            +    '<div class="media-body"> '
+	            +      '<span style="font-size: 24px; margin-right:2px">' + e.userId + '</span> ';
+
+        for(var i = 0; i< e.rating; i++){
+ 		    result += '<i class="fa fa-star" style="color:orange"></i> ';
+ 		}
+
+        result += '(' + e.rating + '점) '
+		        +		'</div> '
+		        +  '</div> '
+		        +    '<span>' + e.replyDate + '</span> '
+		        +  '<p> '
+		        +    e.content
+		        +  '</p> '
+		        +'</div> '
+		        +'<br> ';
+
+		$('.review_list').append(result);
+
+// 		$('.review_list').append(
+// 				'<div class="review_item"> '
+// 	            +  '<div class="media"> '
+// 	            +    '<div class="d-flex"> '
+// 	            +      '<img src="${pageContext.request.contextPath }/resources/img/product/single-product/review-1.png" alt="" /> '
+// 	            +    '</div> '
+// 	            +    '<div class="media-body"> '
+// 	            +      '<span style="font-size: 24px; margin-right:2px">' + e.userId + '</span> '
+// 		);
+
+// 		for(var i = 0; i< e.rating; i++){
+// 			$('.media-body').append(
+// 		    	'<i class="fa fa-star" style="color:orange"></i> '
+// 			);
+// 		}
+// 		$('.media-body').append(
+// 			'(' + e.rating + '점) '
+// 		)
+// 		$('.review_list').append(
+// 	                 '</div> '
+// 	            +  '</div> '
+// 	            + '<br> '
+// 	            +    '<span>' + currentTime + '</span> '
+// 	            +  '<p> '
+// 	            +    e.content
+// 	            +  '</p> '
+// 	            +'</div> '
+// 	            +'<br> '
+// 		);
+	});
+
+}
+
+
+/* ----- 페이징 처리 ----- */
+function printPaging(dto){
+
+// 	debugger;
+	$('#product__pagination').empty();
+	var context = '${pageContext.request.contextPath }';
+
+	// << (첫 페이지로 가기)
+	if(dto.startPage > dto.pageBlock) {
+		var pageNum = dto.startPage - dto.pageBlock
+		$('#product__pagination').append('<a class="search page" data-value="' + pageNum + '" >&lt; &lt;</a> ')
+	}
+
+	// for
+	for(var i = dto.startPage; i <= dto.endPage; i++){
+		$('#product__pagination').append(
+				'<a class="active search page" data-value="' + i + '" >'+ i +'</a> '
+		);
+	}
+
+	// >> (끝 페이지로 가기)
+	if(dto.endPage < dto.pageCount) {
+		var pageNum = dto.startPage + dto.pageBlock
+		$('#product__pagination').append('<a class="search page" data-value="' + pageNum + '" >&gt; &gt;</a> ')
+	}
+
+	// 페이지 클릭하면 AJAX호출
+	$('.search').click(function(){
+		searchProd(this);
+	});
+
+}
+
+$(document).ready(function(){
+	$('.search').click(function(){
+		searchProd(this);
 	});
 });
 
@@ -96,7 +227,7 @@ function printProdList(data){
 
     <div class="container mt-5">
           <h4>상품</h4>
-          <div class="breadcrumb__links mt-1 mb-3">
+          <div class="breadcrumb__links mt-1 mb-3">p
               <a href="${pageContext.request.contextPath }/main/main">홈</a>
               <a href="${pageContext.request.contextPath }/product/shop">스토어</a>
               <span>상품</span>
@@ -132,10 +263,9 @@ function printProdList(data){
             <hr class="md-4"><br>
               <!-- 내가 찜한 목록들 리스트 볼수있게 이동? -->
               <div class="center" style="display:block">
-                  <a class="site-btn mr-2" id="prodLike" href="${pageContext.request.contextPath }/product/detailsLike?prodLCode=${details.prodLCode}&prodLNum=${details.prodLNum}"><span id="sp">찜하기</span></a>
+                  <a class="site-btn mr-2" id="prodLike"><span id="sp">찜하기</span></a>
 	              <a class="site-btn" id="insertBasket"><span id="sp">장바구니에 담기</span></a>
 <!-- 	              장바구니에 가져갈 히든 값. 제품 코드와 가격, 수량 1개 -->
-					<input type="hidden" name="prodLNum" value="${details.prodLNum}" id="prodLNum">
 				  <input type="hidden" name="prodLcount" type="text" id="prodLcount" value="1">
 	              <input type="hidden" name="prodLCode" value="${details.prodLCode}" id="prodLCode">
               	  <input type="hidden" name="prodLPrice" value="${details.prodLPrice}" id="prodLPrice">
@@ -196,8 +326,8 @@ function printProdList(data){
                     <hr>
                   </div>
               </div>
+              <div class="review_list">
 			  <c:forEach var="prodReply"  items="${prodReply}" >
-	              <div class="review_list">
 	                <div class="review_item">
 	                  <div class="media">
 	                    <div class="d-flex">
@@ -216,9 +346,26 @@ function printProdList(data){
 	                    ${prodReply.content}
 	                  </p>
 	                </div>
-	              </div>
 	              <br>
 				</c:forEach>
+				</div>
+				<!-- 페이지 (페이징 처리) 시작 -->
+                 <div class="row">
+                     <div class="col-lg-12">
+                         <div id="product__pagination" class="product__pagination">
+                            <c:if test="${prodDTO.startPage > prodDTO.pageBlock }">
+								<a class="search page" data-value="${prodDTO.startPage - prodDTO.pageBlock}">&lt; &lt;</a>
+							</c:if>
+							<c:forEach var="i" begin="${prodDTO.startPage }" end="${prodDTO.endPage }" step="1">
+								<a class="active search page" data-value="${i}">${i}</a>
+							</c:forEach>
+							<c:if test="${prodDTO.endPage < prodDTO.pageCount }">
+								<a class="search page" data-value="${prodDTO.startPage + prodDTO.pageBlock}">&gt; &gt;</a>
+							</c:if>
+                         </div>
+                     </div>
+                 </div>
+                 <!-- 페이지 (페이징 처리) 끝 -->
             </div>
           </div>
         </div>
@@ -235,7 +382,6 @@ function printProdList(data){
                 </div>
             </div>
             <div class="row">
-
             	<!-- Related Product 관련상품 뿌려주는 곳 시작 -->
             	<div class="row" id="detailsContainer">
                    	<c:forEach var="prodRelatedList" items="${prodRelatedList}">
