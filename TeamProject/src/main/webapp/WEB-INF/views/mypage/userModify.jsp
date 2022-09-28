@@ -75,10 +75,6 @@ $(document).ready(function(){
                       <a class="nav-link" href="${pageContext.request.contextPath }/mypage/passMod">
                       <i class="bx bx-user me-1"></i> 비밀번호 변경</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/connection">
-                      <i class="bx bx-link-alt me-1"></i> 연결</a>
-                    </li>
                   </ul>
 
                   <!-- Account -->

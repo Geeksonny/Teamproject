@@ -141,11 +141,6 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="${pageContext.request.contextPath }/member/forms-input-groups" class="menu-link">
-                    <div data-i18n="Input groups">나의 리뷰</div>
-                  </a>
-                </li>
-                <li class="menu-item">
                   <a href="${pageContext.request.contextPath }/mypage/likeList?userId=${sessionScope.userId}" class="menu-link">
                     <div data-i18n="Input groups">좋아요</div>
                   </a>

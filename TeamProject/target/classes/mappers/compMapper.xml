@@ -377,6 +377,15 @@
 				,round((1 - COU_DC)*100,0) as couDc
 				,COU_INFO_DATE
 		  FROM   COUPON_INFO
+	  ORDER BY	 COU_INFO_DATE
+	  	 LIMIT   #{startRow}
+                ,#{pageSize}
+	</select>
+<!-- 쿠폰 갯수  -->
+	<select id="getCouponListCount" resultType="java.lang.Integer">
+		 SELECT
+				count(COU_NUM)
+		  FROM   COUPON_INFO
 	</select>
 <!-- 	admin 쿠폰 삭제 -->
 	<delete id="deleteCoupon">

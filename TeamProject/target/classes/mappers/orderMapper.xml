@@ -5,39 +5,37 @@
 
 <mapper namespace="com.itwillbs.mappers.orderMapper">
 
-	<insert id="insertOrder" >
-
-			INSERT INTO ORDER_BOARD(
-					NUM
-				   ,USER_ID
-				   ,ORD_GET_NM
-				   ,ORD_GET_ZIPCODE
-				   ,ORD_GET_ADDRESS
-				   ,ORD_GET_PHONE
-				   ,ORD_DELIVERY_MESSAGE
-				   ,ORD_TOTAL_PRICE
-				   ,ORD_COUPONDC
-				   ,ORD_FINALPRICE
-				   )
-			VALUES(
-					(SELECT NUM
+   <insert id="insertOrder" >
+         INSERT INTO ORDER_BOARD(
+               NUM
+               ,USER_ID
+               ,ORD_GET_NM
+               ,ORD_GET_ZIPCODE
+               ,ORD_GET_ADDRESS
+               ,ORD_GET_PHONE
+               ,ORD_DELIVERY_MESSAGE
+               ,ORD_TOTAL_PRICE
+               ,ORD_COUPONDC
+               ,ORD_FINALPRICE
+               )
+         VALUES(
+               (SELECT NUM
                        FROM   (SELECT IFNULL(MAX(CAST(NUM AS UNSIGNED)), 0) + 1 AS NUM
                                             FROM ORDER_BOARD) A)
-				   ,#{userId}
-				   ,#{ordGetNm}
-				   ,#{ordGetZipcode}
-				   ,#{ordGetAddress}
-				   ,#{ordGetPhone}
-				   ,#{ordDeliveryMessage}
-				   ,#{ordTotalPrice}
-				   ,#{ordCouponDc}
-				   ,#{ordFinalPrice}
-				    )
-	</insert>
+               ,#{userId}
+               ,#{ordGetNm}
+               ,#{ordGetZipcode}
+               ,#{ordGetAddress}
+               ,#{ordGetPhone}
+               ,#{ordDeliveryMessage}
+               ,#{ordTotalPrice}
+               ,#{ordCouponDc}
+               ,#{ordFinalPrice}
+                )
+   </insert>
 
-<!--  결제시 결제 리스트에 값 넣기	 -->
-
-	 <insert id="isertOrderList">
+<!--  결제시 결제 리스트에 값 넣기    -->
+    <insert id="insertOrderList">
          INSERT INTO ORDER_LIST(
              ORD_NUM
              ,ORD_L_USER
@@ -66,29 +64,28 @@
          )
    </insert>
 
-
 <!-- 결제시 재고 수량 변경 -->
-	<update id="updateQuantity">
-		UPDATE PRODUCT_LIST
-			SET PROD_L_QUANTITY = PROD_L_QUANTITY - #{ordLQuantity}
-		 	WHERE PROD_L_CODE		=#{prodLCode}
-	</update>
-
+   <update id="updateQuantity">
+      UPDATE PRODUCT_LIST
+         SET PROD_L_QUANTITY = PROD_L_QUANTITY - #{ordLQuantity}
+          WHERE PROD_L_CODE      =#{prodLCode}
+   </update>
 
 <!-- 결제시 장바구니 초기화 -->
-	<delete id="removeItemBasket">
-		DELETE FROM SHOPPING_BASKET
-			WHERE SB_USER=#{userId}
-	</delete>
+   <delete id="removeItemBasket">
+      DELETE FROM SHOPPING_BASKET
+         WHERE SB_USER=#{userId}
+   </delete>
 
 <!-- 제품 수량 가져오기 -->
-	<select id="getQuantityList" resultType="com.itwillbs.domain.ProdDTO">
-		SELECT * FROM PRODUCT_LIST
-			WHERE PROD_L_CODE		=#{prodLCode}
-	</select>
+   <select id="getQuantityList" resultType="com.itwillbs.domain.ProdDTO">
+      SELECT * FROM PRODUCT_LIST
+         WHERE PROD_L_CODE      =#{prodLCode}
+   </select>
 
 <!--  사용한 포인트 입력 -->
-	<insert id="insertUsePoint">
+   <insert id="insertUsePoint">
+     IF(POINT_USED!=0 AND POINT_USED!=NULL) 
       INSERT INTO POINT(
          POINT_NUM
          ,USER_ID
@@ -115,12 +112,12 @@
          )
    </insert>
 
-	<update id="updateCoupon">
-		UPDATE COUPON
-			SET COU_YN = "N"
-			WHERE COU_NUM =#{couNm}
-			  AND COU_USER_ID=#{userId}
-	</update>
+   <update id="updateCoupon">
+      UPDATE COUPON
+         SET COU_YN = "N"
+         WHERE COU_NUM =#{couNm}
+           AND COU_USER_ID=#{userId}
+   </update>
 
 
 </mapper>

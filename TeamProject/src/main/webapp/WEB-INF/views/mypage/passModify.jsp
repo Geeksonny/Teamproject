@@ -91,10 +91,6 @@ src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js" ></script
                       <a class="nav-link active" href="${pageContext.request.contextPath }/mypage/passMod">
                       <i class="bx bx-user me-1"></i> 비밀번호 변경</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="${pageContext.request.contextPath }/mypage/connection">
-                      <i class="bx bx-link-alt me-1"></i> 연결</a>
-                    </li>
                   </ul>
 
                   <!-- 비밀번호 변경 -->

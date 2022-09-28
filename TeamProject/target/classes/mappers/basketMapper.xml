@@ -5,122 +5,122 @@
 
 <mapper namespace="com.itwillbs.mappers.basketMapper">
 
-<!-- 	카트에 물건 삽입 -->
-	<insert id="insertBasket">
-		INSERT INTO  SHOPPING_BASKET(
-					 SB_BASKET_NUM
-					,SB_USER
-					,SB_PROD_CODE
-					,SB_COUNT
-					,SB_PROD_PRICE
-					,SHOPPING_BASKET_DATE
-				   )
-			VALUES(
-				  (SELECT SB_BASKET_NUM
-		       		 FROM   (SELECT IFNULL(MAX(CAST(SB_BASKET_NUM AS UNSIGNED)), 0) + 1 AS SB_BASKET_NUM
-				 	   	       FROM SHOPPING_BASKET) A)
-				   ,#{sbUser}
-				   ,#{sbProdCode}
-				   ,#{sbCount}
-				   ,#{sbProdPrice}
-				   ,#{shoppingBasketDate}
-				    )
+<!--    카트에 물건 삽입 -->
+   <insert id="insertBasket">
+      INSERT INTO  SHOPPING_BASKET(
+                SB_BASKET_NUM
+               ,SB_USER
+               ,SB_PROD_CODE
+               ,SB_COUNT
+               ,SB_PROD_PRICE
+               ,SHOPPING_BASKET_DATE
+               )
+         VALUES(
+              (SELECT SB_BASKET_NUM
+                    FROM   (SELECT IFNULL(MAX(CAST(SB_BASKET_NUM AS UNSIGNED)), 0) + 1 AS SB_BASKET_NUM
+                             FROM SHOPPING_BASKET) A)
+               ,#{sbUser}
+               ,#{sbProdCode}
+               ,#{sbCount}
+               ,#{sbProdPrice}
+               ,#{shoppingBasketDate}
+                )
 
-	</insert>
+   </insert>
 
-<!-- 	카트리스트  -->
-	<select id="getBasketList" resultType="com.itwillbs.domain.BasketDTO" >
-		   SELECT 	 @rownum:=@rownum+1 as num
-		   			,SB_BASKET_NUM
-					,SB_USER
-					,SB_PROD_CODE
-					,SB_COUNT
-					,SB_PROD_PRICE
-					,SB_PROD_PRICE * SB_COUNT as SB_TOTAL_PRICE
-					,(SELECT PROD_L_PRODNM
-					  FROM PRODUCT_LIST
-					  WHERE PROD_L_CODE=SB_PROD_CODE
-					  ) as sbProdNm
-<!-- 					,SB_TOTAL_PRICE -->
-					,(SELECT PROD_L_QUANTITY
-					  FROM PRODUCT_LIST
-					  WHERE PROD_L_CODE=SB_PROD_CODE
-					  ) as prodLQuantity
-					 ,(SELECT PROD_L_MAINIMG
+<!--    카트리스트  -->
+   <select id="getBasketList" resultType="com.itwillbs.domain.BasketDTO" >
+         SELECT     @rownum:=@rownum+1 as num
+                  ,SB_BASKET_NUM
+               ,SB_USER
+               ,SB_PROD_CODE
+               ,SB_COUNT
+               ,SB_PROD_PRICE
+               ,SB_PROD_PRICE * SB_COUNT as SB_TOTAL_PRICE
+               ,(SELECT PROD_L_PRODNM
+                 FROM PRODUCT_LIST
+                 WHERE PROD_L_CODE=SB_PROD_CODE
+                 ) as sbProdNm
+<!--                ,SB_TOTAL_PRICE -->
+               ,(SELECT PROD_L_QUANTITY
+                 FROM PRODUCT_LIST
+                 WHERE PROD_L_CODE=SB_PROD_CODE
+                 ) as prodLQuantity
+                ,(SELECT PROD_L_MAINIMG
                        from PRODUCT_LIST
                        WHERE PROD_L_CODE=SB_PROD_CODE) as prodMainimg
-		     FROM   SHOPPING_BASKET
-		    WHERE   (@rownum:=0)=0
-		      AND   SB_USER=#{sbUser}
+           FROM   SHOPPING_BASKET
+          WHERE   (@rownum:=0)=0
+            AND   SB_USER=#{sbUser}
 
 
-	</select>
+   </select>
 
-<!-- 	회원인지 아닌지 검사 -->
-	<select id="getUser" resultType="com.itwillbs.domain.BasketDTO">
-		SELECT *
-		  FROM SHOPPING_BASKET
-		 WHERE SB_USER=#{sbUser}
-	</select>
-<!-- 	중복 물건 담겼는지 검사 -->
-	<select id="prodCodeCheck" resultType="com.itwillbs.domain.BasketDTO">
-		SELECT *
-		  FROM SHOPPING_BASKET
-		 WHERE SB_USER=#{sbUser}
-		   AND SB_PROD_CODE=#{sbProdCode}
-	</select>
+<!--    회원인지 아닌지 검사 -->
+   <select id="getUser" resultType="com.itwillbs.domain.BasketDTO">
+      SELECT *
+        FROM SHOPPING_BASKET
+       WHERE SB_USER=#{sbUser}
+   </select>
+<!--    중복 물건 담겼는지 검사 -->
+   <select id="prodCodeCheck" resultType="com.itwillbs.domain.BasketDTO">
+      SELECT *
+        FROM SHOPPING_BASKET
+       WHERE SB_USER=#{sbUser}
+         AND SB_PROD_CODE=#{sbProdCode}
+   </select>
 
-<!-- 	주문리스트테이블에 상품 넣기 -->
-<!-- 	<insert id="insertOrder"> -->
-<!-- 		INSERT INTO  ORDER_LIST( -->
-<!-- 					  ORD_NUM -->
-<!-- 					 ,ORD_L_CODE -->
-<!-- 					 ,ORD_L_USER -->
-<!-- 					 ,ORD_L_QUANTITY -->
-<!-- 					 ,ORD_L_PRICE -->
-<!-- 					 ,ORD_L_DATE -->
-<!-- 					 ,ORD_L_COUNUMCOUDC -->
-<!-- 				   ) -->
-<!-- 			VALUES( -->
-<!-- 				  (SELECT ORD_NUM -->
-<!-- 		       		 FROM   (SELECT IFNULL(MAX(CAST(ORD_NUM AS UNSIGNED)), 0) + 1 AS ORD_NUM -->
-<!-- 				 	   	       FROM ORDER_LIST) A) -->
-<!-- 				   ,#{sbProdCode} -->
-<!-- 				   ,#{sbUser} -->
-<!-- 				   ,#{sbCount} -->
-<!-- 				   ,#{sbProdPrice} -->
-<!-- 				   ,#{shoppingBasketDate} -->
-<!-- 				   ,#{ordLCounumcoudc} -->
-<!-- 				    ) -->
+<!--    주문리스트테이블에 상품 넣기 -->
+<!--    <insert id="insertOrder"> -->
+<!--       INSERT INTO  ORDER_LIST( -->
+<!--                  ORD_NUM -->
+<!--                 ,ORD_L_CODE -->
+<!--                 ,ORD_L_USER -->
+<!--                 ,ORD_L_QUANTITY -->
+<!--                 ,ORD_L_PRICE -->
+<!--                 ,ORD_L_DATE -->
+<!--                 ,ORD_L_COUNUMCOUDC -->
+<!--                ) -->
+<!--          VALUES( -->
+<!--               (SELECT ORD_NUM -->
+<!--                     FROM   (SELECT IFNULL(MAX(CAST(ORD_NUM AS UNSIGNED)), 0) + 1 AS ORD_NUM -->
+<!--                              FROM ORDER_LIST) A) -->
+<!--                ,#{sbProdCode} -->
+<!--                ,#{sbUser} -->
+<!--                ,#{sbCount} -->
+<!--                ,#{sbProdPrice} -->
+<!--                ,#{shoppingBasketDate} -->
+<!--                ,#{ordLCounumcoudc} -->
+<!--                 ) -->
 
-<!-- 	</insert> -->
-<!-- 	장바구니 물건 삭제 -->
-	<delete id="deleteBasket">
-	   DELETE FROM  SHOPPING_BASKET
-	   	     WHERE  SB_PROD_CODE=#{sbProdCode}
-	   	     AND    SB_USER=#{sbUser}
-	</delete>
-<!-- 	수량변경시 디비 인서트 -->
-	<update id="updateBasket">
-		UPDATE  SHOPPING_BASKET
-		   SET  SB_COUNT    =#{sbCount}
-	     WHERE  SB_USER     =#{sbUser}
-	       AND	SB_PROD_CODE =#{sbProdCode}
-	</update>
-<!-- 	쿠폰 갖고오기 -->
+<!--    </insert> -->
+<!--    장바구니 물건 삭제 -->
+   <delete id="deleteBasket">
+      DELETE FROM  SHOPPING_BASKET
+              WHERE  SB_PROD_CODE=#{sbProdCode}
+              AND    SB_USER=#{sbUser}
+   </delete>
+<!--    수량변경시 디비 인서트 -->
+   <update id="updateBasket">
+      UPDATE  SHOPPING_BASKET
+         SET  SB_COUNT    =#{sbCount}
+        WHERE  SB_USER     =#{sbUser}
+          AND   SB_PROD_CODE =#{sbProdCode}
+   </update>
+<!--    쿠폰 갖고오기 -->
 
-	<select  id="selectCouponList" resultType="com.itwillbs.domain.CouponDTO" parameterType="com.itwillbs.domain.CouponDTO">
-			SELECT 	  NUM
-					 ,COU_USER_ID
-					 ,COU_NUM
-					 ,COU_NM
-					 ,COU_DC
-					 ,COU_YN
-					 ,COU_DATE
-					 ,CONCAT(COU_NUM,'_',COU_DC) as couNumCouDc
-			  FROM 	 COUPON
-			 WHERE 	 COU_USER_ID =#{couUserId}
-			 AND	 COU_YN =""
-		</select>
+   <select  id="selectCouponList" resultType="com.itwillbs.domain.CouponDTO" parameterType="com.itwillbs.domain.CouponDTO">
+         SELECT      NUM
+                ,COU_USER_ID
+                ,COU_NUM
+                ,COU_NM
+                ,COU_DC
+                ,COU_YN
+                ,COU_DATE
+                ,CONCAT(COU_NUM,'_',COU_DC) as couNumCouDc
+           FROM     COUPON
+          WHERE     COU_USER_ID =#{couUserId}
+          AND    COU_YN = 'Y'
+      </select>
 
 </mapper>
