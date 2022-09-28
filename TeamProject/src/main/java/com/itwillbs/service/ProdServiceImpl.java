@@ -48,6 +48,12 @@ public class ProdServiceImpl implements ProdService{
 	/* 상품 id 이름 */
 	@Override
 	public List<ProdDTO> getProdNumName(ProdDTO prodDTO) {
+		int startRow=(prodDTO.getCurrentPage()-1)*prodDTO.getPageSize()+1;
+		int endRow=startRow+prodDTO.getPageSize()-1;
+
+		prodDTO.setStartRow(startRow-1);
+		prodDTO.setEndRow(endRow);
+
 		return prodDAO.getProdNumName(prodDTO);
 	}
 
@@ -61,6 +67,28 @@ public class ProdServiceImpl implements ProdService{
 	@Override
 	public int checkReply(ProdDTO prodDTO) {
 		return prodDAO.checkReply(prodDTO);
+	}
+
+	/* 리뷰 페이징처리 */
+	@Override
+	public List<ProdDTO> selectReplyList(ProdDTO prodDTO) {
+		int startRow=(prodDTO.getCurrentPage()-1)*prodDTO.getPageSize()+1;
+		int endRow=startRow+prodDTO.getPageSize()-1;
+
+		prodDTO.setStartRow(startRow-1);
+		prodDTO.setEndRow(endRow);
+		return prodDAO.selectReplyList(prodDTO);
+	}
+
+	@Override
+	public int selectReplyListCnt(ProdDTO prodDTO) {
+		int startRow=(prodDTO.getCurrentPage()-1)*prodDTO.getPageSize()+1;
+		int endRow=startRow+prodDTO.getPageSize()-1;
+
+		prodDTO.setStartRow(startRow-1);
+		prodDTO.setEndRow(endRow);
+
+		return prodDAO.selectReplyListCnt(prodDTO);
 	}
 
 	/* 추천 상품 리스트 */

@@ -15,11 +15,16 @@ public interface ProdService {
 	/* 상품 id 이름 */
 	public List<ProdDTO> getProdNumName(ProdDTO prodDTO);
 
-	/* 댓글 등록 */
+	/* 리뷰 등록 */
 	public void enrollReply(ProdDTO prodDTO);
 
-	/* 댓글 존재 체크 */
+	/* 리뷰 존재 체크 */
 	public int checkReply(ProdDTO prodDTO);
+
+	/* 리뷰 페이징처리 */
+	public List<ProdDTO> selectReplyList(ProdDTO prodDTO);
+
+	public int selectReplyListCnt(ProdDTO prodDTO);
 
 	/* 추천 상품 리스트 */
 	public List<ProdDTO> selectProdRelatedList(ProdDTO details);
@@ -29,4 +34,5 @@ public interface ProdService {
 
 	/* 메인화면 - 많이 팔린 상품 리스트 */
 	public List<ProdDTO> selectProdBsList(ProdDTO prodDTO);
+
 }
