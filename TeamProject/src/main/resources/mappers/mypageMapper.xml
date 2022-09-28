@@ -187,12 +187,19 @@
 		  WHERE  COU_USER_ID=#{couUserId}
 		   AND   COU_YN="Y"
 	</select>
+
+<!-- 주문취소전 ORD_NUM 확인 -->
+	<select id="numCheck" resultType="com.itwillbs.domain.OrderListDTO">
+		SELECT   *
+		 FROM   ORDER_LIST 
+		WHERE   ORD_NUM= #{ordNum}
+	</select>
+
 <!-- 	주문취소시 구매상태, 환불상태 업데이트 -->
 	<update id="updateOrderStatus">
 		UPDATE	ORDER_LIST 
 		   SET	ORD_PURCHASESTATUS=#{ordPurchasestatus} ,ORD_REFUND=#{ordRefund}
-		WHERE USER_ID=#{userId}
-		  AND ORD_NUM =#{ordNum}
+		WHERE   ORD_NUM =#{ordNum}
 	</update>
 
 

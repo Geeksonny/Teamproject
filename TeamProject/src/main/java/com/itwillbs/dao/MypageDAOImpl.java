@@ -115,7 +115,10 @@ public class MypageDAOImpl implements MypageDAO {
 	public void updateOrderStatus(OrderListDTO orderListDTO) {
 		sqlSession.update(namespace + ".updateOrderStatus", orderListDTO);
 	}
-
-
+	// 주문취소 시 ORD_NUM 정보확인
+	@Override
+	public OrderListDTO numCheck(int ordNum) {
+		return sqlSession.selectOne(namespace+".numCheck",ordNum);
+	}
 
 }

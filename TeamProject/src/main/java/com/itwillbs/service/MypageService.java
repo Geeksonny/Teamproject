@@ -46,7 +46,6 @@ public interface MypageService {
 	// 마이페이지 쿠폰 등록
 	void insertMyCoupon(CouponDTO couponDTO);
 
-	void updateOrderStatus(OrderListDTO orderListDTO);
 
 	// 마이페이지 쿠폰 등록
 
@@ -54,7 +53,10 @@ public interface MypageService {
 
 
 
-
+	// 주문취소 시 상태변경
+	void updateOrderStatus(OrderListDTO orderListDTO);
+	// 주문취소 시 ORD_NUM 정보확인
+	OrderListDTO numCheck(int ordNum);
 
 
 

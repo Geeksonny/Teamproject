@@ -418,16 +418,20 @@ public class MypageController {
 			}
 			//
 		
+		// 주문취소
 		@RequestMapping(value="/mypage/orderRefund" , method=RequestMethod.POST)
 		public String orderRefund(HttpSession session, HttpServletRequest request, OrderListDTO orderListDTO) throws Exception{
-			String ordLUser = (String) session.getAttribute("userId");
-			 
-//			orderListDTO.setOrdUser(ordLUser);
-//			orderListDTO.setOrdNum(ordNum);
-//			orderListDTO.setOrdPurchasestatus("N");
-//			orderListDTO.setOrdRefund("11");
-//			mypageService.updateOrderStatus(orderListDTO);
-
-			return "redirect:/member/login";
+			int ordNum = Integer.parseInt(request.getParameter("ordNum"));
+			OrderListDTO orderListDTO2=mypageService.numCheck(ordNum);
+			if(orderListDTO2!=null) {
+				orderListDTO.setOrdPurchasestatus("N");
+				orderListDTO.setOrdRefund("11");
+				mypageService.updateOrderStatus(orderListDTO);
+				return "redirect:/mypage/order";	
+			}else {
+				// "틀림" 뒤로이동
+				return "member/msg";
+			}	
+				
 		}
 }
