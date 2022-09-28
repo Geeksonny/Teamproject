@@ -12,6 +12,19 @@
   data-template="vertical-menu-template-free"
 >
   <head>
+  <%
+ String strReferer = request.getHeader("referer"); //이전 URL 가져오기
+ 
+ if(strReferer == null){
+%>
+ <script language="javascript">
+  alert("정상적인 경로를 통해 다시 접근해 주세요.");
+  document.location.href="${pageContext.request.contextPath }/main/main";
+ </script>
+<%
+  return;
+ }
+%>
   </head>
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="${pageContext.request.contextPath }/resources/js/date.js"></script>
