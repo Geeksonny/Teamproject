@@ -41,7 +41,7 @@ public class ProdController {
 
 			prodDTO.setCurrentPage(currentPage);
 			String userId = (String)session.getAttribute("userId");
-			prodDTO.setCurrentPage(currentPage);
+			prodDTO.setUserId(userId);
 			prodDTO.setPageSize(9);
 
 			List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
