@@ -26,25 +26,26 @@
 <form action="${pageContext.request.contextPath }/board/updatePro" method="post"
 enctype="multipart/form-data">
 <input type="hidden" name="userNicknm" value="${sessionScope.userId}" >
+<input type="hidden" name="boardNum" value="${boardDTO2.boardNum}" >
 <section class="shop spad">
 		<div class="container" style="padding-left:10%; padding-right:10%">
             <div class="row">
                     <table class="table table-condensed">
                     		<tr align="center">
                             	 <th style="width:15%; vertical-align:middle">글쓴이 </th>
-                                <th width="100%"><h5><input type="text" name="userNicknm" value="${boardDTO.userNicknm}" style="width:100%; height:50px; border:none;" readonly="readonly"></h5></th>
+                                <th width="100%"><h5><input type="text" name="userNicknm" value="${boardDTO2.userNicknm}" style="width:100%; height:50px; border:none;" readonly="readonly"></h5></th>
                             </tr>
                         <thead>
                             <tr align="center">
                             	 <th style="width:15%; vertical-align:middle">제목  </th>
-                                <th width="100%"><h5><input type="text" name="boardSubject" value="${boardDTO.boardSubject}" style="width:100%; height:50px; border:none;"></h5></th>
+                                <th width="100%"><h5><input type="text" name="boardSubject" value="${boardDTO2.boardSubject}" style="width:100%; height:50px; border:none;"></h5></th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <tr>
                                 <td colspan="2">
-                                    <p class="mb-4 mt-3"><textarea name="boardContent" rows="10" style="width:100%; border-color:#b2b6b9" >${boardDTO.boardContent}</textarea></p>
+                                    <p class="mb-4 mt-3"><textarea name="boardContent" rows="10" style="width:100%; border-color:#b2b6b9" >${boardDTO2.boardContent}</textarea></p>
 
                                 </td>
                             </tr>

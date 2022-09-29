@@ -221,13 +221,13 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class="row">
-           <c:set var="file" value="${boardDTO.boardFile}"/>
+           <c:set var="file" value="c"/>
            <c:forEach var="boardDTO"  items="${boardTopList}" end="2">
            <c:choose>
            	<c:when test="${file != null}">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/img/upload/${file}"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/upload/${file}"></div>
                         <div class="blog__item__text">
                             <span>${boardDTO.userNicknm}</span>
                             <h5>${boardDTO.boardSubject}</h5>

@@ -93,13 +93,13 @@ $(document).ready(function(){
                                 </td>
                             </tr>
                             <tr>
-                            		<td width="10%"></td>
+                            		<td width="10%" style="color:#88939f;">이미지</td>
                                 	<td width="60%"><img src="${pageContext.request.contextPath }/resources/upload/${boardDTO2.boardFile}" style="max-width: 30%; height: auto;" ></td>
                             </tr>
                         </tbody>
                     </table>
                     <input type="hidden" id="boardNum" name="boardNum" value="${boardDTO2.boardNum}"></input>
-	                <input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/${boardDTO2.heart}">
+	               <input type="image" id="pic" src="${pageContext.request.contextPath }/resources/img/icon/${boardDTO2.heart}">
                     <table class="table table-striped" >
                <c:forEach items="${replyList}" var="replyDTO">
 				<!-- 댓글 테이블 -->
@@ -138,8 +138,8 @@ $(document).ready(function(){
                                 <td>
                                     <span style='float:right'>
                                         <a href="${pageContext.request.contextPath }/board/list"><button type="button" id="list" class="btn btn-secondary">목록</button></a>
-                                        <button type="button" id="modify" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/update?boardNum=${boardDTO.boardNum }'">수정</button>
-                                        <button type="button" id="delete" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/delete?boardNum=${boardDTO.boardNum }'">삭제</button>
+                                        <button type="button" id="modify" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/update?boardNum=${boardDTO2.boardNum }'">수정</button>
+                                        <button type="button" id="delete" class="btn btn-secondary" onclick="location.href='${pageContext.request.contextPath }/board/delete?boardNum=${boardDTO2.boardNum }'">삭제</button>
                                     </span>
                                 </td>
                             </tr>

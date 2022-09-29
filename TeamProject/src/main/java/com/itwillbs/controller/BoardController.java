@@ -161,7 +161,6 @@ public class BoardController {
 		
 		// 디비에서 조회
 		BoardDTO boardDTO2=boardService.getBoard(boardDTO);
-
 		// model에 데이터 저장
 		model.addAttribute("boardDTO2", boardDTO2);
 		//댓글란
@@ -251,7 +250,7 @@ public class BoardController {
 	public String updatePro(HttpServletRequest request,MultipartFile file) throws Exception {
 		String filename = "";
 		if(file.isEmpty()) {
-			filename=request.getParameter("oldfile");
+			filename="logo.png";
 		}else {
 			UUID uuid=UUID.randomUUID();
 			filename=uuid.toString()+"_"+file.getOriginalFilename();
