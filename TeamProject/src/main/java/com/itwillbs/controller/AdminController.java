@@ -419,9 +419,11 @@ public class AdminController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/admin/myCouNumDupCheck")
-	public ResponseEntity<Integer> myCouNumDupCheck(HttpServletRequest request, CouponDTO couponDTO) {
-
+	public ResponseEntity<Integer> myCouNumDupCheck(HttpSession session,HttpServletRequest request, CouponDTO couponDTO) {
+		String userId = (String) session.getAttribute("userId");
+		couponDTO.setCouUserId(userId);
 		int count =compService.getMyCouponNum(couponDTO);
+		System.out.println("/admin/myCouNumDupCheck"+count);
 			ResponseEntity<Integer> entity = new ResponseEntity<Integer>(count, HttpStatus.OK);
 			return entity;
 
