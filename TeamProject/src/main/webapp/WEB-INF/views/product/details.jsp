@@ -247,7 +247,7 @@ function printProdList(data){
 
     <div class="container mt-5">
           <h4>상품</h4>
-          <div class="breadcrumb__links mt-1 mb-3">p
+          <div class="breadcrumb__links mt-1 mb-3">
               <a href="${pageContext.request.contextPath }/main/main">홈</a>
               <a href="${pageContext.request.contextPath }/product/shop">스토어</a>
               <span>상품</span>
