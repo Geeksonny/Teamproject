@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.ProdService;
 
@@ -25,6 +26,8 @@ public class ProdController {
 	//객체생성 부모인터페이스 = 자식클래스
 	@Inject
 	private ProdService prodService;
+	@Inject
+	private BoardService boardService;
 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
