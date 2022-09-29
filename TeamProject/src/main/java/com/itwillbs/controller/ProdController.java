@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.ProdDTO;
 import com.itwillbs.service.ProdService;
 
@@ -25,6 +26,8 @@ public class ProdController {
 	//객체생성 부모인터페이스 = 자식클래스
 	@Inject
 	private ProdService prodService;
+	@Inject
+	private BoardService boardService;
 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
@@ -358,14 +361,17 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO, BoardDTO boardDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
+			List<>
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
+			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
 			// 데이터 담기
+			mv.addObject("boardTopList", boardTopList);
 			mv.addObject("newProdList", newProdList);
 			mv.addObject("bsProdList", bsProdList);
 			mv.addObject("prodDTO", prodDTO);

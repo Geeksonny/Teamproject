@@ -111,7 +111,7 @@ $(document).ready(function(){
                                   <c:set var="userId" scope="session" value="${sessionScope.userId}" />
 								  <c:set var="rId" target="${replyList}" scope="request" value="${replyDTO.userId}" />
 								  <c:if test="${userId == rId}">
-                                	<a onclick="location.href='${pageContext.request.contextPath }/board/rdeletePro?boardNum=${boardDTO.boardNum}&rNum=${replyDTO.rNum}'" style="cursor:pointer;">삭제</a>
+                                	<a onclick="location.href='${pageContext.request.contextPath }/board/rdeletePro?boardNum=${boardDTO2.boardNum}&rNum=${replyDTO.rNum}'" style="cursor:pointer;">삭제</a>
                                   </c:if>
                                 </td>
                          </tr>
