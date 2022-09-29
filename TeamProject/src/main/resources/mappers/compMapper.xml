@@ -403,5 +403,6 @@
 		 SELECT  count(*)
 		  FROM   COUPON
 		  WHERE  COU_NUM=#{couNum}
-	</select>
+		  AND    COU_USER_ID=#{couUserId}
+ 	</select>
 </mapper>
