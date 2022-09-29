@@ -24,14 +24,6 @@ public class ProdDTO extends PageDTO {
 	private String prodLDetail;
 	private int prodLQuantity;
 
-	private String heart;
-	public String getHeart() {
-		return heart;
-	}
-	public void setHeart(String heart) {
-		this.heart = heart;
-	}
-	
 	// 별점 평균, 카운트
 	private int avgRating;
 	private int countRating;
@@ -52,6 +44,7 @@ public class ProdDTO extends PageDTO {
 
 	// 사업자
 	private String compNm;
+	private String heart;
 
 	public int getProdLNum() {
 		return prodLNum;
@@ -210,6 +203,12 @@ public class ProdDTO extends PageDTO {
 	public void setCompNm(String compNm) {
 		this.compNm = compNm;
 	}
+	public String getHeart() {
+		return heart;
+	}
+	public void setHeart(String heart) {
+		this.heart = heart;
+	}
 
 	@Override
 	public String toString() {
@@ -221,7 +220,7 @@ public class ProdDTO extends PageDTO {
 				+ prodLQuantity + ", avgRating=" + avgRating + ", countRating=" + countRating + ", srhText=" + srhText
 				+ ", category=" + category + ", gridColumn=" + gridColumn + ", userId=" + userId + ", replyNum="
 				+ replyNum + ", content=" + content + ", rating=" + rating + ", replyDate=" + replyDate + ", compNm="
-				+ compNm + "]";
+				+ compNm + ", heart=" + heart + "]";
 	}
 
 }
