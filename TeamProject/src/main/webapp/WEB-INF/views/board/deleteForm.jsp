@@ -26,7 +26,7 @@
 <form action="${pageContext.request.contextPath }/board/deletePro" method="post"
 enctype="multipart/form-data">
 <input type="hidden" name="userNicknm" value="${sessionScope.userId}" >
-<input type="hidden" name="userNicknm" value="${boardNum}" >
+<input type="hidden" name="boardNum" value="${boardNum}" >
 <section class="shop spad">
 		<div class="container" style="padding-left:10%; padding-right:10%">
             <div class="row">
