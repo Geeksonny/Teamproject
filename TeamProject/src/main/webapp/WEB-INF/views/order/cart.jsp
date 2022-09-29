@@ -81,7 +81,7 @@
 											</td>
 <!-- 											삭제 구현 -->
 											<td class="cart__close" id="delProd_${basketDTO.num}">
-											<a onclick="cartDelete();" title="Remove"><i class="fa fa-close" style="cursor:pointer"></i></a></td>
+											<a id="a_${basketDTO.num}" onclick="cartDelete(this);" title="Remove"><i class="fa fa-close" style="cursor:pointer"></i></a></td>
 										</tr>
 
 										<input type="hidden" name="sbProdCode_" value="${basketDTO.sbProdCode}" id="sbProdCode_${basketDTO.num}">

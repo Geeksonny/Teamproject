@@ -70,10 +70,10 @@ function itemTotal() {
 
 
 // 삭제 코드 시작
-function cartDelete(){
+function cartDelete(t){
 	var sendUrl = "delete";       // Controller로 보내는 URL Controller에 /delete로 전송되고 매핑함
-	var sbProdCode = $('#sbProdCode').val();
-
+	var basketIndex = t.id.split('_')[1];
+	var sbProdCode = $('#sbProdCode_' + basketIndex).val();
 
 		var chk = confirm("정말 삭제하시겠습니까?"); //chk가 boolean타입으로 선택가능
 		if(chk){ //chk가 true면 if문으로 들어옴
