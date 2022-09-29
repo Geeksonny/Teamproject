@@ -346,9 +346,6 @@ $(document)
 							<br>
 							<!-- 내가 찜한 목록들 리스트 볼수있게 이동? -->
 							<div class="center" style="display: block">
-								<a class="site-btn mr-2" id="prodLike">
-									<span id="sp">찜하기</span>
-								</a>
 								<a class="site-btn" id="insertBasket">
 									<span id="sp">장바구니에 담기</span>
 								</a>
