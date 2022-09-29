@@ -131,8 +131,8 @@
                         <td style="vertical-align: middle">
                          		<c:choose>
 						 			<c:when test="${orderListDTO.ordRefund eq '10'}">
-						  				<form action="${pageContext.request.contextPath }/mypage/orderRefund" method="post">
-						  				<button class="btn btn-outline-primary">주문취소</button>
+						  				<form action="${pageContext.request.contextPath }/mypage/orderRefund" method="post" name="orderRef">
+						  				<button class="btn btn-outline-primary" onclick="return checkRefund()">주문취소</button>
 						  				<input type="hidden" value="${orderListDTO.ordNum}" id="ordNum" name="ordNum">
                        					<div></div>
                        					</form>
@@ -258,6 +258,13 @@ function datecheck(){
 		alert('오늘 이전의 날짜만 검색이 가능합니다.');
 		return false;
 	}
+}
+function checkRefund() {
+	if (confirm("정말 주문 취소하시겠습니까?") == true){    //확인
+	     document.orderRef.submit();
+	 }else{   //취소
+	     return false;
+	 }
 }
 </script>
 </html>
