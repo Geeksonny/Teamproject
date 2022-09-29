@@ -69,7 +69,7 @@
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="userAthletic">할인율</label>
                             <select class="select2 form-control form-control-lg" id="couDc " name="couDc">
-                           	    <option value="0.5" >5%</option>
+                           	    <option value="0.95" >5%</option>
 							    <option value="0.9" >10%</option>
 							    <option value="0.8" >20%</option>
 							    <option value="0.7" >30%</option>
