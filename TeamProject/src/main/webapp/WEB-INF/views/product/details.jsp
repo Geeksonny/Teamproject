@@ -263,6 +263,12 @@ function printProdList(data){
         <div class="col-lg-6 col-xl-6">
         <div style="padding:30px">
             <h5 class="mt-3">${details.compNm}</h5>
+	    <form action="${pageContext.request.contextPath }/product/detailsLike">
+            <input type="hidden" name="prodLNum" value="${details.prodLNum}">
+            <input type="hidden" name="userId" value="${sessionScope.userId}">
+            <input type="hidden" name="prodLCode" value="${details.prodLCode}">
+            <input type="image" src="${pageContext.request.contextPath }/resources/img/icon/${details.heart}" >
+            </form>
             <hr style="margin-bottom:12%">
           <div class="product__details__text">
             <h3>${details.prodLProdnm}</h3>
