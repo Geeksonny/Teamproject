@@ -190,10 +190,25 @@
   	</insert>
 
 	<!-- 리뷰 수정 -->
-<!-- 	<update id="updateBoard"> -->
-<!-- 		UPDATE PRODUCT_REPLY -->
-<!-- 		   SET BOARD_SUBJECT=#{boardSubject}, BOARD_CONTENT=#{boardContent} where BOARD_NUM=#{boardNum} -->
-<!-- 	</update> -->
+	<update id="updateReply">
+		UPDATE PRODUCT_REPLY
+		   SET CONTENT=#{content}, RATING=#{rating}
+	  	 WHERE USER_ID = #{userId}
+		   AND PROD_L_NUM = #{prodLNum}
+	</update>
+
+	<!-- 리뷰 삭제 -->
+  	<delete id="deleteReply">
+  		DELETE FROM PRODUCT_REPLY
+  		 WHERE USER_ID = #{userId}
+		   AND PROD_L_NUM = #{prodLNum}
+  	</delete>
+
+	<select id="getUpdateReply" parameterType="com.itwillbs.domain.ProdDTO" resultType="com.itwillbs.domain.ProdDTO">
+		SELECT *
+		  FROM PRODUCT_REPLY
+		 WHERE REPLY_NUM = #{replyNum}
+	</select>
 
 	<!-- 리뷰 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능 -->
 	<select id="checkReply" parameterType="com.itwillbs.domain.ProdDTO" resultType="integer">
