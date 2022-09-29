@@ -28,7 +28,7 @@ public class ProdController {
 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
-	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			// ---------------- 페이징 처리 시작
@@ -39,6 +39,8 @@ public class ProdController {
 			}
 			int currentPage=Integer.parseInt(pageNum);
 
+			prodDTO.setCurrentPage(currentPage);
+			String userId = (String)session.getAttribute("userId");
 			prodDTO.setCurrentPage(currentPage);
 			prodDTO.setPageSize(9);
 
@@ -135,10 +137,11 @@ public class ProdController {
 	public ModelAndView details(HttpServletRequest req, HttpServletResponse res,HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
-
-			ProdDTO details = prodService.selectProdDetail(prodDTO);
+			
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
+			ProdDTO details = prodService.selectProdDetail(prodDTO);
+			
 
 			// ---------------- 페이징 처리 시작
 			int pageSize = 3;
@@ -355,9 +358,11 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
+			String userId = (String)session.getAttribute("userId");
+			prodDTO.setUserId(userId);
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
 			// 데이터 담기
