@@ -228,7 +228,7 @@ $(document)
 									if (data == 1) {
 								var chk = confirm("상품이 추가 되었습니다. 장바구니로 이동하시겠습니까?	");
 										if(chk){
-											location.href="/web/order/cart";
+											location.href="${pageContext.request.contextPath }/order/cart";
 										}else {
 											location.href="shop";
 										}

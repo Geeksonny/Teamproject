@@ -40,7 +40,7 @@ src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js" ></script
 				}
 
 				$.ajax({
-					url : "/web/comp/passCheck",
+					url : "${pageContext.request.contextPath }/comp/passCheck",
 					type : "POST",
 					data : {'compId':$('#compId').val(),'compPass':$('#compPass').val()},
 					success: function(rdata){

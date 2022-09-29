@@ -42,14 +42,14 @@ function checkCouNum() {
 	} else {	debugger; // 18자리가 숫자가 맞으면 들어옴
 
 		$.ajax({
-			url: '/web/admin/couNumDupCheck',
+			url: '${pageContext.request.contextPath }/admin/couNumDupCheck',
 			data: { 'couNum': couNum },
 			type: 'POST',
 			success: function(rdata) {debugger;
 				if (rdata == '1') {	// 관리자 쿠폰 테이블에 쿠폰이 있는경우
 					// 유저 테이블에 쿠폰이 있는지 검사
 					$.ajax({
-						url: '/web/admin/myCouNumDupCheck',
+						url: '${pageContext.request.contextPath }/admin/myCouNumDupCheck',
 						data: { 'couNum': couNum },
 						type: 'POST',
 						success: function(rdata) {

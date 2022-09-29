@@ -40,7 +40,7 @@ $(document).ready(function() {
 		$('#div5').hide(); //숨김
 		$('#prodLOption5').empty(); //초기화
 		$.ajax({
-			url: "/web/common/selectOptionList",
+			url: "${pageContext.request.contextPath }/common/selectOptionList",
 			type: "post",
 			data: { "srhHighCd": one },
 			dataType: "json",
@@ -71,7 +71,7 @@ $(document).ready(function() {
 		$('#div5').hide(); //숨김
 		$('#prodLOption5').empty(); //초기화
 		$.ajax({
-			url: "/web/common/selectOptionList",
+			url: "${pageContext.request.contextPath }/common/selectOptionList",
 			type: "post",
 			data: { "srhHighCd": two },
 			dataType: "json",
@@ -108,7 +108,7 @@ $(document).ready(function() {
 			$('#div5').hide(); //숨김
 			$('#prodLOption5').empty(); //초기화
 			$.ajax({
-				url: "/web/common/selectOptionList",
+				url: "${pageContext.request.contextPath }/common/selectOptionList",
 				type: "post",
 				data: { "srhHighCd": three },
 				dataType: "json",
@@ -137,7 +137,7 @@ $(document).ready(function() {
 			$('#div5').hide(); //숨김
 			$('#prodLOption5').empty(); //초기화
 			$.ajax({
-				url: "/web/common/selectOptionList",
+				url: "${pageContext.request.contextPath }/common/selectOptionList",
 				type: "post",
 				data: { "srhHighCd": four },
 				dataType: "json",

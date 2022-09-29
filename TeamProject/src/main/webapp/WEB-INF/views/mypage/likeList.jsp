@@ -134,9 +134,7 @@
                     <tbody class="table-border-bottom-0">
 
                      <c:forEach var="boardDTO" items="${boardList2}" end="10" >
-                      <tr>
-                      	<td onclick="event.cancelBubble=true">&nbsp;&nbsp;&nbsp;&nbsp;<input class="form-check-input" type="checkbox" value="${boardDTO.boardNum }" name="CheckRow" id="defaultCheck1" />
-                      	<label class="form-check-label" for="defaultCheck1"></label></td>
+                      	<tr id="boardTr" style="cursor:pointer;" onClick="location.href='${pageContext.request.contextPath }/board/content?boardNum=${boardDTO.boardNum }&userId=${sessionScope.userId}'">
                         <td>${boardDTO.boardNum }</td>
                         <td>${boardDTO.userNicknm }</td>
                         <td>${boardDTO.boardSubject}  (${boardDTO.boardRcount})</td>
