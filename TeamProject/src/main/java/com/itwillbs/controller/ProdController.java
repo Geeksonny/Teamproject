@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.service.BoardService;
 import com.itwillbs.service.CommonService;
 import com.itwillbs.service.ProdService;
 
@@ -29,7 +31,9 @@ public class ProdController {
 	private ProdService prodService;
 	@Inject
 	private CommonService commonService;
-
+	@Inject
+	private BoardService boardService;
+ 
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
 	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, HttpSession session,@ModelAttribute ProdDTO prodDTO) throws Exception {
@@ -148,9 +152,10 @@ public class ProdController {
 		try {
 			ModelAndView mv = new ModelAndView();
 
-			ProdDTO details = prodService.selectProdDetail(prodDTO);
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
+			
+			ProdDTO details = prodService.selectProdDetail(prodDTO);
 
 			// ---------------- 페이징 처리 시작
 			int pageSize = 3;
@@ -315,7 +320,7 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO, BoardDTO boardDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			
@@ -324,7 +329,11 @@ public class ProdController {
 			prodDTO.setUserId(userId);
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
+			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
+			
 			// 데이터 담기
+			
+			mv.addObject("boardTopList", boardTopList);
 			mv.addObject("newProdList", newProdList);
 			mv.addObject("bsProdList", bsProdList);
 			mv.addObject("prodDTO", prodDTO);
