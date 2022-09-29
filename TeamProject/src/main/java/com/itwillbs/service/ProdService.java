@@ -18,6 +18,12 @@ public interface ProdService {
 	/* 리뷰 등록 */
 	public void enrollReply(ProdDTO prodDTO);
 
+	/* 리뷰 수정 */
+	public void updateReply(ProdDTO prodDTO);
+
+	/* 리뷰 삭제 */
+	public void deleteReply(ProdDTO prodDTO);
+
 	/* 리뷰 존재 체크 */
 	public int checkReply(ProdDTO prodDTO);
 

@@ -1,6 +1,5 @@
 package com.itwillbs.service;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.itwillbs.dao.ProdDAO;
 import com.itwillbs.domain.ProdDTO;
-import com.itwillbs.domain.PageDTO;
 
 @Service
 public class ProdServiceImpl implements ProdService{
@@ -61,6 +59,18 @@ public class ProdServiceImpl implements ProdService{
 	@Override
 	public void enrollReply(ProdDTO prodDTO) {
 		prodDAO.enrollReply(prodDTO);
+	}
+
+	/* 댓글 수정 */
+	@Override
+	public void updateReply(ProdDTO prodDTO) {
+		prodDAO.updateReply(prodDTO);
+	}
+
+	/* 댓글 삭제 */
+	@Override
+	public void deleteReply(ProdDTO prodDTO) {
+		prodDAO.deleteReply(prodDTO);
 	}
 
 	/* 댓글 존재 체크 */
