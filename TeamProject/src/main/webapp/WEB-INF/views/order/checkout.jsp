@@ -226,7 +226,7 @@ function myCoupon(){
 
                   <!-- 주문자 정보 -->
                             <h6 class="checkout__title">주문자 정보
-                        <a href="/web/mypage/modify" class="text-primary float-right" style="text-decoration:none;">
+                        <a href="/mypage/modify" class="text-primary float-right" style="text-decoration:none;">
                            정보 변경
                         </a>
                             </h6>
