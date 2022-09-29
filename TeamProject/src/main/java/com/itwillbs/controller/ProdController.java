@@ -358,14 +358,17 @@ public class ProdController {
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO, BoardDTO boardDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
+			List<>
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
+			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
 			// 데이터 담기
+			mv.addObject("boardTopList", boardTopList);
 			mv.addObject("newProdList", newProdList);
 			mv.addObject("bsProdList", bsProdList);
 			mv.addObject("prodDTO", prodDTO);
