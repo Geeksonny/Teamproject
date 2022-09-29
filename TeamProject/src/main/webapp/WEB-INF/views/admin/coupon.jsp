@@ -76,12 +76,12 @@ function couponDelete(){
 		data:{'couNum':couNum},
 		type: 'POST',
 		success:function(rdata){
-			if(rdata=='1'){	// 아이디가 중복이거나 글자 수 넘억
-				spanElem.innerHTML = "중복입니다.";
+			if(rdata=='1'){	// 쿠폰 중복
+				spanElem.innerHTML = "쿠폰 코드 중복입니다.";
 				spanElem.style.color = "RED";
 				checkCouNumResult =false;
 			}else{
-				spanElem.innerHTML = "사용가능한 상품코드입니다.";
+				spanElem.innerHTML = "사용가능한 쿠폰코드입니다.";
 				spanElem.style.color = "GREEN";
 				checkCouNumResult =true;
 			}
