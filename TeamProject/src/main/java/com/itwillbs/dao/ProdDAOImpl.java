@@ -43,6 +43,16 @@ public class ProdDAOImpl implements ProdDAO{
 	}
 
 	@Override
+	public void updateReply(ProdDTO prodDTO) {
+		sqlSession.update(namespace+".updateReply", prodDTO);
+	}
+
+	@Override
+	public void deleteReply(ProdDTO prodDTO) {
+		sqlSession.delete(namespace+".deleteReply", prodDTO);
+	}
+
+	@Override
 	public int checkReply(ProdDTO prodDTO) {
 		return sqlSession.selectOne(namespace+".checkReply",prodDTO);
 	}
