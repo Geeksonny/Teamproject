@@ -10,15 +10,17 @@
 <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 
-/* 리뷰 쓰기 */
-$(document).ready(function(){
-	$("#detailReply").on("click", function(e){
-// 		debugger;
-		e.preventDefault();
 
-		const userId = '${prodDTO.userId}';
-		const prodLNum = '${prodDTO.prodLNum}';
-		const prodLProdnm = '${details.prodLProdnm}';
+/* 리뷰 등록 */
+const userId = '${prodDTO.userId}';
+const prodLNum = '${prodDTO.prodLNum}';
+const prodLProdnm = '${details.prodLProdnm}';
+
+$(document).ready(function(){
+
+	$("#detailReply").on("click", function(e){
+		//접근 한 태그의 클릭 이벤트로 인해 발생하는 기본적인 동작을 막기 위해 preventDefault() 메서드를 호출
+		e.preventDefault();
 
 		$.ajax({
 			data : {
@@ -29,7 +31,7 @@ $(document).ready(function(){
 			type : 'POST',
 			success : function(result){
 				// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
-				// 존재 : S /  존재x : F
+				// 존재o : F /  존재x : S
 				if(result.code === 'S'){
 					let popUrl = "${pageContext.request.contextPath }/product/replyEnroll?userId=" + userId + "&prodLNum=" + prodLNum + "&prodLProdnm=" + prodLProdnm;
 					console.log(popUrl);
@@ -42,6 +44,59 @@ $(document).ready(function(){
 		});
 
 	});
+
+	/* 리뷰 수정 버튼 */
+	 $("#updateReply").on("click", function(e){
+		e.preventDefault();
+
+		$.ajax({
+			data : {
+				prodLNum : prodLNum,
+				userId : userId
+			},
+			url : '${pageContext.request.contextPath }/product/check',
+			type : 'POST',
+			success : function(result){
+				// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
+				// 존재o : F /  존재x : S
+				if(result.code === 'F'){
+					let popUrl = "${pageContext.request.contextPath }/product/replyUpdate?userId=" + userId + "&prodLNum=" + prodLNum + "&prodLProdnm=" + prodLProdnm;
+					console.log(popUrl);
+					let popOption = "width = 490px, height=490px, top=300px, left=300px, scrollbars=yes";
+					window.open(popUrl,"리뷰 수정",popOption);
+				} else{
+					alert("등록하신 리뷰가 존재하지 않습니다.");
+				}
+			}
+		});
+	 });
+
+	 /* 리뷰 삭제 버튼 */
+	$("#deleteReply").on("click", function(e){
+
+		e.preventDefault();
+
+		$.ajax({
+			data : {
+				prodLNum : prodLNum,
+				userId : userId
+			},
+			url : '${pageContext.request.contextPath }/product/deleteReply',
+			type : 'POST',
+			success : function(result){
+// 				debugger;
+				// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
+				// 존재o : F /  존재x : S
+				if(result.code === 'S'){
+					alert("등록하신 리뷰가 존재하지 않습니다.");
+				} else{
+					alert("등록하신 리뷰를 삭제하였습니다.");
+					window.location.reload(true);
+				}
+			}
+		});
+	 });
+
 });
 
 
@@ -64,7 +119,6 @@ function searchProd(comp){
 		}
 	});
 }
-
 
 /* ----- 리뷰 뿌려주기 ----- */
 function printReplyList(data){
@@ -209,12 +263,6 @@ function printProdList(data){
         <div class="col-lg-6 col-xl-6">
         <div style="padding:30px">
             <h5 class="mt-3">${details.compNm}</h5>
-            <form action="${pageContext.request.contextPath }/product/detailsLike">
-            <input type="hidden" name="prodLNum" value="${details.prodLNum}">
-            <input type="hidden" name="userId" value="${sessionScope.userId}">
-            <input type="hidden" name="prodLCode" value="${details.prodLCode}">
-            <input type="image" src="${pageContext.request.contextPath }/resources/img/icon/${details.heart}" >
-            </form>
             <hr style="margin-bottom:12%">
           <div class="product__details__text">
             <h3>${details.prodLProdnm}</h3>
@@ -235,6 +283,7 @@ function printProdList(data){
             <hr class="md-4"><br>
               <!-- 내가 찜한 목록들 리스트 볼수있게 이동? -->
               <div class="center" style="display:block">
+                  <a class="site-btn mr-2" id="prodLike"><span id="sp">찜하기</span></a>
 	              <a class="site-btn" id="insertBasket"><span id="sp">장바구니에 담기</span></a>
 <!-- 	              장바구니에 가져갈 히든 값. 제품 코드와 가격, 수량 1개 -->
 				  <input type="hidden" name="prodLcount" type="text" id="prodLcount" value="1">
@@ -320,6 +369,20 @@ function printProdList(data){
 	              <br>
 				</c:forEach>
 				</div>
+				<!-- 리뷰 수정, 삭제 시작 -->
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <td>
+                                <span style='float:right'>
+                                    <button type="button" id="updateReply" class="btn btn-secondary">수정</button>
+                                    <button type="button" id="deleteReply" class="btn btn-secondary">삭제</button>
+                                </span>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <!-- 리뷰 수정, 삭제 끝 -->
 				<!-- 페이지 (페이징 처리) 시작 -->
                  <div class="row">
                      <div class="col-lg-12">
@@ -337,6 +400,7 @@ function printProdList(data){
                      </div>
                  </div>
                  <!-- 페이지 (페이징 처리) 끝 -->
+
             </div>
           </div>
         </div>

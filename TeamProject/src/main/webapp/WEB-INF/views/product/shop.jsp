@@ -33,27 +33,6 @@
 <!-- ------------ AJAX 카테고리 구현 ------------ -->
 <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	//id="idbtn"
-	$('.prodLike').click(function(){
-		var prodLCode = this.value;
-		var th = this;
-		$.ajax({
-			type : 'POST', 
-			url:'${pageContext.request.contextPath}/main/mainLike',
-			data:{prodLCode : prodLCode},
-			/* dataType : 'text', */
-			success:function(rdata){
-				var value = this.data.split('=')[1];
-				var result = "${pageContext.request.contextPath }/resources/img/icon/"+rdata;
-				$('input[value=' + value + ']').attr("src", result);
-// 				$(".prodLike").attr("src", result);
-			}
-		});
-	});
-	
-});
-
 var category = "";
 
 function searchProd(comp){
@@ -460,7 +439,8 @@ $(document).ready(function(){
 									<img src="${pageContext.request.contextPath }/resources/img/product/${prodList.prodLMainimg}" alt="위의 이미지를 누르면 연결됩니다."/>
 								</a>
                                 <ul class="product__hover">
-                                <li><input type="image" class="prodLike" id="prodpic" src="${pageContext.request.contextPath }/resources/img/icon/${prodList.heart}" value="${prodList.prodLCode}"></li>
+                                <li><a href="${pageContext.request.contextPath }/product/likeinsert?prodLCode=${prodList.prodLCode}">
+                                	<img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""><span>찜하기</span></a></li>
                                 </ul>
                                 </div>
                                 <div class="product__item__text">
