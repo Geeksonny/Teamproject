@@ -317,31 +317,36 @@
 
 	<insert id="pointUpdate">
 		INSERT INTO 	POINT(
-								USER_ID
-							   ,POINT_NUM
+							USER_ID
+							,POINT_NUM
 						       ,POINT_TYPE
 						       ,POINT_NOW
 						       ,POINT_USED
 						       ,POINT_CHARGE
-			                   ,POINT_USED_OB_NUM
+			                   	       ,POINT_USED_OB_NUM
 		          		      )
 
 			 SELECT 			#{ordLUser}
-							   ,(SELECT POINT_NUM
+							,(SELECT POINT_NUM
 					       		 FROM   (SELECT IFNULL(MAX(CAST(POINT_NUM AS UNSIGNED)), 0) + 1 AS POINT_NUM
 							 	   	       FROM POINT) A)
 						       ,"포인트 환불"
-						       ,(POINT_NOW + (POINT_USED * (#{individualPrice}/#{ordTotalPrice})))
-						       ,(POINT_USED - (POINT_USED * (#{individualPrice}/#{ordTotalPrice})))
-						       ,(POINT_USED * (#{individualPrice}/#{ordTotalPrice}))
+						       ,(SELECT *
+						           FROM ( SELECT P.POINT_NOW +(PO.POINT_USED * (#{individualPrice}/#{ordTotalPrice}))
+						        			FROM POINT P
+						        		   WHERE P.USER_ID=#{ordLUser}
+						        		ORDER BY P.POINT_DATE DESC) A
+						        		   LIMIT 1)
+						       ,(PO.POINT_USED - (PO.POINT_USED * (#{individualPrice}/#{ordTotalPrice})))
+						       ,(PO.POINT_USED * (#{individualPrice}/#{ordTotalPrice}))
 			                   ,#{num}
-			   FROM 			POINT
-			  WHERE   			USER_ID  = #{ordLUser}
-				AND             POINT_USED_OB_NUM = #{num}
-				AND             POINT_NUM = (SELECT MAX(POINT_NUM)
-											   FROM POINT
-			               					  where POINT_USED_OB_NUM = #{num}
-			               					    and USER_ID     = #{ordLUser}
+			   FROM 			POINT PO
+			  WHERE   			PO.USER_ID  = #{ordLUser}
+				AND             PO.POINT_USED_OB_NUM = #{num}
+				AND             PO.POINT_NUM = (SELECT MAX(POINT_NUM)
+											   	  FROM POINT PO1
+			               					     where PO1.POINT_USED_OB_NUM = #{num}
+			               					       and PO1.USER_ID     = #{ordLUser}
 											 )
 
 	</insert>
