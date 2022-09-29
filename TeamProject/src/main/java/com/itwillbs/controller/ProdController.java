@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.itwillbs.domain.BoardDTO;
-import com.itwillbs.domain.CommonDTO;
 import com.itwillbs.domain.ProdDTO;
-import com.itwillbs.service.BoardService;
-import com.itwillbs.service.CommonService;
 import com.itwillbs.service.ProdService;
 
 @Controller
@@ -29,29 +25,12 @@ public class ProdController {
 	//객체생성 부모인터페이스 = 자식클래스
 	@Inject
 	private ProdService prodService;
-	@Inject
-	private CommonService commonService;
-	@Inject
-	private BoardService boardService;
- 
+
 	// 상품페이지
 	@RequestMapping(value = "/product/shop", method = RequestMethod.GET)
-	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, HttpSession session,@ModelAttribute ProdDTO prodDTO) throws Exception {
+	public ModelAndView list(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
-			// ---------------- 자동 코드값 생성 시작
-			//코드 생성 > "코드" + YYMMDD + max(000)+1
-			CommonDTO commonDTO =  new CommonDTO();
-			commonDTO.setComCd("PF"); // 코드 정의
-			commonDTO.setColumnNm("PROD_L_CODE"); //기준 컬럼
-			commonDTO.setTableNm("PRODUCT_LIST"); //테이블 정의
-			CommonDTO cd = commonService.selectCodeSearch(commonDTO);
-			//cd = PF220906001 로 생성됨
-			//조회해온 코드값을 원하는 DTO에 Set 처리
-			prodDTO.setProdLCode(cd.getPkCd());
-
-			List<CommonDTO> commonList =  commonService.selectCommonList(commonDTO);
-			// ---------------- 자동 코드값 생성 끝
 			// ---------------- 페이징 처리 시작
 			int pageSize = 9;
 			String pageNum = prodDTO.getPageNum();
@@ -59,11 +38,9 @@ public class ProdController {
 				pageNum = "1";
 			}
 			int currentPage=Integer.parseInt(pageNum);
-			String userId = (String)session.getAttribute("userId");
+
 			prodDTO.setCurrentPage(currentPage);
 			prodDTO.setPageSize(9);
-			
-			prodDTO.setUserId(userId);
 
 			List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
 			int count = prodService.selectProdListCnt(prodDTO);
@@ -83,7 +60,6 @@ public class ProdController {
 			// ---------------- 페이징 처리 끝
 
 			// 데이터 담기
-			mv.addObject("cd", cd);
 			mv.addObject("prodList", prodList);
 			mv.addObject("prodDTO", prodDTO);
 			mv.setViewName("product/shop");
@@ -105,6 +81,13 @@ public class ProdController {
 		String pageNum = req.getParameter("pageNum");
 		String gridColumn = req.getParameter("gridColumn");
 
+		prodDTO.setPageNum(pageNum);
+		prodDTO.setCategory(category);
+		prodDTO.setSrhText(srhText);
+		prodDTO.setGridColumn(gridColumn);
+
+
+
 
 		// ---------------- 페이징 처리(Ajax) 시작
 		if(pageNum == null) {
@@ -116,6 +99,10 @@ public class ProdController {
 		prodDTO.setPageSize(9);
 
 		int pageSize = 9;
+
+		List<ProdDTO> prodReply = prodService.getProdNumName(prodDTO);
+		List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
+
 		int count = prodService.selectProdListCnt(prodDTO);
 		int pageBlock = 3;
 		int startPage = (currentPage-1)/pageBlock*pageBlock+1;
@@ -133,13 +120,10 @@ public class ProdController {
 		prodDTO.setEndPage(endPage);
 		prodDTO.setPageCount(pageCount);
 
-		prodDTO.setCategory(category);
-		prodDTO.setSrhText(srhText);
-		prodDTO.setGridColumn(gridColumn);
+
 		// ---------------- 페이징 처리(Ajax) 끝
 
-		List<ProdDTO> prodList = prodService.selectProdList(prodDTO);
-
+		map.put("prodReply", prodReply);
 		map.put("prodList", prodList);
 		map.put("prodDTO", prodDTO);
 
@@ -152,10 +136,9 @@ public class ProdController {
 		try {
 			ModelAndView mv = new ModelAndView();
 
+			ProdDTO details = prodService.selectProdDetail(prodDTO);
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
-			
-			ProdDTO details = prodService.selectProdDetail(prodDTO);
 
 			// ---------------- 페이징 처리 시작
 			int pageSize = 3;
@@ -258,7 +241,7 @@ public class ProdController {
 	}
 
 
-	// 리뷰창
+	/* 리뷰 로그인 체크 -> 리뷰 등록 팝업창 띄어주기 */
 	@RequestMapping(value = "/product/replyEnroll", method = RequestMethod.GET)
 	public ModelAndView replyEnrollWindow(HttpServletRequest req, HttpServletResponse res,HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
@@ -281,24 +264,22 @@ public class ProdController {
 
 	}
 
-	// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
-	// 존재 : F  /  존재x : S
+	/* 리뷰 여부 체크 (댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능) */
 	@RequestMapping(value = "/product/check", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> replyCheck(HttpServletRequest req, HttpServletResponse res, ProdDTO prodDTO) {
 		Map<String, Object> map = new HashMap<>();
-
 		int check = prodService.checkReply(prodDTO);
-		// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
+		// 존재o : F  /  존재x : S
 		if(check > 0) {
-			map.put("code", "F"); // 이미 리뷰 쓴 경우
+			map.put("code", "F"); // 리뷰 존재O
 		}else {
-			map.put("code", "S");
+			map.put("code", "S"); // 리뷰 존재x
 		}
 		map.put("prodDTO", prodDTO);
 		return map;
 	}
 
-	// 리뷰 등록
+	/* 리뷰 등록 */
 	@RequestMapping(value = "/product/enroll", method = RequestMethod.POST)
 	public @ResponseBody Map<String, Object> enrollReply(HttpServletRequest req, HttpServletResponse res, ProdDTO prodDTO) {
 		Map<String, Object> map = new HashMap<>();
@@ -317,23 +298,69 @@ public class ProdController {
 		return map;
 	}
 
+	/* 리뷰 수정 */
+	@RequestMapping(value = "/product/updateReply", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> updateReply(HttpServletRequest req, HttpServletResponse res, ProdDTO prodDTO) {
+		Map<String, Object> map = new HashMap<>();
+
+		int check = prodService.checkReply(prodDTO);
+		// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
+		if(check > 0) {
+			prodService.updateReply(prodDTO); //update
+			map.put("check", "S"); // 이미 리뷰 쓴 경우
+		}else {
+			map.put("code", "F");
+		}
+		map.put("prodDTO", prodDTO);
+		return map;
+	}
+
+	/* 리뷰 수정 팝업창(팝업창 뷰를 반환해주는 url 매핑 메서드) */
+	@RequestMapping(value = "/product/replyUpdate", method = RequestMethod.GET)
+	public ModelAndView replyUpdateWindow(HttpServletRequest req, HttpServletResponse res,HttpSession session, @ModelAttribute ProdDTO prodDTO) throws Exception {
+		try {
+			ModelAndView mv = new ModelAndView();
+			String userId = (String)session.getAttribute("userId");
+
+			if(!"".equals(userId) && userId !=null) {
+				mv.addObject("prodDTO", prodDTO);
+				mv.setViewName("product/replyUpdate");
+			}else {
+				mv.setViewName("product/msg");
+			}
+			return mv;
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	/* 댓글 삭제 */
+	@RequestMapping(value = "/product/deleteReply", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> deleteReply(HttpServletRequest req, HttpServletResponse res, ProdDTO prodDTO) {
+		Map<String, Object> map = new HashMap<>();
+		int check = prodService.checkReply(prodDTO);
+		// 댓글 등록 전 회원이 이전에 등록한 댓글이 있는지 확인하는 기능
+		if(check > 0) {
+			map.put("check", "F"); // 이미 리뷰 쓴 경우
+			prodService.deleteReply(prodDTO); //delete
+		}else {
+			map.put("code", "S");
+		}
+		map.put("prodDTO", prodDTO);
+		return map;
+	}
 
 	// 메인화면
 	@RequestMapping(value = "/main/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, HttpSession session, @ModelAttribute ProdDTO prodDTO, BoardDTO boardDTO) throws Exception {
+	public ModelAndView main(HttpServletRequest req, HttpServletResponse res, @ModelAttribute ProdDTO prodDTO) throws Exception {
 		try {
 			ModelAndView mv = new ModelAndView();
-			
-			
-			String userId = (String)session.getAttribute("userId");
-			prodDTO.setUserId(userId);
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
-			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
-			
 			// 데이터 담기
-			
-			mv.addObject("boardTopList", boardTopList);
 			mv.addObject("newProdList", newProdList);
 			mv.addObject("bsProdList", bsProdList);
 			mv.addObject("prodDTO", prodDTO);
