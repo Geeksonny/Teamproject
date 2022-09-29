@@ -100,8 +100,6 @@
         </div>
     </div>
     <div class="offcanvas__nav__option">
-        <a href="#" class="search-switch"><img src="${pageContext.request.contextPath }/resources/img/icon/search.png" alt=""></a>
-        <a href="#"><img src="${pageContext.request.contextPath }/resources/img/icon/heart.png" alt=""></a>
 
        <!-- todo 페이지를 못찾음-->
         <a href="${pageContext.request.contextPath }/order/cart"><img src="${pageContext.request.contextPath }/resources/img/icon/cart.png" alt="">장바구니</a>
@@ -178,10 +176,6 @@
             </div>
             <div class="col-lg-5 col-md-6">
               <div class="header__nav__option shop__sidebar__search mb-0">
-	              <form action="searchItem" method="post" id="search">
-	                  <input type="text" placeholder="단백질 쉐이크" id="searchMain">
-	                  <button type="submit"><span class="icon_search" style="color:#495057;"></span></button>
-	              </form>
                 </div>
             </div>
             <div class="col-lg-4 col-md-12">
