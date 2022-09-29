@@ -50,6 +50,8 @@
 		<beans:constructor-arg value="D:\\workspace_sts1\\TP\\TeamProject\\src\\main\\webapp\\resources\\upload"></beans:constructor-arg>
 	</beans:bean>
 	<!-- D:\\workspace_sts1\\TP\\TeamProject\\src\\main\\webapp\\resources\\upload -->
+<!-- 	/itwillbs15/tomcat/webapps/ROOT/resources/upload -->
+
 
 	<!-- 회원가입 메일 인증 -->
 	<beans:bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">

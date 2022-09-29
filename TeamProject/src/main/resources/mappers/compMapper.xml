@@ -177,7 +177,7 @@
 		 							FROM PRODUCT_LIST
 		 						   WHERE PROD_L_COMPNM=#{compId})
 		   AND   OL.ORD_L_NUM = OB.NUM
-		 ORDER BY  OL.ORD_L_DATE
+		 ORDER BY  OL.ORD_L_DATE DESC
 		 LIMIT 	#{startRow}	,#{pageSize}
 	</select>
 

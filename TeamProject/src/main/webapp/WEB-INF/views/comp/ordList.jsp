@@ -13,7 +13,31 @@
 >
   <head>
   <script src="http://code.jquery.com/jquery-3.6.0.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/jsPro/ordList.js"></script>
+<%--   <script src="${pageContext.request.contextPath }/resources/jsPro/ordList.js"></script> --%>
+<script type="text/javascript">
+
+$(document).ready(function() {
+	delivNumberAdd();
+});
+function delivNumberAdd() {
+	$('button[id^=delivNumberAdd_btn_')
+		.on(
+			"click",
+			function() {
+
+				$(this).next().html(
+					"  <div><input placeholder='택배사' class='form-control' type='text' style='float:left; width:55%;' id='ordLDelivComp' name='ordLDelivComp' >"
+					+ "  <br><div class='form-group'><input placeholder='송장번호' class='form-control' type='text' style='float:left; width:55%' id='ordLDelivNum' name='ordLDelivNum' >"
+							+ "<button type='submit' class='btn btn-primary ' >" + "입력"+"</button></div>"
+
+						);
+
+			});
+}
+
+
+
+</script>
 <!--   전체선택, 선택삭제 자바스크립트 -->
 <%
  String strReferer = request.getHeader("referer"); //이전 URL 가져오기

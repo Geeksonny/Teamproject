@@ -4,8 +4,224 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="${pageContext.request.contextPath }/resources/jsPro/basketListPro.js"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.js">
+</script>
+<%-- <script src="${pageContext.request.contextPath }/resources/jsPro/basketListPro.js"></script> --%>
+<script type="text/javascript">
+$(document).ready(function(){
+	itemTotal(); // 전체 합계
+	myCoupon(); // 쿠폰 선택
+
+	}); // documnet
+	function myCoupon(){
+	 var sbUser = $('#sbUser').val();
+	 $('.nice-select').hide();
+	 $('#myCouponList').show();
+		$.ajax({
+	        	url: "/web/order/myCoupon",
+				type: "post",
+				data : {'couUserId':sbUser},
+				dataType: "json",
+				async: false,
+				success:function( data ) {
+					if(data.code=="S") {
+						$('#myCouponList').append("<option value='0_0'>" + "쿠폰 선택" + "</option>");
+						var codeList = data.couponList;
+					      for(var i = 0; i < codeList.length ; i++){
+					        var option = "<option value='" + codeList[i].couNumCouDc + "'>" + codeList[i].couNm + "</option>";
+					        $('#myCouponList').append(option);
+					      }
+					} else {
+						alert("ERROR : Common Code");
+					}
+				}
+			}); // ajax
+	}
+
+
+	function itemTotal() {
+
+		//전체 합계
+		var sbProdPrice = $("input[name='sbProdPrice']");
+		var sbCount = $("input[name='sbCount']");
+		var sum = 0;
+		var count = sbProdPrice.length;
+		var itemDC = 0;
+		var prodLQuantity = $("input[name='prodLQuantity']");
+
+
+		//전체합계
+		for (var i = 0; i < count; i++){
+
+		  if(prodLQuantity[i].value !=0){ // 품절 상품 아닌것만 더하기
+			sum += parseInt(sbProdPrice[i].value) * parseInt(sbCount[i].value);
+		  }
+
+		}
+		var sum = new Intl.NumberFormat().format(sum);
+		var itemDC = new Intl.NumberFormat().format(itemDC);
+		$("#itemTotalPrice").html(sum+" 원"); // 총합표시
+		$("#itemDcPrice").html(itemDC+" 원"); // 할인가격 표시
+	}
+
+	// 삭제 코드 시작
+	function cartDelete(t){
+		var sendUrl = "delete";       // Controller로 보내는 URL Controller에 /delete로 전송되고 매핑함
+		var basketIndex = t.id.split('_')[1];
+		var sbProdCode = $('#sbProdCode_' + basketIndex).val();
+
+			var chk = confirm("정말 삭제하시겠습니까?"); //chk가 boolean타입으로 선택가능
+			if(chk){ //chk가 true면 if문으로 들어옴
+			$.ajax({
+				type : 'POST',       // Post방식
+				url : sendUrl,          // 전송 URL
+				traditional : true,		// ajax 배열 넘기기 옵션
+				data : {'sbProdCode':sbProdCode
+					   // 보내고자 하는 data 변수 설정
+				},
+				success: function (rdata) {
+					if(rdata == 1) {
+					 location.href="cart";
+					}else {
+						alert("삭제 실패");
+					}
+
+				},
+				error:function(){
+
+					alert("에러");
+				}
+			}); // ajax
+
+		}
+	}
+
+
+	// 삭제 코드 끝
+
+
+	//수량 수정 디비 저장
+	function updateValue(index){
+		var url = "/web/order/update";
+
+		var vol = $('#select_vol_'+index).val();
+		var sbProdCode = $('#sbProdCode_'+index).val();
+		var sbUser = $('#sbUser').val();
+
+		$.ajax({
+				type : 'POST',       // Post방식
+				url : url,          // 전송 URL
+				traditional : true,		// ajax 배열 넘기기 옵션
+				data : {
+					'sbCount' : vol,
+					'sbProdCode': sbProdCode,
+					'sbUser' : sbUser                 // 보내고자 하는 data 변수 설정
+				}
+
+			}); // ajax
+	}
+	 /*-------------------
+	Quantity change
+--------------------- */
+
+
+
+var proQty = $('.pro-qty');
+proQty.prepend('<span class="fa fa-angle-up dec qtybtn"></span>');
+proQty.append('<span class="fa fa-angle-down inc qtybtn"></span>');
+proQty.on('click', '.qtybtn', function () {
+    var $button = $(this);
+    var oldValue = $button.parent().find('input').val();
+    if ($button.hasClass('inc')) {
+        var newVal = parseFloat(oldValue) + 1;
+    } else {
+        // Don't allow decrementing below zero
+        if (oldValue > 0) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+    $button.parent().find('input').val(newVal);
+});
+
+var proQty = $('.pro-qty-2');
+proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
+proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');
+proQty.on('click', '.qtybtn', function(){
+	var myCouponDC =document.getElementById('myCouponList');
+	var myCouponDC1 = myCouponDC.options[myCouponDC.selectedIndex].value.split('_')[1]; // 옵션 value값
+
+    var $button = $(this);
+    var oldValue = $button.parent().find('input').val();
+    var index = $button.parent().find('input')[0].id.split('_')[2];
+
+    var optionMax= $('#quantity_'+index).val(); // 디비저정된 수량 최대값
+
+    if ($button.hasClass('inc')) {
+        if(parseInt(oldValue) >= parseInt(optionMax)){
+			alert("재고수량이상으로 주문하실수 없습니다.");
+			var newVal = oldValue;
+		}else {
+         newVal = parseFloat(oldValue) + 1;
+		}
+    } else {
+        // Don't allow decrementing below zero
+        if (oldValue > 0) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 0;
+        }
+    }
+
+    $button.parent().find('input').val(newVal);
+    var price = $('#price_' + index).val(); // 개별 가격
+
+    var total = newVal * price ; // 개별 가격 * 새로 바뀐 수량
+	var total = new Intl.NumberFormat().format(total); // 원으로 바꾸기
+    $('#total_' + index).text(total +"원"); // total에 뿌려주기
+
+
+	var totalSum = 0;  // 총 합계 구하기
+	var itemDC = 0; // 할인 가격
+	for(var i = 0; i < $('.total').length ; i++){
+		totalSum += parseInt($('.total')[i].textContent.replace(/[^0-9]/g,''));
+	}
+
+	if(myCouponDC1!=0){ // 할인율이 0이 아닐때 계산
+		itemDC=totalSum - totalSum * myCouponDC1;
+		totalSum=totalSum * myCouponDC1;
+	}
+	var totalSum = new Intl.NumberFormat().format(totalSum); // 원으로 바꾸기
+	var itemDC = new Intl.NumberFormat().format(itemDC); // 원으로 바꾸기
+	$("#itemTotalPrice").html(totalSum+" 원"); //화면에 총합 표시
+	$("#itemDcPrice").html(itemDC+" 원"); // 할인가격 표시
+	updateValue(index); // 수량 디비에 넣기
+});
+
+$('#myCouponList').change(function(){ // 할인 셀렉박스 바뀔때 동작
+	var total = 0;
+	var totalArr = $('.total');
+	var itemDC=0;
+	for(var i=0; i<totalArr.length; i++){ // 개별총합계를 더함
+		total += Number($(totalArr[i]).text().replace(/[^0-9]/g,''));
+	}
+
+	if(this.value.split('_')[1] != 0){ // 할인율 곱하기
+		var totalDc = this.value.split('_')[1]
+		itemDC= total - total*totalDc; // 할인된 가격
+		total *= totalDc;
+
+
+	}
+	var total = new Intl.NumberFormat().format(total);
+	var itemDC = new Intl.NumberFormat().format(itemDC);
+	$("#itemDcPrice").html(itemDC + "원"); // 할인가격 표시
+	$("#itemTotalPrice").html(total + "원");
+
+});
+
+</script>
 </head>
 
 <body>

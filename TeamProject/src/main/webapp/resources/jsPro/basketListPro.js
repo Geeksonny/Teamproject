@@ -61,13 +61,7 @@ function itemTotal() {
 	var itemDC = new Intl.NumberFormat().format(itemDC);
 	$("#itemTotalPrice").html(sum+" 원"); // 총합표시
 	$("#itemDcPrice").html(itemDC+" 원"); // 할인가격 표시
-
-
-
 }
-
-
-
 
 // 삭제 코드 시작
 function cartDelete(t){
