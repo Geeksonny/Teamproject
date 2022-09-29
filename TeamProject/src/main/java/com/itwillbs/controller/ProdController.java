@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.itwillbs.domain.BoardDTO;
 import com.itwillbs.domain.ProdDTO;
+import com.itwillbs.service.BoardService;
 import com.itwillbs.service.ProdService;
 
 @Controller
@@ -366,7 +367,6 @@ public class ProdController {
 			ModelAndView mv = new ModelAndView();
 			String userId = (String)session.getAttribute("userId");
 			prodDTO.setUserId(userId);
-			List<>
 			List<ProdDTO> newProdList = prodService.selectProdNewList(prodDTO);
 			List<ProdDTO> bsProdList = prodService.selectProdBsList(prodDTO);
 			List<BoardDTO> boardTopList = boardService.getBoardTopList(boardDTO);
