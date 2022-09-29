@@ -18,7 +18,7 @@ $(document).ready(function(){
 	 $('.nice-select').hide();
 	 $('#myCouponList').show();
 		$.ajax({
-	        	url: "/web/order/myCoupon",
+	        	url: "${pageContext.request.contextPath }/order/myCoupon",
 				type: "post",
 				data : {'couUserId':sbUser},
 				dataType: "json",
@@ -102,7 +102,7 @@ $(document).ready(function(){
 
 	//수량 수정 디비 저장
 	function updateValue(index){
-		var url = "/web/order/update";
+		var url = "${pageContext.request.contextPath }/order/update";
 
 		var vol = $('#select_vol_'+index).val();
 		var sbProdCode = $('#sbProdCode_'+index).val();
