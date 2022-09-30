@@ -132,14 +132,14 @@
                     </thead>
                     <tbody class="table-border-bottom-0">
 
-                     <c:forEach var="prodDTO" items="${prodList}" end="10" >
-                      <tr>
-			<td>${prodDTO.prodLNum }</td>
-                        <td><img src="${pageContext.request.contextPath }/resources/img/product/${prodDTO.prodLMainimg}"  width="150"></td>
-                        <td>${prodDTO.prodLProdnm }</td>
-                        <td>${prodDTO.prodLPrice}</td>
+                     <c:forEach var="prodList" items="${prodList}" end="10" >
+                     <tr id="boardTr" style="cursor:pointer;" onClick="location.href='${pageContext.request.contextPath }/product/details?prodLNum=${prodList.prodLNum}'">
+						<td>${prodList.prodLNum }</td>
+                        <td><img src="${pageContext.request.contextPath }/resources/img/product/${prodList.prodLMainimg}"  width="150"></td>
+                        <td>${prodList.prodLProdnm }</td>
+                        <td>${prodList.prodLPrice}</td>
                       </tr>
-					 </c:forEach>
+		</c:forEach>
                     </tbody>
                   </table>
 
