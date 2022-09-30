@@ -124,6 +124,7 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
+			<th>상품 번호</th>   
                         <th>상품 사진</th>
                         <th>상품 이름</th>
                         <th>상품 가격</th>
@@ -133,6 +134,7 @@
 
                      <c:forEach var="prodDTO" items="${prodList}" end="10" >
                       <tr>
+			<td>${prodDTO.prodLNum }</td>
                         <td><img src="${pageContext.request.contextPath }/resources/img/product/${prodDTO.prodLMainimg}"  width="150"></td>
                         <td>${prodDTO.prodLProdnm }</td>
                         <td>${prodDTO.prodLPrice}</td>
