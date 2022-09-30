@@ -2,7 +2,7 @@
 <img width="50%" src="https://user-images.githubusercontent.com/108128650/187670001-4b00e7ed-d12b-49f2-9d06-0c7fb9b9693b.png"/>
 
 > 2조의 운동용품 쇼핑몰 '핏티드' 프로젝트 <br>
-- 배포주소 적을 예정
+- [http://itwillbs15.cafe24.com/main/main](http://itwillbs15.cafe24.com/main/main)
 <br><br>
 
 ## 목차
