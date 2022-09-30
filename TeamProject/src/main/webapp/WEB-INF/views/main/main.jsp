@@ -227,7 +227,7 @@ $(document).ready(function(){
            	<c:when test="${file != null}">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="${pageContext.request.contextPath }/resources/upload/${file}"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="$${pageContext.request.contextPath }/resources/img/blog/blog-1.jpg"></div>
                         <div class="blog__item__text">
                             <span>${boardDTO.userNicknm}</span>
                             <h5>${boardDTO.boardSubject}</h5>
