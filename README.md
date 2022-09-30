@@ -3,7 +3,9 @@
 
 > 2조의 운동용품 쇼핑몰 '핏티드' 프로젝트 <br>
 - [http://itwillbs15.cafe24.com/main/main](http://itwillbs15.cafe24.com/main/main)
+- [팀프로젝트2조_핏티드PPT.pdf](https://github.com/TEAMPROJECT-2/TP/files/9681178/2._.PPT.pdf)
 <br><br>
+
 
 ## 목차
 
