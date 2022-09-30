@@ -34,7 +34,8 @@
 	</select>
 
 	<select id="getPordLikeList" resultType="com.itwillbs.domain.ProdDTO">
-		SELECT	  p.PROD_L_CODE
+		SELECT	 	  p.PROD_L_NUM
+				, p.PROD_L_CODE
 				, p.PROD_L_PRODNM
 				, p.PROD_L_PRICE
 				, p.PROD_L_MAINIMG
