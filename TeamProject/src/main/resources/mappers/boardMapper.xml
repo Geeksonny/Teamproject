@@ -91,7 +91,7 @@
 	</update>
 
 	<delete id="deleteBoard">
-		delete from BOARD where BOARD_PASS=#{boardPass} and USER_NICKNM=#{userNicknm}
+		delete from BOARD where BOARD_PASS=#{boardPass} and USER_NICKNM=#{userNicknm} and BOARD_NUM=#{boardNum}
 	</delete>
 
 	<update id="rCount">
