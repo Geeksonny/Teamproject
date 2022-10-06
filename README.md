@@ -65,15 +65,15 @@
 
 ### - 개념/논리모델링
 ![pt6](https://user-images.githubusercontent.com/108128650/187753550-f1c3511b-6388-4749-9cdc-1eb71d995a99.png)
-<br>
+<br><br>
 
-### - 회의록 (업데이트 중)
+### - 회의록
 ![보고서](https://user-images.githubusercontent.com/108128650/187753547-c69fa28b-4555-4a60-9c07-9a1d0230f58a.jpg)
 손그림으로 페이지를 그려보고 필수 기능 위주로 정리하는 과정을 윔지컬 이용해 모델링을 했고 회의와 메신저를 통해 의견을 공유했다.<br>
 <br>
 
-### - 일정 관리 (업데이트 중)
-![일정관리](https://user-images.githubusercontent.com/108128650/189941950-1c9721ab-461b-4f63-af41-1041755db080.JPG)
+### - 일정 관리
+![image](https://user-images.githubusercontent.com/108128650/194315776-9c4eea6b-631c-4d59-aa0b-83f4c6898f10.png)
 <br>
 
 ### - 벤치마킹 
@@ -82,25 +82,33 @@
 <hr>
 
 ## 설계
-### - ERD 다이어그램 (업데이트 중)
+### - ERD 다이어그램
 
-![팀플erd](https://user-images.githubusercontent.com/108128650/187747172-3b36bcfc-cf13-449e-826e-71f738f849f7.png)
+![팀플erd](https://user-images.githubusercontent.com/108128650/194320116-cd05c11d-fa9e-48c7-9efc-d16069b3d86e.PNG)
+
 
 <br>
 
-### - 기능 설계 (업데이트 중)
+### - 기능 설계
 
-[기능 및 URI / 데이터 형식 정리 문서](https://docs.google.com/document/d/1Bep4sCVTUXkl6zIJfLv8Oft9x7AtLScx19WQAvlL5K4/edit?usp=sharing)
+[기능 및 URI / 데이터 형식 정리 문서](https://docs.google.com/document/d/1bD62gQZeH9kPO9id1HmV2T-vTDqM6hM2Vh1rFZxttUk/edit)
+<br>
+![fit1](https://user-images.githubusercontent.com/108128650/194317415-22b88743-7bf4-4519-949f-69353283e191.PNG)
+![f2](https://user-images.githubusercontent.com/108128650/194317421-2a5db794-dd44-462c-95be-477eb3796c3f.PNG)
+![f3](https://user-images.githubusercontent.com/108128650/194317423-d5963d30-3753-47f1-b9d1-74dd3a50beb7.PNG)
+
 
 <br>
 <hr>
 
 ## 프로젝트 화면
-![pt1](https://user-images.githubusercontent.com/108128650/187747124-c24d5776-0490-439d-9d4d-2815ab400b76.png)
-![pt2](https://user-images.githubusercontent.com/108128650/187747121-8e7cb177-ea97-4623-8667-bd98a71e9973.png)
-![pt3](https://user-images.githubusercontent.com/108128650/187747119-8f70646f-34c6-419e-8e6c-f73494d74101.png)
-![pt4](https://user-images.githubusercontent.com/108128650/187747117-1dc2b60a-00ce-4c8f-a888-e5d34e669afa.png)
-![pt5](https://user-images.githubusercontent.com/108128650/187747112-7a258c4b-41d5-471d-b97f-4d0118e9a222.png)
+![ft1](https://user-images.githubusercontent.com/108128650/194319044-bc0561d8-2ceb-4bab-88ea-143a7e29ea47.PNG)
+![ft2](https://user-images.githubusercontent.com/108128650/194319052-e69f620b-5821-4006-af7f-17db58a32282.PNG)
+![ft6](https://user-images.githubusercontent.com/108128650/194319063-3f6e11ea-56f6-40d3-9bec-06129fe1a253.PNG)
+![ft3](https://user-images.githubusercontent.com/108128650/194319058-783aa85d-44e1-4e6f-b178-725d6f6857bd.PNG)
+![ft4](https://user-images.githubusercontent.com/108128650/194319060-08e15dfe-a799-4f5e-b66c-b8aeb76d41d8.PNG)
+![ft5](https://user-images.githubusercontent.com/108128650/194319062-37453246-bca4-45cf-b8a3-d7cb8b940c9b.PNG)
+
 <hr>
 
 ## 구현 목록
@@ -228,3 +236,5 @@
  * 챗봇
  - [X] - 고객상담 1:1 채팅
 <br>
+
+
